@@ -1,0 +1,116 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;  
+    font-family: 'Rubik', sans-serif; 
+}
+.flexDisplay{
+    display: flex;
+}
+.flexDirCol{
+    flex-direction: column;
+}
+.flexBetween{
+    justify-content: space-between;
+}
+.flexAround{
+    justify-content: space-around;
+}
+.flexCenter{
+    justify-content: center;
+}
+.flexEvenly{
+    justify-content: space-evenly;
+}
+.flexItemCenter{
+    align-items: center;
+}
+.main{
+    height: 100vh;
+}
+.textLight{
+    color: #fff;
+}
+.textBlue{
+    color: #32507b;
+}
+.bgBlue{
+    background-color: #32507b;
+}
+.bgSkyBlue{
+    background-color: #dcf2f2;
+}
+.footerLogo{
+    width: 50px;
+    height: auto;
+}
+.footerContainer{
+    height: 50px;
+    width: 97%;
+    margin: auto;
+}
+.footerObjective{
+    height: 20px;
+}
+.logoContainer{
+    margin-left: 10px;
+}
+.dateTimeContainer{
+    margin-right: 10px;
+    width: 140px;
+}
+.bgGreen{
+    background-color: #F1F6C7;
+}
+.operationContainer{
+    width: 650px;
+    height: 490px;
+}
+.nameContainer{
+    width: 300px;
+    height: 25px;
+}
+.btn{
+    border: none;
+    width: 120px;
+    padding: 8px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.inputFields{
+    height: 25px;
+    width: 150px;
+}
+.dateInput{
+    width: 150px;
+    height: 25px;
+}
+.smallInput{
+    width: 100px;
+    height: 25px;
+}
+.labelContainer{
+    width: 40%;
+    margin-left: 5%;
+}
+.inputContainer{
+    height: 70px;
+}
+.headerConteiner{
+    height: 30px;
+    border-bottom: #32507b 1px solid;
+}
+.userInputContainer{
+    height: 430px;
+    width: 80%;
+    margin: auto;
+}
+.secondsContainer{
+    height: 250px;
+    width: 90%;
+    margin: 10px auto;
+}
+.bottomContainer{
+    width: 50%;
+    height: 220px;
+}

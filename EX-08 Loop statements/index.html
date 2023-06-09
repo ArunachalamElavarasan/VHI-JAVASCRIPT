@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dispaly reversed year and find leap year</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <main class="flexDisplay flexCenter">
+        <section
+          class="bgGreen textBlue operationContainer flexDisplay flexDirCol flexAround"
+        >
+          <section class="flexDisplay headerConteiner">
+            <h3 class="labelContainer">Exercise : 8</h3>
+            <h3>Display Years in Reverse and Find Leap Year</h3>
+          </section>
+          <section class="userInputContainer flexDisplay flexEvenly flexDirCol">
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter First Date</p></section>
+              <section>
+                <input
+                  type="date"
+                  name=""
+                  id="inputFirstDate"
+                  class="dateInput"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter Second Date</p></section>
+              <section>
+                <input
+                  type="date"
+                  name=""
+                  id="inputSecondDate"
+                  class="dateInput"
+                />
+              </section>
+            </section>
+          </section>
+          <section class="secondsContainer flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer">
+                <p>Select Any Choice</p>
+              </section>
+              <section>
+                <select name="" id="loopChoice" onchange="validateYear()">
+                  <option disabled selected>Select Loop</option>
+                  <option value="for loop">For Loop</option>
+                  <option value="while loop">While Loop</option>
+                  <option value="do while loop">Do While Loop</option>
+                </select>
+              </section>
+            </section>
+            <section class="flexDisplay flexEvenly">
+              <section class="loopContainer">
+                <p>For_loop</p>
+                <section
+                  class="loopResultContainer flexDisplay flexDirCol flexCenter flexItemCenter"
+                >
+                  <section>
+                    <section><p>Display Years in Reverse</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <textarea
+                        name=""
+                        id="forYearRev"
+                        cols="15"
+                        rows="6"
+                      ></textarea>
+                    </section>
+                  </section>
+                  <section>
+                    <section><p>Display all leap years</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <textarea
+                        name=""
+                        id="forLeap"
+                        cols="15"
+                        rows="6"
+                      ></textarea>
+                    </section>
+                  </section>
+                  <section>
+                    <section><p>Number of Leap years</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <input
+                        type="text"
+                        name="forNumLeap"
+                        id="forNumLeap"
+                        class="dateInput"
+                      />
+                    </section>
+                  </section>
+                </section>
+              </section>
+              <section class="loopContainer">
+                <p>While loop</p>
+                <section
+                  class="loopResultContainer flexDisplay flexDirCol flexCenter flexItemCenter"
+                >
+                  <section>
+                    <section><p>Display Years in Reverse</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <textarea
+                        name=""
+                        id="whileYearRev"
+                        cols="15"
+                        rows="6"
+                      ></textarea>
+                    </section>
+                  </section>
+                  <section>
+                    <section><p>Display all leap years</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <textarea
+                        name=""
+                        id="whileLeap"
+                        cols="15"
+                        rows="6"
+                      ></textarea>
+                    </section>
+                  </section>
+                  <section>
+                    <section><p>Number of Leap years</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <input
+                        type="text"
+                        name=""
+                        id="whileNumLeap"
+                        class="dateInput"
+                      />
+                    </section>
+                  </section>
+                </section>
+              </section>
+              <section class="loopContainer flexDisplay flexDirCol">
+                <p>Do While loop</p>
+                <section
+                  class="loopResultContainer flexDisplay flexDirCol flexItemCenter"
+                >
+                  <section>
+                    <section><p>Display Years in Reverse</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <textarea
+                        name=""
+                        id="doYearRev"
+                        cols="15"
+                        rows="6"
+                      ></textarea>
+                    </section>
+                  </section>
+                  <section>
+                    <section><p>Display all leap years</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <textarea
+                        name=""
+                        id="doLeap"
+                        cols="15"
+                        rows="6"
+                      ></textarea>
+                    </section>
+                  </section>
+                  <section>
+                    <section><p>Number of Leap years</p></section>
+                    <section class="flexDisplay flexCenter">
+                      <input
+                        type="text"
+                        name=""
+                        id="doNumLeap"
+                        class="dateInput"
+                      />
+                    </section>
+                  </section>
+                </section>
+              </section>
+              <section class="loopContainer flexDisplay flexDirCol flexEnd">
+                <button class="btn bgBlue textLight" onclick="Reset()">
+                  Reset
+                </button>
+              </section>
+            </section>
+          </section>
+        </section>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : Loop Statements</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/loopStatement.js"></script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Name Search (Variables)</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <main class="flexDisplay flexCenter">
+        <section
+          class="bgGreen textBlue operationContainer flexDisplay flexDirCol flexAround"
+        >
+          <section class="flexDisplay headerConteiner">
+            <h3 class="labelContainer">Exercise : 13</h3>
+            <h3>Name Search (Variables)</h3>
+          </section>
+          <section class="userInputContainer flexDisplay flexEvenly flexDirCol">
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter the First Employee Name</p></section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="firstEmployee"
+                  class="nameContainer"
+                  onkeypress="preventNumber(event)"
+                  onkeydown="preventNumber(event)"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter the Second Employee Name</p></section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="secondEmployee"
+                  class="nameContainer"
+                  onkeypress="preventNumber(event)"
+                  onkeydown="preventNumber(event)"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter the Third Employee Name</p></section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="thirdEmployee"
+                  class="nameContainer"
+                  onkeypress="preventNumber(event)"
+                  onkeydown="preventNumber(event)"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter the Four Employee Name</p></section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="fourthEmployee"
+                  class="nameContainer"
+                  onkeypress="preventNumber(event)"
+                  onkeydown="preventNumber(event)"
+                />
+              </section>
+            </section>
+          </section>
+          <section class="secondsContainer flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter the Name to be Searched</p></section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="inputSearch"
+                  class="nameContainer"
+                  onkeypress="preventNumber(event)"
+                  onkeydown="preventNumber(event)"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Searched Text</p></section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="searchResult"
+                  class="nameContainer"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer">
+                <button class="btn bgBlue textLight" onclick="searchEmployee()">Search Text</button>
+              </section>
+              <section class="flexDisplay" style="justify-content: flex-end; width: 300px;">
+                <button class="btn bgBlue textLight" onclick="Reset()">Reset</button>
+              </section>
+            </section>
+          </section>
+        </section>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : Basic Text Search</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/nameSearch.js"></script>
+  </body>
+</html>

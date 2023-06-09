@@ -1,0 +1,95 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;  
+    font-family: 'Rubik', sans-serif; 
+}
+.flexDisplay{
+    display: flex;
+}
+.flexDirCol{
+    flex-direction: column;
+}
+.flexBetween{
+    justify-content: space-between;
+}
+.flexAround{
+    justify-content: space-around;
+}
+.flexCenter{
+    justify-content: center;
+}
+.flexEvenly{
+    justify-content: space-evenly;
+}
+.flexItemCenter{
+    align-items: center;
+}
+.main{
+    height: 100vh;
+}
+.navContainer{
+    color: #fff;
+    background-color: #32507b;
+}
+.logoContainer{
+    margin-left: 10px;
+}
+.logo, .dateTimeContainer{
+    margin-right: 20px;
+}
+.dateTimeContainer{
+    width: 150px;
+    align-items: center;
+}
+.operationContainer{
+    color: #32507b;
+    background-color: #F1F6C7;
+    width: 650px;
+    height: 350px;
+}
+.userInputContainer{
+    height: 65px;    
+    border-bottom: #32507b 1px solid;
+    padding: 20px 0px;
+}
+.resultContainer{
+    height: 130px;
+    padding: 20px 0px;
+}
+.topicContainer{
+    padding: 15px 0px;
+    border-bottom: #32507b 1px solid;
+}
+.footerContent{
+    height: 20px;
+    padding: 20px 0px;
+}
+.exercise{
+    width: 200px;
+    padding: 5px 0px 0px 15px;
+}
+.labelContainer, .inputContainer{
+    width: 48%;
+}
+.btn{
+    background-color: #32507b;
+    color: #fff;
+    width: 150px;
+    height: 25px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.footerContainer{
+    background-color: #dcf2f2;
+    color: #32507b;
+}
+.footerBox{
+    width: 98%;
+    margin: auto;
+}
+.footerLogo{
+    width: 50px;
+    height: auto;
+}

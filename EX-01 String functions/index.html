@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String Operation</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <section class="navContainer flexDisplay flexBetween flexItemsCenter">
+        <section class="flexDisplay logoContainer">
+          <section>
+            <img src="Images/infologo.png" alt="infoLogo" class="logo" />
+          </section>
+          <section class="flexDisplay flexDirCol flexCenter">
+            <h2>INFOTECH</h2>
+            <h2>ASHRAM</h2>
+          </section>
+        </section>
+        <div class="flexDisplay flexDirCol flexCenter">
+          <h1>JAVASCRIPT TRAINING PROGRAM</h1>
+        </div>
+        <div class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </div>
+      </section>
+      <section class="flexDisplay flexCenter">
+        <div class="operationContainer flexDisplay flexDirCol">
+          <section class="topicContainer flexDisplay flexItemsCenter">
+            <section>
+              <section class="flexDisplay">
+                <section><p class="exercise">Exercise no : 1</p></section>
+                <section><h2>String Operation</h2></section>
+              </section>
+            </section>
+          </section>
+          <section
+            class="userInputContainer flexDisplay flexDirCol flexBetween"
+          >
+            <section class="flexDisplay flexCenter flexCenter">
+              <section class="labelContainer"><p>Enter the String</p></section>
+              <section class="inputContainer flexDisplay flexCenter">
+                <input
+                  type="text"
+                  name=""
+                  id="userInput"
+                  onkeydown="preventNumber(event)"
+                  onkeyup="preventNumber(event)"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay flexCenter">
+              <section class="labelContainer">
+                <p>Enter the String to be Searched</p>
+              </section>
+              <section class="inputContainer flexDisplay flexCenter">
+                <input
+                  type="text"
+                  name=""
+                  id="searchInput"
+                  onkeydown="preventNumber(event)"
+                  onkeyup="preventNumber(event)"
+                />
+              </section>
+            </section>
+          </section>
+          <section class="resultContainer flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay flexCenter">
+              <section class="labelContainer"><p>Searched String</p></section>
+              <section class="inputContainer flexDisplay flexCenter">
+                <input type="text" name="" id="searchResult" />
+              </section>
+            </section>
+            <section class="flexDisplay flexCenter">
+              <section class="labelContainer"><p>Palindrome/Not</p></section>
+              <section class="inputContainer flexDisplay flexCenter">
+                <input type="text" name="" id="palindromeResult" />
+              </section>
+            </section>
+            <section class="flexDisplay flexCenter">
+              <section class="labelContainer"><p>Reversed String</p></section>
+              <section class="inputContainer flexDisplay flexCenter">
+                <input type="text" name="" id="reversedString" />
+              </section>
+            </section>
+            <section class="flexDisplay flexCenter">
+              <section class="labelContainer">
+                <button class="btn" onclick="result()">Search</button>
+              </section>
+              <section class="inputContainer flexDisplay flexCenter">
+                <button class="btn" onclick="reset()">Reset</button>
+              </section>
+            </section>
+          </section>
+        </div>
+      </section>
+      <section class="footerContainer">
+        <section class="flexDisplay flexBetween footerBox">
+          <section class="flexDisplay">
+            <span class="footerContent"
+              >Learning Objective : Hadling Strings</span
+            >
+          </section>
+          <section class="flexDisplay">
+            <section class="flexDisplay flexItemsCenter">
+              <p class="footerContent">Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="infoLogo" class="footerLogo" />
+            </section>
+          </section>
+        </section>
+      </section>
+    </main>
+    <script src="Script files/stringOperation.js"></script>
+  </body>
+</html>

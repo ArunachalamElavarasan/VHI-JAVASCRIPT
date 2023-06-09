@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bubble Sort</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <main class="flexDisplay flexCenter">
+        <section
+          class="bgGreen textBlue operationContainer flexDisplay flexDirCol flexAround"
+        >
+          <section class="flexDisplay headerConteiner">
+            <h3 class="labelContainer">Exercise : 20</h3>
+            <h3>Bubble Sort</h3>
+          </section>
+          <section class="userInputContainer flexDisplay flexEvenly flexDirCol">
+            <section class="flexDisplay inputContainer flexAround flexItemCenter">
+              <section class="labelContainer"><p>Enter the Array Items</p></section>
+              <section>
+                <input
+                  type="number"
+                  name=""
+                  id="inputItem"
+                  class="nameContainer"
+                />
+              </section>
+              <section>
+                <button class="btn bgBlue textLight" onclick="addItems()">Add</button>
+              </section>
+            </section>
+          </section>
+          <section class="secondsContainer flexDisplay flexDirCol flexBetween">
+           
+            <section class="flexDisplay inputContainer flexAround flexItemCenter">
+              <section class="labelContainer"><p>Array</p></section>
+              <section>
+                <textarea name="" id="outputResult" cols="40" rows="6"></textarea>
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexAround flexDirCol resultContainer">
+              <section><p class="textPrimary"><u>Non-Array Method</u></p></section>
+              <section class="flexDisplay flexBetween">
+                <section class="labelContainer">
+                  <p>Ascending Order</p>
+                  <textarea name="" id="nonAscending" cols="40" rows="6"></textarea>
+                </section>
+                <section>
+                  <p>Decending Order</p>
+                  <textarea name="" id="nonDecending" cols="40" rows="6"></textarea>
+                </section>
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexAround flexDirCol resultContainer">
+              <section><p class="textPrimary"><u>Array Method</u></p></section>
+              <section class="flexDisplay flexBetween">
+                <section class="labelContainer">
+                  <p>Ascending Order</p>
+                  <textarea name="" id="arrayAscending" cols="40" rows="6"></textarea>
+                </section>
+                <section>
+                  <p>Decending Order</p>
+                  <textarea name="" id="arrayDecending" cols="40" rows="6"></textarea>
+                </section>
+              </section>
+            </section>
+            
+            <section class="flexDisplay flexAround">
+              <section>
+                <button class="btn bgBlue textLight" onclick="bubbleSort()">Bobble Sort</button>
+              </section>
+              <section>
+                <button class="btn bgBlue textLight" onclick="arraySort()">Array Sort</button>
+              </section>
+              <section>
+                <button class="btn bgBlue textLight" onclick="Reset()">Reset</button>
+              </section>
+            </section>
+          </section>
+        </section>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : Every, Sort, Filter Method</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/bubbleSort.js"></script>
+  </body>
+</html>

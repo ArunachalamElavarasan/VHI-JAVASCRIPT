@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marriage Age Validation</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <main class="flexDisplay flexCenter">
+        <section
+          class="bgGreen textBlue operationContainer flexDisplay flexDirCol flexEvenly"
+        >
+          <section class="flexDisplay headerConteiner">
+            <h3 class="labelContainer">Exercise : 3</h3>
+            <h3>Marriage Age Validation</h3>
+          </section>
+          <section class="userInputContainer flexDisplay flexEvenly flexDirCol">
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer">
+                <p>Enter Person's Age</p>
+              </section>
+              <section>
+                <input
+                  type="number"
+                  name=""
+                  id="inputPersonAge"
+                  class="smallInput"
+                  min="1"
+                  max="100"
+                  onkeyup="preventNumber(event)"
+                  onkeydown="preventNumber(event)"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Gender</p></section>
+              <section>
+                <form
+                  id="gender"
+                  class="radioContainer flexDisplay flexBetween"
+                >
+                  <section>
+                    <input
+                      type="radio"
+                      name="gender"
+                      id="male"
+                      value="male"
+                      onclick="validateAge(this.value)"
+                    />
+                    <label for="male">Male</label>
+                  </section>
+                  <section>
+                    <input
+                      type="radio"
+                      name="gender"
+                      id="female"
+                      value="female"
+                      onclick="validateAge(this.value)"
+                    />
+                    <label for="female">Female</label>
+                  </section>
+                </form>
+              </section>
+            </section>
+          </section>
+          <section class="secondsContainer flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay textAreaContainer">
+              <section class="labelContainer">
+                <p>Eligible for Marriage/Not</p>
+              </section>
+              <section>
+                <textarea
+                  name=""
+                  id="eligibleResult"
+                  cols="30"
+                  rows="6"
+                  class="textArea"
+                ></textarea>
+              </section>
+            </section>
+            <section class="flexDisplay">
+              <section class="labelContainer"></section>
+              <button class="btn bgBlue textLight" onclick="reset()">
+                Reset
+              </button>
+            </section>
+          </section>
+        </section>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : Conditional Statements</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/marriageValidation.js"></script>
+  </body>
+</html>

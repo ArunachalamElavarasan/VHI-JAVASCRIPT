@@ -1,0 +1,147 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;  
+    font-family: 'Rubik', sans-serif; 
+}
+.flexDisplay{
+    display: flex;
+}
+.flexDirCol{
+    flex-direction: column;
+}
+.flexBetween{
+    justify-content: space-between;
+}
+.flexAround{
+    justify-content: space-around;
+}
+.flexCenter{
+    justify-content: center;
+}
+.flexEvenly{
+    justify-content: space-evenly;
+}
+.flexItemCenter{
+    align-items: center;
+}
+.main{
+    height: 100vh;
+}
+.textLight{
+    color: #fff;
+}
+.textBlue{
+    color: #32507b;
+}
+.bgBlue{
+    background-color: #32507b;
+}
+.bgSkyBlue{
+    background-color: #dcf2f2;
+}
+.footerLogo{
+    width: 50px;
+    height: auto;
+}
+.footerContainer{
+    height: 50px;
+    width: 97%;
+    margin: auto;
+}
+.footerObjective{
+    height: 20px;
+}
+.logoContainer{
+    margin-left: 10px;
+}
+.dateTimeContainer{
+    margin-right: 10px;
+    width: 140px;
+}
+.bgGreen{
+    background-color: #F1F6C7;
+}
+.operationContainer{
+    width: 1000px;
+    height: 450px;
+}
+.btn{
+    border: none;
+    width: 200px;
+    padding: 10px 0px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.smallInput{
+    width: 90px;
+    height: 40px;
+}
+.labelContainer{
+    width: 40%;
+    margin-left: 5%;
+}
+.inputContainer{
+    height: 30px;
+    width: 50px;
+}
+.headerConteiner{
+    height: 30px;
+    border-bottom: #32507b 1px solid;
+}
+.userInputContainer{
+    height: 120px;
+    border-bottom: #32507b 1px solid;
+}
+.subjectInput{
+    width: 80%;
+}
+.textAreaContainer{
+    height: 100px;
+}
+.textArea{
+    resize: none;
+}
+.secondsContainer{
+    height: 140px;
+}
+.radioContainer{
+    width: 200px;
+}
+.noteContainer{
+    background-color: #f2f2f2;
+    width: 45%;
+    margin-left: 5%;
+    border: 1px solid;
+}
+.noteBox{
+    height: 100px;
+    margin-left: 20px;
+}
+.userInput{
+    height: 25px;
+    width: 250px;
+}
+.userNameContainer{
+    width: 40%;
+    margin-left: 20px;
+}
+#eligibility{
+    height: 20px;
+    width: 250px;
+}
+#total, #average, #cutoff, #grade, #result{
+    height: 20px;
+    width: 100px;
+}
+.eligibilityContainer{
+    width: 45%;
+    margin-left: 2%;
+}
+.resultContainer{
+    width: 30%;
+    margin-left: 2%;
+}
+.fullResultContainer{
+    height: 200px;
+}
