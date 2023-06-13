@@ -28,7 +28,7 @@ function stringUniqueReverse(){
         reverseOutput.value = stringInput.reverse().join("");
 
         let stringCollection = stringInput.map(elementValue => {
-            return elementValue.toLowerCase()
+            return elementValue.toLowerCase();
         });
         
         let uniqueCollection = stringInput.filter(letterInput => {
