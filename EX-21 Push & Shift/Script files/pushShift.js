@@ -27,7 +27,7 @@ const shiftResult = document.getElementById('shiftResult');
 
 //Error Declaration
 const NO_VALUE_ERR = "Please fill inputs to validate";
-const NO_ELEMENTS_ERR = "Please add element to validate";
+const NO_ELEMENTS_ERR = "There is no elements available to remove.";
 const NO_PUSH_ERR = "Please fill input to push element";
 const INPUT_LIMIT_ERR = "Given number is must between 0 to 1000";
 const MAX_LEN_ERR = "you are already added maximum number of elements. So you can't add more elements";
@@ -38,15 +38,14 @@ function addItem(){
 
     if(itemInput && inputCollection.length < maxLength && itemInput >= minValue && itemInput <= maxValue){          //this block will push elements into array when given conditions become true
                 inputCollection.push(itemInput);
-                inputItems.value = "";
                 arrResult.value = inputCollection.join(", ");
+                inputItems.value = "";
     }
     else{                                                                                                           //this block will send a alert message based on given condition
         alert(
              (!(inputCollection.length < maxLength)) ? MAX_LEN_ERR 
              : (!(itemInput >= minValue && itemInput <= maxValue)) ? INPUT_LIMIT_ERR
-             : NO_VALUE_ERR
-        );
+             : NO_VALUE_ERR);
         inputItems.value = "";
     }
 }
@@ -57,15 +56,14 @@ function pushItem(){
 
     if(pushInput && inputCollection.length < maxLength && pushInput >= minValue && pushInput <= maxValue){          //this block will push element into array when all given conditions become true
                 inputCollection.push(pushInput);
-                inputPush.value = "";
                 pushResult.value = inputCollection.join(", ");
+                inputPush.value = "";
     }
     else{                                                                                                           //this block will send alert message to user based on given condtition
         alert(
             (!(inputCollection.length < maxLength)) ? MAX_LEN_ERR
             : (!(pushInput >= minValue && pushInput <= maxValue)) ? INPUT_LIMIT_ERR
-            : NO_VALUE_ERR
-        );
+            : NO_VALUE_ERR);
         pushInput.value = "";
     }
 }

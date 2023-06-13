@@ -15,6 +15,7 @@ document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
 //variable declaration
 const maxElement = 10;
 const minElement = 0;
+const elementBegin = 1;
 let inputCollection = [];
 
 //Input details from DOM assigned to variables
@@ -32,10 +33,10 @@ const MAX_LIMIT = "Maximum Element added. So you can't add more element"
 
 //this function is used to add items into array
 function addItems(){
-    const addInput = validateName(inputItems.value);
+    const addInput = parseInt(inputItems.value).replace(/\s + /g, '').trim();
     if(addInput){                                                                       //this block will execute when input field has some value
         if(inputCollection.length <= maxElement){                                       //this block will execute when given condition is true otherwise send alert message
-            inputCollection.push(addInput);                                             //push element into array
+            inputCollection.push(addInput);                                          //push element into array
             outputResult.value = inputCollection.join(", ");                            //display array element to user
             inputItems.value = "";
         }
@@ -52,34 +53,30 @@ function addItems(){
 function bubbleSort(){ 
     if(inputCollection.length > minElement){                                                        //this block will execute when array has some elements to validate otherwise send alert message to user  
         arrayAscending.value = arrayDecending.value = "";
-        let sortCollection = inputCollection;
+        let sortCollection = inputCollection;        
         let sortLen = sortCollection.length;
 
-        for(let innerItem = minElement; innerItem < sortLen; innerItem++){                          //this loop is used to show a ascending order elements to user by using bubble sort method
-            for(let outerItem = minElement; outerItem < sortLen; outerItem++){
-                if(sortCollection[innerItem] - sortCollection[outerItem] < minElement){
-                    let firstItem = sortCollection[outerItem];
-                    let secondItem = sortCollection[innerItem];
-
-                    sortCollection[innerItem] = firstItem;
-                    sortCollection[outerItem] = secondItem;
+        for(let outerItem = minElement; outerItem < sortLen; outerItem++){
+            for(let innerItem = minElement; innerItem < (sortLen - outerItem - elementBegin); innerItem++){
+                if(sortCollection[innerItem] > sortCollection[innerItem + elementBegin]){
+                    let temp = sortCollection[innerItem];
+                    sortCollection[innerItem] = sortCollection[innerItem + elementBegin];
+                    sortCollection[innerItem + elementBegin] = temp;
                 }
             }
         }
-        nonAscending.value = sortCollection.join();
+        nonAscending.value = sortCollection.join(", ");
 
-        for(let innerItem = minElement; innerItem < sortLen; innerItem++){                          //this loop is used to show decending order elements to user by using bubble sort method
-            for(let outerItem = minElement; outerItem < sortLen; outerItem++){
-                if(sortCollection[outerItem] - sortCollection[innerItem] < minElement){
-                    let firstItem = sortCollection[innerItem];
-                    let secondItem = sortCollection[outerItem];
-
-                    sortCollection[innerItem] = secondItem;
-                    sortCollection[outerItem] = firstItem;
+        for(let outerItem = minElement; outerItem < sortLen; outerItem++){
+            for(let innerItem = minElement; innerItem < (sortLen - outerItem - elementBegin); innerItem++){
+                if(sortCollection[innerItem] < sortCollection[innerItem + elementBegin]){
+                    let temp = sortCollection[innerItem];
+                    sortCollection[innerItem] = sortCollection[innerItem + elementBegin];
+                    sortCollection[innerItem + elementBegin] = temp;
                 }
             }
         }
-        nonDecending.value = sortCollection.join();
+        nonDecending.value = sortCollection.join(", ");
     }
     else{
         alert(NO_ITEM_ERR);
@@ -93,20 +90,16 @@ function arraySort(){
         let nonAscendingCollection = inputCollection.sort((firstItem, secondItem) => {
             return firstItem - secondItem;
         });
-        arrayAscending.value = nonAscendingCollection.join();                                           //show a ascending order element to user
+        arrayAscending.value = nonAscendingCollection.join(", ");                                           //show a ascending order element to user
 
         let nonDecendingCollection = inputCollection.sort((firstItem, secondItem) => {
             return secondItem - firstItem;
         });
-        arrayDecending.value = nonDecendingCollection.join();                                           //show a decending order element to user
+        arrayDecending.value = nonDecendingCollection.join(", ");                                           //show a decending order element to user
     }
     else{
         alert(NO_ITEM_ERR);
     }
-}
-//this function is used to remove unwanted space and convert it into lowercase strings to validate
-function validateName(employeeName){
-    return employeeName.replace(/\s + /g, '').trim();
 }
 //This function is used to reset all input fields
 function Reset(){
