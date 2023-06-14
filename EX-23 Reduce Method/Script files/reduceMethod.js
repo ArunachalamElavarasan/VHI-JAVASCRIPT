@@ -26,7 +26,7 @@ const resultField = document.getElementById('resultField');
 
 //Error Declaration
 const NO_VALUE_ERR = "Please fill all input field to add elements";
-const NO_ELEMENT_ERR = "Please add elements to check result";
+const NO_ELEMENT_ERR = "Please add values before calculate.";
 
 //This function is used to add elements as sub array into array if condition is satisfied
 function addItem(){
