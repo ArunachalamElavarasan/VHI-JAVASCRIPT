@@ -49,7 +49,7 @@ function addItem(){
 
 function calculate(){
     if(firstSisterInput.length > 0 && secondSisterInput.length > 0){
-        
+
     }
     else{
         alert(NO_ELEMENT_ERR);
