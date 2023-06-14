@@ -22,7 +22,7 @@ const duplicateResult = document.getElementById('duplicateResult');
 
 //Error Declaration
 const NO_VALUE_ERR = "Please enter value to add";
-const NO_ELEMENT_ERR = "Please add values before calculate.";
+const NO_ELEMENT_ERR = "There is no elements in array. First add elements to validate.";
 
 //this function is used to add elements and show array items to user
 function addElement(){
