@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" name="" id="inputValue"><button onclick="add()">Add</button><br><br><br>
+    <ul>
+
+    </ul>
+    <script>
+        let pos = document.querySelector('ul');
+
+        function add(){
+            let value = document.getElementById('inputValue').value;
+
+            let li = document.createElement('li');
+            li.innerHTML = value + "<sup> in " + new Date().toLocaleDateString() + " at " + new Date().toLocaleTimeString() + "</sup>";
+
+            pos.appendChild(li);
+
+            document.getElementById('inputValue').value = "";
+        }
+    </script>
+</body>
+</html>
