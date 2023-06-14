@@ -74,6 +74,14 @@ function findArea(findInput){
     return areaResult;
 }
 
+//this function is used to prevent some input keys(., e,);
+function preventLetter(key){  
+    const keyValue = key.which;  
+    if(keyValue > 187 && keyValue < 191 || keyValue == 69){
+      key.preventDefault();
+    }
+}
+
 //This function is used to reset all input fields
 function reset(){
     firstSisFirst.value = firstSisSecond.value = secondSisFirst.value = secondSisSecond.value =
