@@ -27,18 +27,32 @@ const arrElement = document.getElementById('arrElement');
 const resultField = document.getElementById('resultField');
 
 //Error Declaration
-const NO_VALUE_ERR = "Please fill all input field to add elements"
+const NO_VALUE_ERR = "Please fill all input field to add elements";
+const NO_ELEMENT_ERR = "Please add elements to check result";
 
 function addItem(){
     if(firstSisFirst.value && firstSisSecond.value && secondSisFirst.value && secondSisSecond.value){
+        let arrResult;
+        firstSisterInput.push([parseInt(firstSisFirst.value), parseInt(firstSisSecond.value)]);
+        secondSisterInput.push([parseInt(secondSisFirst.value), parseInt(secondSisSecond.value)]);
+        arrResult = firstSisterInput.join(", ") + "\n";
+        arrResult += secondSisterInput.join(", ");
 
-        firstSisterInput.push(parseInt(firstSisFirst.value), parseInt(firstSisSecond.value));
-        secondSisterInput.push(parseInt(secondSisFirst.value), parseInt(secondSisSecond.value));
+        arrElement.value = arrResult;
 
-        
+        firstSisFirst.value = firstSisSecond.value = secondSisFirst.value = secondSisSecond.value = "";
     }
     else{
         alert(NO_VALUE_ERR);
+    }
+}
+
+function calculate(){
+    if(firstSisterInput.length > 0 && secondSisterInput.length > 0){
+        
+    }
+    else{
+        alert(NO_ELEMENT_ERR);
     }
 }
 
@@ -46,5 +60,5 @@ function addItem(){
 function reset(){
     firstSisFirst.value = firstSisSecond.value = secondSisFirst.value = secondSisSecond.value =
     arrElement.value = resultField.value = "";
-    firstSister = secondSister = [];
+    firstSisterInput = secondSisterInput = [];
 }
