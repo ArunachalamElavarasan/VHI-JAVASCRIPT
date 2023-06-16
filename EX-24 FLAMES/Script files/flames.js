@@ -21,18 +21,19 @@ const flamesResult = document.getElementById('resultField');
 const NO_VAL_ERR = "Please fill both person name to check FLAMES";
 const SAME_VAL_ERR = "Please try different name to check FLAMES";
 
+//This function is used to show result to user
 function checkFlames(){
     let boyName = (boyNameInput.value).replaceAll(" ", "").toLowerCase();
     let girlName = (girlNameInput.value).replaceAll(" ", "").toLowerCase();
     let flames = ["F", "L", "A", "M", "E", "S"];
     let flamesLen = flames.length;
 
-    if(boyName && girlName){
+    if(boyName && girlName){                                        //this block is used show a result to user when given condition become true
         boyName = boyName.split("");
         girlName = girlName.split("");
         let boyLen = boyName.length;
         let girlLen = girlName.length;
-        for (let index = 0; index < boyLen; index++) {
+        for (let index = 0; index < boyLen; index++) {              //this loop is used to remove a same elemnent from both array
             for(let item = 0; item < girlLen; item++){
                 if(boyName[index] === girlName[item]){
                     boyName.splice(index, 1);
@@ -47,12 +48,12 @@ function checkFlames(){
         const nameCount = (boyName.concat(girlName)).length;
         let count = nameCount;
 
-        if(nameCount > 0){
-            while(flamesLen > 1){
+        if(nameCount > 0){                                                                     
+            while(flamesLen > 1){                                               //this while loop execute till array length become one
                 if(count > flamesLen){
                     count = count % flamesLen;
                 }
-                if(count == 0){
+                if(count == 0){                                                 
                     flames.splice(flamesLen-1, 1);
                 }
                 else{
@@ -68,7 +69,7 @@ function checkFlames(){
                 flamesLen = flames.length;
                 count = nameCount;
             }
-            switch(flames[0]){
+            switch(flames[0]){                                                  //this switch case is used to show a result user based on array element
                 case "F":
                     flamesResult.value = "Friendship";
                     break;
