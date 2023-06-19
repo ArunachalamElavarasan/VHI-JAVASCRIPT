@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stop Watch</title>
+    <script
+      src="https://kit.fontawesome.com/1de50aa74b.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <main class="flexDisplay flexCenter">
+        <div class="outerClock flexDisplay flexCenter flexItemCenter">
+          <div class="innerClock flexDisplay flexDirCol flexBetween">
+              <section class="innerClockMainContainer flexDisplay flexItemCenter flexCenter flexDirCol">
+                <ul class="flexDisplay flexCenter">
+                  <li id="hours"></li>
+                  <li>:</li>
+                  <li id="minutes"></li>
+                  <li>:</li>
+                  <li id="seconds"></li>
+                  <li>:</li>
+                  <li id="millieSeconds"></li>
+                </ul>
+                <h1 id="secTotal">0</h1>
+              </section>
+              <section class="flexDisplay btnContainer">
+                <section class="bgGreen btnBox flexDisplay flexCenter flexItemCenter" onclick="action()">
+                  <h2 class="textLight" style="margin-left: 50px;"><i class="fa-solid fa-play" id="playIcon"></i></h2>
+                </section>
+                <section class="bgDarkBlue btnBox flexDisplay flexCenter flexItemCenter" onclick="reset()">
+                  <h2 class="textLight" style="margin-right: 50px;"><i class="fa-solid fa-rotate" id="resetIcon"></i></h2>
+                </section>
+              </section>
+          </div>
+        </div>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : DOM</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/stopWatch.js"></script>
+  </body>
+</html>

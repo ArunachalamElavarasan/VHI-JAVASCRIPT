@@ -1,0 +1,114 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;  
+    font-family: 'Rubik', sans-serif; 
+}
+.flexDisplay{
+    display: flex;
+}
+.flexDirCol{
+    flex-direction: column;
+}
+.flexBetween{
+    justify-content: space-between;
+}
+.flexCenter{
+    justify-content: center;
+}
+.flexEvenly{
+    justify-content: space-evenly;
+}
+.flexItemCenter{
+    align-items: center;
+}
+.main{
+    height: 100vh;
+}
+.textLight{
+    color: #fff;
+}
+.textBlue{
+    color: #32507b;
+}
+.bgBlue{
+    background-color: #32507b;
+}
+.bgSkyBlue{
+    background-color: #dcf2f2;
+}
+.bgDarkBlue{
+    background-color: #047BFB;
+}
+.btnContainer{
+    height: 35%;
+}
+.btnBox{
+    width: 50%;
+    cursor: pointer;
+}
+.btnBox h2{
+    font-size: 40px;
+}
+.innerClockMainContainer{
+    height: 60%;
+    width: 100%;
+}
+.innerClockMainContainer ul li{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 26px;
+    margin-top: 60px;
+    color: #43A8C6;
+}
+.innerClockMainContainer h1{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 50px;
+    margin-top: 60px;
+    color: #51CCF6;
+}
+.footerLogo{
+    width: 50px;
+    height: auto;
+}
+.footerContainer{
+    height: 50px;
+    width: 97%;
+    margin: auto;
+}
+.footerObjective{
+    height: 20px;
+}
+.logoContainer{
+    margin-left: 10px;
+}
+.dateTimeContainer{
+    margin-right: 10px;
+    width: 140px;
+}
+.bgGreen{
+    background-color: #74BF82;
+}
+.bottomContainer{
+    height: 130px;
+}
+.headerItem{
+    width: 440px;
+}
+.outerClock{
+    height: 470px;
+    border-radius: 50%;
+    width: 470px;    
+    background-color: #DDDCDC;
+}
+.innerClock{
+    height: 440px;
+    width: 440px;
+    border-radius: 50%;
+    background-color: #F0F0F0;
+}
+.rotate{
+    transform: rotate(360deg);
+}
+#resetIcon{
+    transition: 0.5s;
+}
