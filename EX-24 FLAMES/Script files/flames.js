@@ -99,8 +99,7 @@ function checkFlames(){
         alert(NO_VAL_ERR);
     }
 }
-
-//This function is used to 
+ 
 function preventNumber(key){
     const keyValue = key.which;
     if(keyValue > 42 && keyValue < 65 || keyValue > 91 && keyValue < 96 || keyValue > 122 && keyValue < 126){key.preventDefault();}
