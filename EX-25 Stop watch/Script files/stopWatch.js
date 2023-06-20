@@ -20,6 +20,7 @@ const maxMillie = 99;
 let millie, secValue, secOutput, minuteValue, hourValue, clockValue;
 millie = secValue = secOutput = minuteValue = hourValue = beginValue;
 
+
 //Input details from DOM assigned to variables
 const outputMilliSeconds = document.getElementById('millieSeconds');
 const outputSeconds = document.getElementById('seconds');
@@ -28,6 +29,9 @@ const outputMinutes = document.getElementById('minutes');
 const hours = document.getElementById('hours');
 const resetAction = document.getElementById('resetIcon');
 const playPause = document.getElementById('playIcon');
+
+//this function is used to add zero before number whem number is less than 10
+const numPattern = item => (item < 10) ? `${beginValue}${item}` : item;
 
 hours.innerHTML = outputMinutes.innerHTML = outputSeconds.innerHTML = outputMilliSeconds.innerHTML = secTotal.innerHTML = "00";
 //this function is used to start and stop watch
@@ -66,11 +70,6 @@ function action(){
         playPause.classList.add("fa-play");
         clearInterval(clockValue);
     }
-}
-//this function is used to add zero before number whem number is less than 10
-function numPattern(item){
-    let numValue = (item < 10) ? `${beginValue}${item}` : item;
-    return numValue;
 }
 //this function is used to reset stop watch
 function reset(){
