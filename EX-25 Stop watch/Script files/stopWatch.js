@@ -12,17 +12,13 @@ const dateAndTime = new Date();
 document.getElementById('date').innerHTML = dateAndTime.toLocaleDateString();
 document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
 
+//Variable declaration
 const beginValue = 0;
-const maxHour = 1;
-const maxMinute = 60;
-const maxMillie = 100;
-let millie = 0;
-let seconds = 0;
-let secValue = 0;
-let minutes = 0;
-let hour = 0;
-let id;
-
+const maxHour = 23;
+const maxMinute = 59;
+const maxMillie = 99;
+let millie, secValue, secOutput, minuteValue, hourValue, clockValue;
+millie = secValue = secOutput = minuteValue = hourValue = beginValue;
 
 //Input details from DOM assigned to variables
 const outputMilliSeconds = document.getElementById('millieSeconds');
@@ -33,58 +29,52 @@ const hours = document.getElementById('hours');
 const resetAction = document.getElementById('resetIcon');
 const playPause = document.getElementById('playIcon');
 
-hours.innerHTML = hour;
-outputMinutes.innerHTML = minutes;
-outputSeconds.innerHTML = seconds;
-outputMilliSeconds.innerHTML = millie;
-
+hours.innerHTML = outputMinutes.innerHTML = outputSeconds.innerHTML = outputMilliSeconds.innerHTML = secTotal.innerHTML = "00";
+//this function is used to start and stop watch
 function action(){
-    if(playPause.classList == "fa-solid fa-play"){
+    if(playPause.classList == "fa-solid fa-play"){          //this block will start time watch when given conditions become true
         playPause.classList.remove("fa-play");
         playPause.classList.add("fa-pause");
         
-        id = setInterval(() => {
+        clockValue = setInterval(() => {                    //this block will execute every single millie second
             ++millie;
-            if(millie > 99){
-                millie = 0;
-                ++seconds;
-                if(seconds > 59){
-                    seconds = seconds;
-                    ++minutes;
-                    if(minutes > 59){
-                        minutes = 0;
-                        ++hour;
-                        if(hour > 23){
-                            hour = 0;
-                        }
-                        hour = (hour < 10) ? `${beginValue}${hour}` : hour;
-                        hours.innerHTML = hour;
-                    }
-                    minutes = (minutes < 10) ? `${beginValue}${minutes}` : minutes;
-                    outputMinutes.innerHTML = minutes;
-                }
+            if(millie > maxMillie){                         //this block will execute when millie seconds goes upto 99
+                millie = beginValue;
                 ++secValue;
-                secTotal.innerHTML = secValue;
-                seconds = (seconds < 10) ? `${beginValue}${seconds}` : seconds;
-                outputSeconds.innerHTML = seconds;
+                ++secOutput;
+                if(secValue > maxMinute){                   //this block will execute when seconds goes upto 59 and reset it to zero
+                    secValue = beginValue;
+                    ++minuteValue;
+                    if(minuteValue > maxMinute){            //this block will execute when minutes goes upto 59 and reset it to zero
+                        minuteValue = beginValue;
+                        ++hourValue;
+                        if(hourValue > maxHour){            //this block will execute when hour value goes upto 23 and reset it to zero
+                            hourValue = beginValue;
+                        }
+                        hours.innerHTML = numPattern(hourValue);
+                    }
+                    outputMinutes.innerHTML = numPattern(minuteValue);
+                }
+                secTotal.innerHTML = numPattern(secOutput);
+                outputSeconds.innerHTML = numPattern(secValue);
             }
-            millie = (millie < 10) ? `${beginValue}${millie}` : millie;
-            outputMilliSeconds.innerHTML = millie;
+            outputMilliSeconds.innerHTML = numPattern(millie);
         }, 10);
     }
-    else{
+    else{                                                                  //this block will pause timer when timer is running
         playPause.classList.remove("fa-pause");
         playPause.classList.add("fa-play");
-        clearInterval(id);
+        clearInterval(clockValue);
     }
 }
-
+//this function is used to add zero before number whem number is less than 10
+function numPattern(item){
+    let numValue = (item < 10) ? `${beginValue}${item}` : item;
+    return numValue;
+}
+//this function is used to reset stop watch
 function reset(){
    resetAction.classList.toggle("rotate");
-   millie = seconds = secValue = minutes = hour = 0;
-   hours.innerHTML = hour;
-   outputMinutes.innerHTML = minutes;
-   outputSeconds.innerHTML = seconds;
-   outputMilliSeconds.innerHTML = millie;
-   secTotal.innerHTML = secValue;
+   millie = secValue = secOutput = minuteValue = hourValue = beginValue;
+   hours.innerHTML = outputMinutes.innerHTML = outputSeconds.innerHTML = outputMilliSeconds.innerHTML = secTotal.innerHTML = "00";
 }
