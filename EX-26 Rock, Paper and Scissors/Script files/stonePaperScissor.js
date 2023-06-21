@@ -116,7 +116,7 @@ function start(){
         computerPoints.innerHTML = computerScore;
         chanceOutput.innerHTML = remainingChances;
     }
-    else{                                                        //this block will execute when user played given chances successfully and show the result
+    else{                                                        //this block will execute when user played given chances successfully and show the result to user
         overLayer.classList.remove("rotateHide");
         statusResult.classList.remove("noneVisible");
         matchStart.innerHTML = "Play Again";
