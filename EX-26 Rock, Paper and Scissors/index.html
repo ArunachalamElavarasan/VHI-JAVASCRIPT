@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stone Paper Scissor</title>
+    <script
+      src="https://kit.fontawesome.com/1de50aa74b.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="flexDisplay flexDirCol flexBetweem posRelative">
+    <header class="bgBlue textLight flexDisplay flexBetweem flexItemCenter">
+      <section class="flexDisplay">
+        <section class="logoContainer">
+          <img src="Images/infologo.png" alt="" />
+        </section>
+        <section class="logoContainer">
+          <h3>INFOTECH</h3>
+          <h3>ASHRAM</h3>
+        </section>
+      </section>
+      <h2>Javascript Training Program</h2>
+      <section class="dateTimeContainer flexDisplay flexBetween">
+        <ul>
+          <li>Date :</li>
+          <li>Time :</li>
+        </ul>
+        <ul>
+          <li id="date"></li>
+          <li id="time"></li>
+        </ul>
+      </section>
+    </header>
+    <section class="displayScreen flexDisplay flexEvenly">
+      <section class="posRelative cardContainer flexDisplay flexCenter">  
+      <section class="posAbsolute player"><section class="flexDisplay"><h2 style="margin-right: 40px;">Player :</h2> <h2 id="playerPoints">0</h2>&nbsp;&nbsp;<h2>Points</h2></section></section>
+        <section class="posAbsolute playContainer bgLight flexDisplay flexCenter flexItemCenter">
+          <section class="iconContainer bgDarkGreen flexDisplay flexCenter flexItemCenter">
+            <img src="" alt="" id="user">
+          </section>
+        </section>
+        <section class="posAbsolute playerProfile flexDisplay flexCenter flexItemCenter">
+          <section class="bgLight profileInnerContainer">
+            <img src="Images/userProfile.png" alt="" class="imgFluid">
+          </section>
+        </section>
+      </section>
+      <section style="height: 150px;" class="flexDisplay flexBetweem flexDirCol flexItemCenter">
+        <section class="flexDisplay flexBetweem">
+          <h2 style="padding-right: 20px;">Remaining Chances :</h2>
+          <h2 id="chance" style="width: 30px;"></h2>
+        </section>
+        <section>
+          <h1 style="font-size: 40px;" id="eachStatus"></h1>
+        </section>
+      </section>
+      <section class="posRelative cardContainer flexDisplay flexCenter">
+        <section class="posAbsolute computer"><section class="flexDisplay"><h2 style="margin-right: 10px;">Computer :</h2> <h2 id="computerPoints">0</h2>&nbsp;&nbsp;<h2>Points</h2></section></section>
+        <section class="posAbsolute playContainer bgLight flexDisplay flexCenter flexItemCenter">
+          <section class="iconContainer bgDanger flexDisplay flexCenter flexItemCenter">
+            <img src="" alt="" id="computer">
+          </section>
+        </section>
+        <section class="posAbsolute playerProfile flexDisplay flexCenter flexItemCenter">
+          <section class="bgLight profileInnerContainer flexDisplay flexCenter flexItemCenter">
+            <img src="Images/computerProfile.png" alt="" style="width: 35px; height: auto;">
+          </section>
+        </section>
+      </section>
+    </section>
+    <section class="flexDisplay flexCenter">      
+      <section class="flexDisplay flexBetweem inputContainer">
+        <section class="bgLight btnBox flexDisplay flexCenter flexItemCenter">
+          <button class="btn bgDanger textLight" onclick="play(this.value)" value="0"><i class="fa-solid fa-hand-back-fist"></i></button>  
+        </section>
+        <section class="bgLight btnBox flexDisplay flexCenter flexItemCenter">
+          <button class="btn bgWarning textLight" onclick="play(this.value)" value="1"><i class="fa-solid fa-hand"></i></button>
+        </section>
+        <section class="bgLight btnBox flexDisplay flexCenter flexItemCenter">
+          <button class="btn bgSuccess textLight" onclick="play(this.value)" value="2"><i class="fa-solid fa-scissors"></i></button>
+        </section>
+      </section>
+    </section>
+    <section class="overLayerBackground posAbsolute" id="overLayer">
+      <section class="flexDisplay flexCenter flexItemCenter posAbsolute textLight" style="width: 100%; height: 100%;">
+        <section class="overLayerContainer flexDisplay flexCenter flexItemCenter">
+          <section class="bgBlues flexDisplay flexItemCenter flexDirCol flexEvenly ">
+            <h3 id="status">Stone Paper Scissors</h3>
+            <section class="flexDisplay flexAround" style="width: 60%;">
+              <section>
+                <h4>PLAYER</h4>
+              </section>
+              <section>
+                <small>vs</small>
+              </section>
+              <section>
+                <h4>COMPUTER</h4>
+              </section>
+            </section>
+            <section id="intro">
+              <img src="Images/intro.png" alt="" class="introImage">
+            </section>
+            <section class="flexDisplay flexDirCol noneVisible flexItemCenter" style="width: 100%; height: 100px;" id="statusResult">
+              <section class="flexDisplay flexAround" style="width: 70%; height: 80px;">
+                <ul>
+                  <li>Won points &nbsp;:</li>
+                  <li>Lose points &nbsp;:</li>
+                  <li>Tied &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</li>
+                </ul>
+                <ul>
+                  <li id="won"></li>
+                  <li id="Lose"></li>
+                  <li id="tied"></li>
+                </ul>
+              </section>
+              <h2 id="matchStatus"></h2>
+            </section>
+            <section class="flexDisplay flexAround">
+              <section>
+                <button class="btnDesign bgDarkGreen textLight" onclick="start()" id="matchStart">Start Game</button>
+              </section>
+            </section>
+          </section>
+        </section>
+      </section>
+    </section>
+    <section class="bgSkyBlue">
+      <footer
+        class="textBlue flexDisplay flexBetweem footerContainer flexItemCenter"
+      >
+        <section class="footerObjective">
+          <p>Learning Objective : Stone, Paper, Scissor</p>
+        </section>
+        <section class="flexDisplay flexItemCenter">
+          <section class="footerObjective">
+            <p>Powered by :</p>
+          </section>
+          <section>
+            <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+          </section>
+        </section>
+      </footer>
+    </section>
+    <script src="Script files/stonePaperScissor.js"></script>
+  </body>
+</html>

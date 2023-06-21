@@ -1,0 +1,193 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+    font-family: 'Roboto Slab', serif;
+}
+body{
+    background: url('../Images/backgroundImage.jpg') center no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+}
+.flexDisplay{
+    display: flex;
+}
+.flexDirCol{
+    flex-direction: column;
+}
+.flexBetweem{
+    justify-content: space-between;
+}
+.flexAround{
+    justify-content: space-around;
+}
+.flexCenter{
+    justify-content: center;
+}
+.flexItemCenter{
+    align-items: center;
+}
+.flexEnd{
+    align-items: end;
+}
+.flexEvenly{
+    justify-content: space-evenly;
+}
+.btn{
+    width: 90px;
+    height: 90px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 30px;
+}
+.bgDanger{
+    background-color: rgba(187, 0, 0, 50);
+}
+.btnBox{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.bgDanger:hover{
+    background-color: #7E0000;
+}
+.bgSuccess{
+    background-color: #007A11;
+}
+.bgSuccess:hover{
+    background-color: #00500B;
+}
+.bgWarning{
+    background-color: #FCDA00;
+}
+.bgWarning:hover{
+    background-color: #D8BB00;
+}
+.bgLight{
+    background-color: white;
+}
+.textLight{
+    color: white;
+}
+.inputContainer{
+    width: 500px;
+}
+.srOnly{
+    display: none;
+}
+.playContainer{
+    width: 250px;
+    height: 300px;
+    top: 50px;
+}
+.posRelative{
+    position: relative;
+}
+.posAbsolute{
+    position: absolute;
+}
+.playerProfile{
+    width: 70px;
+    height: 70px;
+    z-index: 1;
+    top: 10px;
+}
+.cardContainer{
+    height: 400px;
+    width: 350px;
+}
+.bgDarkGreen{
+    background-color: #00500B;
+}
+.bgDarkGreen:hover{
+    background-color: #003708;
+}
+.iconContainer{
+    width: 230px;
+    height: 280px;
+}
+.imgFluid{
+    width: 100%;
+    height: auto;
+}
+.profileInnerContainer{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+.overLayerBackground{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 3;
+    transition: 0.8s;
+}
+.bgBlues{
+    background-color: #002146;
+    width: 480px;
+    height: 280px;
+}
+.bgBlue{
+    background-color: #002146;
+}
+.textBlue{
+    color: #002146;
+}
+.overLayerContainer{
+    width: 500px;
+    height: 300px;
+    background-color: #FF6100;
+}
+.textCenter{
+    text-align: center;
+}
+.btnDesign{
+    padding: 5px 30px;
+    cursor: pointer;
+}
+.rotateHide{
+    margin-left: -100%;
+    transform: rotate(90deg);
+}
+.noneVisible{
+    display: none;
+}
+.introImage{
+    width: 80px;
+    height: auto;
+}
+.footerLogo{
+    width: 50px;
+    height: auto;
+}
+.footerContainer{
+    height: 50px;
+    width: 97%;
+    margin: auto;
+}
+.footerObjective{
+    height: 20px;
+}
+.logoContainer{
+    margin-left: 10px;
+}
+.dateTimeContainer{
+    margin-right: 10px;
+    width: 140px;
+}
+.bgSkyBlue{
+    background-color: #dcf2f2;
+}
+.player{
+    transform: rotate(270deg);
+    left: -80px;
+    top: 50%;
+}
+.computer{
+    transform: rotate(270deg);
+    left: 185px;
+    top: 45%;
+    width: 260px;
+}
