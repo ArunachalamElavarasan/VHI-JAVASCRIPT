@@ -4,7 +4,7 @@
                     *       Developed for          : VHITECH Training Program                 *
                     *       Maintenance History                                               *
                     *       Developer              : Arunachalam                              *
-                    *       Creation date          : 21/06/2023      Ticket No:               *
+                    *       Creation date          : 23/06/2023      Ticket No:               *
                     *                                                                       **/
 //Date and Time
 const dateAndTime = new Date();
@@ -39,6 +39,7 @@ const matrixInput = () => {
 //Error Declaration
 const NO_MATRIX_ERR = "Please give value minimum 1";
 const NO_VALUE_ERR = "Please fill all row and column value to validate";
+const NO_ARR_ERR = "Please add some value to validate ";
 const NO_SEARCH_ERR = "Please fill value to search";
 
 //this function is used to create table rows and table data with input field
@@ -73,50 +74,77 @@ function validate(key){
 function matrixSum(){
     let inputValue = matrixInput();
     let totalValue = 0;
+    let checkValue = inputValue.flat();
+    checkValue = checkValue.includes(NaN);
     if(inputValue.length){
 
-        for(let index = 0; index < inputValue.length; index++){
-            totalValue += inputValue[index][index];
+        if(!checkValue){
+            for(let index = 0; index < inputValue.length; index++){
+                totalValue += inputValue[index][index];
+            }
+            outputSumDiagoanals.value = totalValue;
         }
-        outputSumDiagoanals.value = totalValue;
+        else{
+            alert(NO_VALUE_ERR);
+        }
     }
     else{
-        alert(NO_VALUE_ERR);
+        alert(NO_ARR_ERR);
     }
 }
 //this function is used to show a transpose value of matrix
 function matrixTranspose(){
     let inputValue = matrixInput();
+    let checkValue = inputValue.flat();
+    checkValue = checkValue.includes(NaN);
     if(inputValue.length){
-        outputTranspose.value = "";
+        if(!checkValue){
+            outputTranspose.value = "";
         
-        for(let outerIndex = 0; outerIndex < inputValue.length; outerIndex++){
-            for(let innerIndex = 0; innerIndex < inputValue.length; innerIndex++){
-                outputTranspose.value += inputValue[innerIndex][outerIndex] + " ";
+            for(let outerIndex = 0; outerIndex < inputValue.length; outerIndex++){
+                for(let innerIndex = 0; innerIndex < inputValue.length; innerIndex++){
+                    outputTranspose.value += inputValue[innerIndex][outerIndex] + " ";
+                }
+                outputTranspose.value += "\n";
             }
-            outputTranspose.value += "\n";
         }
-    }
+        else{
+            alert(NO_VALUE_ERR);
+        }
+        }
     else{
-        alert(NO_VALUE_ERR);
+        alert(NO_ARR_ERR);
     }
 }
 //this function is used to show a position of matrix value to user
 function matrixSearch(){
     let inputValue = matrixInput();
+    let checkValue = inputValue.flat();
+    checkValue = checkValue.includes(NaN);
     if(inputValue.length){
-        outputPosition.value = "";
+        if(!checkValue){
+            if(!(inputSearch.value == "")){
+                outputPosition.value = "";
 
-        for(let outerIndex = 0; outerIndex < inputValue.length; outerIndex++){
-            for(let innerIndex = 0; innerIndex < inputValue.length; innerIndex++){
-                if(inputValue[outerIndex][innerIndex] == inputSearch.value){
-                    outputPosition.value +=  `[${outerIndex + 1}][${innerIndex + 1}] \n`;
+                for(let outerIndex = 0; outerIndex < inputValue.length; outerIndex++){
+                    for(let innerIndex = 0; innerIndex < inputValue.length; innerIndex++){
+                        if(inputValue[outerIndex][innerIndex] == inputSearch.value){
+                            outputPosition.value +=  `[${outerIndex + 1}][${innerIndex + 1}] \n`;
+                        }
+                    }
                 }
+                if(outputPosition.value == "")outputPosition.value = "No Index found";
             }
+            else{
+                alert(NO_SEARCH_ERR);
+            }
+        }
+        else{
+            alert(NO_VALUE_ERR)
         }
     }
     else{
-        alert(NO_VALUE_ERR);
+        alert(NO_ARR_ERR);
     }
 
 }
