@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Reduce Method</title>
+    <title>Sum of Diagonals, Transpose, Index Search</title>
     <link rel="stylesheet" href="Stylesheet/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,6 +12,12 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
       rel="stylesheet"
     />
+    <style>
+      input{
+        width: 25px;
+        height: 25px;
+      }
+    </style>
   </head>
   <body>
     <main class="main flexDisplay flexDirCol flexBetween">
@@ -42,69 +48,90 @@
           class="bgGreen textBlue operationContainer flexDisplay flexDirCol flexAround"
         >
           <section class="flexDisplay headerConteiner">
-            <h3 class="labelContainer">Exercise : 23</h3>
-            <h3>Reduce Method</h3>
+            <h3 class="labelContainer">Exercise : 27</h3>
+            <h3>Sum of Diagonals, Transpose, Index Search</h3>
           </section>
           <section class="userInputContainer flexDisplay flexEvenly flexDirCol">
             <section class="flexDisplay inputContainer flexItemCenter">
-              <section class="labelContainer">
-                <p>First Sister</p>
-              </section>
-              <section class="flexDisplay flexBetween biscuitContainer">
-                <section>
-                  <input type="number" name="" id="firstSisFirst" class="inputValid" min="0" onkeydown=" preventLetter(event)" onkeypress="preventLetter(event)">
-                </section>
-                <section>
-                  <input type="number" name="" id="firstSisSecond" class="inputValid" min="0" onkeydown=" preventLetter(event)" onkeypress="preventLetter(event)">
-                </section>
-              </section>
-            </section>
-            <section class="flexDisplay inputContainer flexItemCenter">
-              <section class="labelContainer">
-                <p>Second Sister</p>
-              </section>
-              <section class="flexDisplay flexBetween biscuitContainer">
-                <section>
-                  <input type="number" name="" id="secondSisFirst" class="inputValid" min="0" onkeydown=" preventLetter(event)" onkeypress="preventLetter(event)">
-                </section>
-                <section>
-                  <input type="number" name="" id="secondSisSecond" class="inputValid" min="0" onkeydown=" preventLetter(event)" onkeypress="preventLetter(event)">
-                </section>
+              <section class="labelContainer"><p>Enter the Rows * Coloumns</p></section>
+              <section>
+                <input
+                  type="number"
+                  name=""
+                  id="rowColInput"
+                  class="nameContainer"
+                  onkeypress="validate(event)"
+                  onkeydown="preventText(event)"
+                  min="1"
+                  max="10"
+                />
               </section>
             </section>
-            <section class="flexDisplay flexEnd" style="margin-right: 10%;">
-              <section class="flexDisplay inputContainer flexItemCenter">
-                <button class="btn bgBlue textLight" onclick="addItem()">Add</button>
+            <section class="flexDisplay flexItemCenter">
+              <section class="labelContainer"></section>
+              <section class="tableContainer" style="overflow: auto;">
+                <table id="tableInput">
+                  
+                </table>
               </section>
             </section>
             <section>
-              <section class="flexDisplay flexItemCenter">
-                <section class="labelContainer">
-                  <p>Chocolate Array</p>
-                </section>
-                <section class="flexDisplay biscuitContainer">
-                  <textarea name="" id="arrElement" cols="50" rows="6"></textarea>
-                </section>
-              </section>
+              <table id="inputTable"></table>
             </section>
-            <section class="flexDisplay flexEnd" style=" margin-right: 10%;">
-              <section class="flexDisplay inputContainer flexItemCenter">
-                <button class="btn bgBlue textLight" onclick="calculateArea()">Calculate</button>
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Enter the Number to be searched</p></section>
+              <section>
+                <input
+                  type="number"
+                  name=""
+                  id="numSearch"
+                  class="nameContainer"
+                  onkeypress="preventText(event)"
+                  onkeydown="preventText(event)"
+                  min="1"
+                />
               </section>
             </section>
           </section>
-          <section class="flexDisplay flexDirCol flexBetween bottomContainer">
-            <section class="flexDisplay flexItemCenter">
-              <section class="labelContainer">
-                <p>Equal/Not</p>
-              </section>
-              <section class="flexDisplay flexEnd biscuitContainer">
-                <input type="text" name="" id="resultField" class="inputField">
+          <section class="secondsContainer flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay inputContainer flexItemCenter">
+              <section class="labelContainer"><p>Sum of Diagonals</p></section>
+              <section>
+                <input
+                  type="number"
+                  name=""
+                  id="sumDiagonals"
+                  class="nameContainer"
+                  onkeypress="preventText(event)"
+                  onkeydown="preventText(event)"
+                  min="1"
+                />
               </section>
             </section>
-            <section class="flexDisplay" style="justify-content: end; margin-right: 10%;">
-              <section class="flexDisplay inputContainer flexItemCenter">
-                <button class="btn bgBlue textLight" onclick="reset()">Reset</button>
+            <section class="flexDisplay flexItemCenter">
+              <section class="labelContainer"><p>Transpose Matrix</p></section>
+              <section>
+                <textarea name="" id="transpose" cols="15" rows="5" style="overflow: auto;"></textarea>
+              </section>
+            </section>
+            <section class="flexDisplay flexItemCenter">
+              <section class="labelContainer"><p>Index position(s) of the Element</p></section>
+              <section>
+                <textarea name="" id="position" cols="15" rows="5" style="overflow: auto;"></textarea>
+              </section>
+            </section>
+            <section class="flexDisplay flexAround">
+              <section>
+                <button class="btn bgBlue textLight" onclick="matrixSum()">Sum of Diagonals</button>
+              </section>
+              <section>
+                <button class="btn bgBlue textLight" onclick="matrixTranspose()" value="transpose">Transpose</button>
+              </section>
+              <section>
+                <button class="btn bgBlue textLight" onclick="matrixSearch()"value="search">Search</button>
+              </section>
+              <section>
+                <button class="btn bgBlue textLight" onclick="Reset()">Reset</button>
               </section>
             </section>
           </section>
@@ -115,7 +142,7 @@
           class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
         >
           <section class="footerObjective">
-            <p>Learning Objective : Date Validation Through Array Concepts</p>
+            <p>Learning Objective : Two Dimensional Array Using DOM</p>
           </section>
           <section class="flexDisplay flexItemCenter">
             <section class="footerObjective">
@@ -128,6 +155,6 @@
         </footer>
       </section>
     </main>
-    <script src="Script files/reduceMethod.js"></script>
+    <script src="Script files/Matrix.js"></script>
   </body>
 </html>

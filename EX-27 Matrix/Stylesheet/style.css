@@ -67,10 +67,10 @@
 }
 .operationContainer{
     width: 850px;
-    height: 490px;
+    height: 500px;
 }
 .nameContainer{
-    width: 300px;
+    width: 50px;
     height: 25px;
 }
 .btn{
@@ -113,11 +113,11 @@ textarea{
     border-bottom: #32507b 1px solid;
 }
 .userInputContainer{
-    height: 300px;
+    height: 200px;
     border-bottom: #32507b 1px solid;
 }
 .secondsContainer{
-    width: 90%;
+    height: 300px;
 }
 .inputField{
     width: 350px;
@@ -125,4 +125,11 @@ textarea{
 }
 .bottomContainer{
     height: 90px;
+}
+.tableContainer{
+    height: 100px;
+    width: 200px;
+}
+.matrixVal{
+    text-align: center;
 }
