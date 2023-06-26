@@ -25,11 +25,9 @@ const matrixInput = () => {
     let matrixValue = document.querySelectorAll(".matrixVal");
     let matrix = [];
     let temp = [];
-
-    for(let index = 0; index < matrixValue.length; index++){
+    for(let index = beginValue; index < matrixValue.length; index++){
         temp.push(parseInt(matrixValue[index].value));
-
-        if((index + 1) % parseInt(inputRow.value) == 0){
+        if((index + 1) % parseInt(inputRow.value) == beginValue){
             matrix.push(temp);
             temp = [];
         }
@@ -48,7 +46,7 @@ function validate(key){
     if(keyValue == 13){
         rowColValue = parseInt(inputRow.value);
 
-        if(rowColValue > 0){
+        if(rowColValue > beginValue){
             for(let item = beginValue; item < rowColValue; item++){
                 let createTR = document.createElement("tr");
                 for(let index = beginValue; index < rowColValue; index++){
@@ -73,23 +71,17 @@ function validate(key){
 //this function is used to show sum of diagoanals to user when click the button
 function matrixSum(){
     let inputValue = matrixInput();
-    let totalValue = 0;
+    let totalValue = beginValue;
     let checkValue = inputValue.flat();
     checkValue = checkValue.includes(NaN);
-    if(inputValue.length){
+    if(inputValue.length == beginValue)return alert(NO_ARR_ERR);
+    if(checkValue)return alert(NO_VALUE_ERR);
 
-        if(!checkValue){
-            for(let index = 0; index < inputValue.length; index++){
-                totalValue += inputValue[index][index];
-            }
-            outputSumDiagoanals.value = totalValue;
+    if(inputValue.length && !(checkValue)){
+        for(let index = beginValue; index < inputValue.length; index++){
+            totalValue += inputValue[index][index];
         }
-        else{
-            alert(NO_VALUE_ERR);
-        }
-    }
-    else{
-        alert(NO_ARR_ERR);
+        outputSumDiagoanals.value = totalValue;
     }
 }
 //this function is used to show a transpose value of matrix
@@ -97,23 +89,17 @@ function matrixTranspose(){
     let inputValue = matrixInput();
     let checkValue = inputValue.flat();
     checkValue = checkValue.includes(NaN);
-    if(inputValue.length){
-        if(!checkValue){
-            outputTranspose.value = "";
-        
-            for(let outerIndex = 0; outerIndex < inputValue.length; outerIndex++){
-                for(let innerIndex = 0; innerIndex < inputValue.length; innerIndex++){
-                    outputTranspose.value += inputValue[innerIndex][outerIndex] + " ";
-                }
-                outputTranspose.value += "\n";
+    if(inputValue.length == beginValue)return alert(NO_ARR_ERR);
+    if(checkValue)return alert(NO_VALUE_ERR);
+
+    if(inputValue.length && !(checkValue)){
+        outputTranspose.value = "";
+        for(let outerIndex = beginValue; outerIndex < inputValue.length; outerIndex++){
+            for(let innerIndex = beginValue; innerIndex < inputValue.length; innerIndex++){
+                outputTranspose.value += inputValue[innerIndex][outerIndex] + " ";
             }
+            outputTranspose.value += "\n";
         }
-        else{
-            alert(NO_VALUE_ERR);
-        }
-        }
-    else{
-        alert(NO_ARR_ERR);
     }
 }
 //this function is used to show a position of matrix value to user
@@ -121,32 +107,23 @@ function matrixSearch(){
     let inputValue = matrixInput();
     let checkValue = inputValue.flat();
     checkValue = checkValue.includes(NaN);
-    if(inputValue.length){
-        if(!checkValue){
-            if(!(inputSearch.value == "")){
-                outputPosition.value = "";
 
-                for(let outerIndex = 0; outerIndex < inputValue.length; outerIndex++){
-                    for(let innerIndex = 0; innerIndex < inputValue.length; innerIndex++){
-                        if(inputValue[outerIndex][innerIndex] == inputSearch.value){
-                            outputPosition.value +=  `[${outerIndex + 1}][${innerIndex + 1}] \n`;
-                        }
-                    }
+    if(inputValue.length == beginValue)return alert(NO_ARR_ERR);
+    if(checkValue)return alert(NO_VALUE_ERR);
+    if(!(inputSearch.value)) return alert(NO_SEARCH_ERR);
+
+    if(inputSearch.value && inputValue.length && !(checkValue)){
+        outputPosition.value = "";
+
+        for(let outerIndex = beginValue; outerIndex < inputValue.length; outerIndex++){
+            for(let innerIndex = beginValue; innerIndex < inputValue.length; innerIndex++){
+                if(inputValue[outerIndex][innerIndex] == inputSearch.value){
+                    outputPosition.value +=  `[${outerIndex + 1}][${innerIndex + 1}] \n`;
                 }
-                if(outputPosition.value == "")outputPosition.value = "No Index found";
-            }
-            else{
-                alert(NO_SEARCH_ERR);
             }
         }
-        else{
-            alert(NO_VALUE_ERR)
-        }
+        if(outputPosition.value == "")outputPosition.value = "No Index found";
     }
-    else{
-        alert(NO_ARR_ERR);
-    }
-
 }
 //this function is used to prevent some input keys(., e,);
 function preventText(key){  
