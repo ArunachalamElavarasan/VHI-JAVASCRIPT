@@ -40,5 +40,4 @@ function showCapital(){
     const countryVal = countryInput.value;
     const countryCapital = country.find(countyInput => countyInput.name.common == countryVal);
     capitalOutput.value = (countryCapital.capital[0]) ? countryCapital.capital : NO_CAPITAL_ERR;
-    console.log(countryCapital.capital);
 }
