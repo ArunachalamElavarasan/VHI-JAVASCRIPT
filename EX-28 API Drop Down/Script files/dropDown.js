@@ -14,13 +14,14 @@ document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
 
 //variable declaration
 let country;
+const countryDetailsCollection = 'https://restcountries.com/v3.1/all';
 const NO_CAPITAL_ERR = "This country does't have a capital";
 
 //Input details from DOM assigned to variables
 const countryInput = document.getElementById('country');
 const capitalOutput = document.getElementById('capital');
 
-fetch('https://restcountries.com/v3.1/all')                                         //this methos fetch a country details from the api link
+fetch(countryDetailsCollection)                                         //this methos fetch a country details from the api link
 .then(countryCollection => countryCollection.json())
 .then(countryDetails => {
     country = countryDetails.sort((fitstCountry, secondCountry) => {
@@ -39,5 +40,5 @@ fetch('https://restcountries.com/v3.1/all')                                     
 function showCapital(){
     const countryVal = countryInput.value;
     const countryCapital = country.find(countyInput => countyInput.name.common == countryVal);
-    capitalOutput.value = (countryCapital.capital[0]) ? countryCapital.capital : NO_CAPITAL_ERR;
+    capitalOutput.value = (countryCapital.capital) ? countryCapital.capital : NO_CAPITAL_ERR;
 }
