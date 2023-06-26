@@ -54,31 +54,31 @@ function play(option){
     }
     else if(chances[option] == chances[0]){                             //this block will execute when user select rock
         if(chances[computerOption] == chances[2]){
-            eachStatus.innerHTML = "WON";
+            eachStatus.innerHTML = "You Won This Turn";
             ++userScore;
         }
         else{
-            eachStatus.innerHTML = "LOSE";
+            eachStatus.innerHTML = "Computer Won This Turn";
             ++computerScore;
         }
     }
     else if(chances[option] == chances[1]){                            //this block will execute when user selects paper
         if(chances[computerOption] == chances[0]){
-            eachStatus.innerHTML = "WON";
+            eachStatus.innerHTML = "You Won This Turn";
             ++userScore;
         }
         else{
-            eachStatus.innerHTML = "LOSE";
+            eachStatus.innerHTML = "Computer Won This Turn";
             ++computerScore;
         }
     }
     else if(chances[option] == chances[2]){                           //this block will execute when user clicks scissor
         if(chances[computerOption] == chances[1]){
-            eachStatus.innerHTML = "WON";
+            eachStatus.innerHTML = "You Won This Turn";
             ++userScore;
         }
         else{
-            eachStatus.innerHTML = "LOSE";
+            eachStatus.innerHTML = "Computer Won This Turn";
             ++computerScore;
         }
     }
