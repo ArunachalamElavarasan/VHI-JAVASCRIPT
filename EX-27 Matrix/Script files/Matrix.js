@@ -10,8 +10,10 @@
 const dateAndTime = new Date();
 document.getElementById('date').innerHTML = dateAndTime.toLocaleDateString();
 document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
+
 //constant declaration
 const beginValue = 0;
+
 //Input details from DOM assigned to variables
 const inputTable = document.getElementById('tableInput');
 const inputRow = document.getElementById('rowColInput');
@@ -19,6 +21,12 @@ const inputSearch = document.getElementById('numSearch');
 const outputSumDiagoanals = document.getElementById('sumDiagonals');
 const outputTranspose = document.getElementById('transpose');
 const outputPosition = document.getElementById('position');
+
+//Error Declaration
+const NO_MATRIX_ERR = "Please give value minimum 1";
+const NO_VALUE_ERR = "Please fill all row and column value to validate";
+const NO_ARR_ERR = "Please add some value to validate ";
+const NO_SEARCH_ERR = "Please fill value to search";
 
 //this function is used to get and return matrix value as array
 const matrixInput = () => {
@@ -34,11 +42,6 @@ const matrixInput = () => {
     }
     return matrix;  
 }
-//Error Declaration
-const NO_MATRIX_ERR = "Please give value minimum 1";
-const NO_VALUE_ERR = "Please fill all row and column value to validate";
-const NO_ARR_ERR = "Please add some value to validate ";
-const NO_SEARCH_ERR = "Please fill value to search";
 
 //this function is used to create table rows and table data with input field
 function validate(key){
