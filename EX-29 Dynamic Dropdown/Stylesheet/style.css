@@ -85,8 +85,9 @@
     height: 250px;
 }
 select{
-    width: 180px;
+    width: 150px;
     height: 30px;
+    margin: 0px 5px;
 }
 input{
     width: 180px;
@@ -99,6 +100,14 @@ input{
     border-radius: 5px;
 }
 .selectContainer{
-    height: 100px;
+    height: 50px;
     width: 100%;
+}
+.gridContainer{
+    display: grid;
+}
+#selectMenu{
+    height: 110px;
+    flex-wrap: wrap;
+    width: 90%;
 }
