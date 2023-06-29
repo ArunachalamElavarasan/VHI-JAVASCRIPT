@@ -38,7 +38,6 @@ const listCountry = async () => {
             countryInput.appendChild(createOption);
         });
     } catch (error) {
-        console.log(error);
     }
 }
 listCountry();
