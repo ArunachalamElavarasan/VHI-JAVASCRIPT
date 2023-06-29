@@ -225,7 +225,7 @@ const generateMenu = () =>{
     createSelect.innerHTML = "<option selected hidden disabled>Select</option>";
 
     createSelect.addEventListener('change', () => {
-      let dataCollection = document.getElementById('firstMenu').selectedIndex;
+      const dataCollection = document.getElementById('firstMenu').selectedIndex;
       createNextMenu(dataCollection, dropDown, "firstMenu")
     });
 
@@ -263,7 +263,7 @@ const createNextMenu = (dataVal, dataCol, dataId) => {
     createSelect.setAttribute('id', dataCol[dataVal - 1].name);
     createSelect.innerHTML = "<option selected hidden disabled>Select</option>";
     createSelect.addEventListener('change', () => {
-      let dataCollection = document.getElementById(dataCol[dataVal - 1].name).selectedIndex;
+      const dataCollection = document.getElementById(dataCol[dataVal - 1].name).selectedIndex;
       createNextMenu(dataCollection, dataContainer, dataCol[dataVal - 1].name);
     });
 
