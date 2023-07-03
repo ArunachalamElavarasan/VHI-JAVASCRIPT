@@ -170,9 +170,9 @@
 {
     "ProductID": 14,
     "ProductName": "Teatime Chocolate Biscuits",
-    "UnitsInStock": 0,
-    "UnitsOnOrder": 40,
-    "UnitPrice": 7,
+    "UnitsInStock": 10,
+    "UnitsOnOrder": 50,
+    "UnitPrice": 0,
     "SupplierID": 2,
     "Discontinued": false,
     "Supplier": {

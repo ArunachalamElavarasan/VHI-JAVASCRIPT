@@ -20,11 +20,12 @@ const parentTable = document.getElementById('tableContainer');
 
 //This function is used to fetch a supplier details from json file
 const fetchData = async(dataCollection) => {
-    let dataItem = fetch(dataCollection);
+    let dataItem = fetch(dataCollection)
     dataItem = (await dataItem).json();
     let supplierCollection = await dataItem;
     return supplierCollection;        
 }
+
 //This function is used to add selleing details and show data in table
 const getData = (dataCol, idOfSupplier, detailType) => {
     let totalValue = dataCol.reduce((total, currentVal) => {
@@ -66,14 +67,14 @@ const showData = async(supplierData, salesData) => {
                 }                
             }
         }
-        if(addressCollection.length > 0){                                              //This block will execute when address collection array has some value
-            let createData = document.createElement('td');
-            createData.innerHTML = addressCollection.join(", ");
-            createRow.appendChild(createData);
-        }
+                                          
         let createData = document.createElement('td');
-        createData.innerHTML = (productName(salesDetails, supplier.SupplierID)).join(", "); //In this step we call productName function to show collection of sellers products
+        createData.innerHTML = addressCollection.join(", ");
         createRow.appendChild(createData);
+
+        let createProductData = document.createElement('td');
+        createProductData.innerHTML = (productName(salesDetails, supplier.SupplierID)).join(", "); //In this step we call productName function to show collection of sellers products
+        createRow.appendChild(createProductData);
 
         sellingDetail.forEach(item => {                                                     //this block is used to show a some selling details of seller
             let createData = document.createElement('td');
