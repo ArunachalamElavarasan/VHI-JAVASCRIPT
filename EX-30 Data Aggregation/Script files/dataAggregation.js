@@ -11,8 +11,8 @@ const dateAndTime = new Date();
 document.getElementById('date').innerHTML = dateAndTime.toLocaleDateString();
 document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
 //Constant variable declaration
-const supplierDataCollection = "../Json/supplier.json";
-const salesDataCollection = "../Json/supplierSales.json";
+const supplierDataCollection = "Json/supplier.json";
+const salesDataCollection = "Json/supplierSales.json";
 const sellingDetail = ["UnitsInStock", "UnitsOnOrder", "UnitPrice"];
 const beginValue = 0;
 //DOM declaration
