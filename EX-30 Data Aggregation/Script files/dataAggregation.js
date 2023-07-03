@@ -65,11 +65,11 @@ const showData = async(supplierData, salesData) => {
                     createRow.appendChild(createData);
                 }                
             }
-            if(addressCollection.length > 0){                                              //This block will execute when address collection array has some value
-                let createData = document.createElement('td');
-                createData.innerHTML = addressCollection.join(", ");
-                createRow.appendChild(createData);
-            }
+        }
+        if(addressCollection.length > 0){                                              //This block will execute when address collection array has some value
+            let createData = document.createElement('td');
+            createData.innerHTML = addressCollection.join(", ");
+            createRow.appendChild(createData);
         }
         let createData = document.createElement('td');
         createData.innerHTML = (productName(salesDetails, supplier.SupplierID)).join(", "); //In this step we call productName function to show collection of sellers products
