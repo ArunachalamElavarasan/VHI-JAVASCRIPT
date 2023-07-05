@@ -6,9 +6,6 @@
                       *       Developer              : Arunachalam                         *
                       *       Creation date          : 03/07/2023      Ticket No:          *
                       *                                                                   **/
-const cardColor = ["Blue", "Green", "Red", "Yellow"];
-const cardValue = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "Skip", "Reverse", "Draw"];
-
 //deck declaration
 let computerDeck = [];
 let playerDeck = [];
@@ -24,19 +21,12 @@ class card{
     }
 }
 
-const begin = () => {
-    for(let index = 0; index < 7; index++){
-        let inputCardColor = parseInt(Math.random() * 4);
-        let inputCardValue = parseInt(Math.random() * 13);
-        let newCard = new card(cardColor[inputCardColor], cardValue[inputCardValue]);
-        playerDeck.push(newCard);
-    }
-    for(let index = 0; index < 7; index++){
-        let inputCardColor = parseInt(Math.random() * 4);
-        let inputCardValue = parseInt(Math.random() * 13);
-        let newCard = new card(cardColor[inputCardColor], cardValue[inputCardValue]);
-        computerDeck.push(newCard);
-    }
+const randomColor = () => {
+    const colorCollection = ["Blue", "Green", "Red", "Yellow"];
+    return colorCollection[parseInt(Math.random() * 4)];
 }
-begin();
+const randomValue = () => {
+    const valueCollection = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, "Skip", "Reverse", "Draw"];
+    return valueCollection[parseInt(Math.random() * 13)];
+}
 

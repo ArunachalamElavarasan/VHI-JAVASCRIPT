@@ -136,3 +136,6 @@ body{
     height: 100%;
     width: 50%;
 }
+.srOnly{
+    display: none;
+}
