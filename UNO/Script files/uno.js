@@ -84,7 +84,12 @@ const addCard = (addDeck, checkDeck, cardDeck) => {
     addCard(addDeck, checkDeck);
 }
 
-const insertCard = () => addCard(playerDeck, computerDeck, playerContainer);
+const insertCard = () => {
+    addCard(playerDeck, computerDeck, playerContainer);
+    setTimeout(() => {
+        addCard(computerDeck, playerDeck, computerContainer);
+    }, 2000);
+}
 
 beginCard(playerDeck, computerDeck, 7);
 beginCard(computerDeck, playerDeck, 7);
