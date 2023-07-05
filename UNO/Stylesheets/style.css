@@ -1,0 +1,138 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+body{
+    background: url("../Images/backgroundImage") center no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+.flexDisplay{
+    display: flex;
+}
+.flexBetween{
+    justify-content: space-between;
+}
+.flexAround{
+    justify-content: space-around;
+}
+.flexDirCol{
+    flex-direction: column;
+}
+.flexEnd{
+    justify-content: flex-end;
+}
+.flexCenter{
+    justify-content: center;
+}
+.flexItemCenter{
+    align-items: center;
+}
+.posRelative{
+    position: relative;
+}
+.posAbsolute{
+    position: absolute;
+}
+.bgLight{
+    background-color: #fff;
+}
+.bgGreen{
+    background-color: #3AB900;
+}
+.bgRed{
+    background-color: #FF0000;
+}
+.bgBlue{
+    background-color: #0085C8;
+}
+.bgYellow{
+    background-color: #FFBE00;
+}
+.bgDark{
+    background-color: #191919;
+}
+.textLight{
+    color: #fff;
+}
+.textGreen{
+    color: #3AB900;
+}
+.textRed{
+    color: #FF0000;
+}
+.textBlue{
+    color: #0085C8;
+}
+.textYellow{
+    color: #FFBE00;
+}
+.textBold{
+    font-weight: bold;
+    padding: 5px;
+}
+.disHeight{
+    height: 600px;
+}
+.playingContainer{
+    width: 90%;
+    height: 550px;
+}
+.cardContainer{
+    width: 100px;
+    height: 150px;
+    border-radius: 10px;
+    border: 0.3px solid black;
+}
+.card{
+    width: 90px;
+    height: 140px;
+    border-radius: 10px;
+    border: 0.3px solid black;
+}
+.cardValue{
+    font-size: 25px;
+    font-weight: bolder;
+}
+.innerCardContainer{
+    height: 60px;
+    width: 60px;
+}
+.rotateBox{
+    transform: rotate(45deg);
+}
+.cardIcon{
+    transform: rotate(-45deg);
+}
+.bottomIconRotate{
+    transform: rotate(180deg);
+}
+.deckContainer{
+    height: 160px;
+    width: 80%;
+}
+.commonDeckContainer{
+    width: 230px;
+    height: 160px;
+    border: 5px #0085C8 solid;
+    border-radius: 15px;
+}
+.pointer{
+    cursor: pointer;
+}
+.lgFont{
+    font-size: 50px;
+    transform: rotate(-45deg);
+    z-index: 1;
+    top: 0%;
+    right: 38%;
+}
+.colorContainer{
+    height: 50%;
+    width: 100%;
+}
+.smColorContainer{
+    height: 100%;
+    width: 50%;
+}

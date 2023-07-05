@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UNO</title>
+    <link rel="stylesheet" href="Stylesheets/style.css" />
+    <script
+      src="https://kit.fontawesome.com/1de50aa74b.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="flexDisplay flexCenter flexItemCenter disHeight">
+        <div class="playingContainer flexDisplay flexDirCol flexBetween flexItemCenter">
+            <section class="deckContainer flexDisplay posRelative" id="computerDeck">
+                
+            </section>
+
+            <section class="commonDeckContainer flexDisplay flexBetween flexItemCenter">
+                <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick="console.log('Hello peter!')">
+                    <section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
+                        <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative">
+                            <section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
+                                <section style="height: 50%; width: 100%;" class="flexDisplay">
+                                    <section class="bgBlue" style="height: 100%; width: 50%;"></section>
+                                    <section class="bgRed" style="height: 100%; width: 50%;"></section>
+                                </section>
+                                <section style="height: 50%; width: 100%;" class="flexDisplay">
+                                    <section class="bgGreen" style="height: 100%; width: 50%;"></section>
+                                    <section class="bgYellow" style="height: 100%; width: 50%;"></section>
+                                </section>
+                            </section>
+                            <h1 class="textLight lgFont posAbsolute">4</h1>
+                        </section>
+                    </section>
+                </div>
+                <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter">
+                    <section class="bgGreen card textLight flexDisplay flexBetween flexDirCol">
+                        <section class="flexDisplay">
+                            <p class="textLight textBold">0</p>
+                        </section>
+                        <section class="flexDisplay flexCenter rotateBox">
+                            <section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter">
+                                <section class="cardIcon">
+                                    <p class="cardValue">0</p>
+                                </section>
+                            </section>
+                        </section>
+                        <section class="flexDisplay bottomIconRotate">
+                            <p class="textLight textBold">0</p>
+                        </section>
+                    </section>
+                </div>
+            </section>
+
+            <section class="deckContainer flexDisplay" id="playerContainer">
+                
+            </section>
+        </div>
+    </div>
+    <script src="Script files/uno.js"></script>
+  </body>
+</html>
