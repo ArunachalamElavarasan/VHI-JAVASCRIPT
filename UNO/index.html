@@ -16,48 +16,67 @@
   <body>
     <div class="flexDisplay flexCenter flexItemCenter disHeight">
         <div class="playingContainer flexDisplay flexDirCol flexBetween flexItemCenter">
-            <section class="deckContainer flexDisplay flexCenter flexItemCenter" id="computerDeck">
+            <section class="deckContainer flexDisplay flexCenter flexItemCenter srOnly" id="computerDeck">
                 
             </section>
 
-            <section class="commonDeckContainer flexDisplay flexBetween flexItemCenter">
-                <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick="insertCard()">
-                    <section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
-                        <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative">
-                            <section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
-                                <section style="height: 50%; width: 100%;" class="flexDisplay">
-                                    <section class="bgBlue" style="height: 100%; width: 50%;"></section>
-                                    <section class="bgRed" style="height: 100%; width: 50%;"></section>
-                                </section>
-                                <section style="height: 50%; width: 100%;" class="flexDisplay">
-                                    <section class="bgGreen" style="height: 100%; width: 50%;"></section>
-                                    <section class="bgYellow" style="height: 100%; width: 50%;"></section>
-                                </section>
-                            </section>
-                            <h1 class="textLight lgFont posAbsolute">4</h1>
+            <section class="flexDisplay flexBetween flexItemCenter common">
+                <section class="flexDisplay flexBetween flexDirCol commonBox">
+                    <section>
+                        <section class="colorIdentifier textLight flexDisplay flexCenter flexItemCenter" style="background-color: #06074B;">
+                            <p class="rotateAntiClockwise">UNO</p>
                         </section>
                     </section>
-                </div>
-                <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter">
-                    <section class="bgGreen card textLight flexDisplay flexBetween flexDirCol">
-                        <section class="flexDisplay">
-                            <p class="textLight textBold">0</p>
+                    <section class="colorIdentifier flexDisplay flexCenter flexItemCenter flexDirCol posRelative">
+                        <section style="height: 50%; width: 100%;" class="flexDisplay">
+                            <section class="bgBlue boxShadow" style="height: 100%; width: 50%;"></section>
+                            <section class="bgRed boxShadow" style="height: 100%; width: 50%;"></section>
                         </section>
-                        <section class="flexDisplay flexCenter rotateBox">
-                            <section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter">
-                                <section class="cardIcon">
-                                    <p class="cardValue">0</p>
-                                </section>
-                            </section>
+                        <section style="height: 50%; width: 100%;" class="flexDisplay ">
+                            <section class="bgGreen boxShadow" style="height: 100%; width: 50%;"></section>
+                            <section class="bgYellow boxShadow" style="height: 100%; width: 50%;"></section>
                         </section>
-                        <section class="flexDisplay bottomIconRotate">
-                            <p class="textLight textBold">0</p>
+                        <section class="posAbsolute">
+                            <h3 class="rotateAntiClockwise" style="font-size: 30px; color: black; text-shadow: 1px 2px 2px white;">1</h3>
                         </section>
                     </section>
-                </div>
+                </section>
+
+                <section class="commonDeckContainer flexDisplay flexBetween flexItemCenter">
+                    <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick="insertCard()">
+                        <section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
+                            <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative">
+                                <section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
+                                    <section style="height: 50%; width: 100%;" class="flexDisplay">
+                                        <section class="bgBlue boxShadow" style="height: 100%; width: 50%;"></section>
+                                        <section class="bgRed boxShadow" style="height: 100%; width: 50%;"></section>
+                                    </section>
+                                    <section style="height: 50%; width: 100%;" class="flexDisplay">
+                                        <section class="bgGreen boxShadow" style="height: 100%; width: 50%;"></section>
+                                        <section class="bgYellow boxShadow" style="height: 100%; width: 50%;"></section>
+                                    </section>
+                                </section>
+                                <h1 class="textLight lgFont posAbsolute">4</h1>
+                            </section>
+                        </section>
+                    </div>
+                    <section id="commonDeck">
+                        
+                    </section>
+                </section>
+                <section class="flexDisplay flexBetween flexDirCol commonBox">
+                    <section>
+                        <section class="colorIdentifier" id="colorIdentifier">
+
+                        </section>
+                    </section>
+                    <section>
+                        <button class="btn bgVilot textLight pointer"><i class="fa-solid fa-angle-right cardIcon"></i></button>
+                    </section>
+                </section>
             </section>
 
-            <section class="deckContainer flexDisplay flexCenter flexItemCenter" id="playerDeck">
+            <section class="deckContainer flexDisplay flexCenter flexItemCenter srOnly" id="playerDeck">
                 
             </section>
         </div>

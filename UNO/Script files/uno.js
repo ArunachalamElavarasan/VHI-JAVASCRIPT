@@ -9,10 +9,13 @@
 //deck declaration
 let computerDeck = [];
 let playerDeck = [];
+let commonDeck = [];
 
 //DOM input declaration
 const playerContainer = document.getElementById('playerDeck');
 const computerContainer = document.getElementById('computerDeck');
+const commonContainer = document.getElementById('commonDeck');
+const colorContainer = document.getElementById('colorIdentifier');
 
 class Card{
     constructor(cardColor, cardValue, cardPoint, cardTopIcon){
@@ -52,28 +55,44 @@ const showCard = (cardVal, cardColor, cardIcon) =>`<div class="cardContainer bgL
 
 const hiddenCard = () =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter"><section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
                         <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative"><section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
-                        <section class="flexDisplay colorContainer"><section class="bgBlue smColorContainer"></section><section class="bgRed smColorContainer"></section></section><section class="flexDisplay colorContainer">
-                        <section class="bgGreen smColorContainer"></section><section class="bgYellow smColorContainer"></section></section></section><h1 class="textLight lgFont posAbsolute">4</h1></section></section></div>`;
+                        <section class="flexDisplay colorContainer"><section class="bgBlue smColorContainer boxShadow"></section><section class="bgRed smColorContainer boxShadow"></section></section><section class="flexDisplay colorContainer">
+                        <section class="bgGreen smColorContainer boxShadow"></section><section class="bgYellow smColorContainer boxShadow"></section></section></section><h1 class="textLight lgFont posAbsolute">4</h1></section></section></div>`;
 
 const beginCard = (addDeck, checkDeck, count) => {
     if(addDeck.length == count)return 0;
-    const cardColor = randomColor()
+    const cardColor = randomColor();
     const cardValue = randomValue();
     const newCard = new Card(cardColor, cardValue.value, cardValue.point, cardValue.topIcon);
     let check = addDeck.concat(checkDeck);
     const checkAvailable = check.filter(card => card == newCard);
 
-    if(checkAvailable.length < 2){
-        addDeck.push(newCard);
-    }
+    if(checkAvailable.length < 2)addDeck.push(newCard)
+
     beginCard(addDeck, checkDeck, count);
 }
 
-const addCard = (addDeck, checkDeck, cardDeck) => {
+const playCard = (addDeck, computerDeck, playerDeck, addContainer) => {
     const cardColor = randomColor();
     const cardValue = randomValue();
     const newCard = new Card(cardColor, cardValue.value, cardValue.point, cardValue.topIcon);
-    let check = addDeck.concat(checkDeck);
+    let check = addDeck.concat(computerDeck, playerDeck);
+    const checkAvailable = check.filter(card => card == newCard);
+
+    if(checkAvailable.length < 2){
+        addDeck.push(newCard);
+        addContainer.innerHTML = showCard(newCard.value, newCard.color, newCard.topIcon);
+        colorIdentifier(newCard.color);
+        return 0;
+    }
+
+    playCard(addDeck, computerDeck, playerDeck, addContainer);
+}
+
+const addCard = (addDeck, checkDeck, commonDeck, cardDeck) => {
+    const cardColor = randomColor();
+    const cardValue = randomValue();
+    const newCard = new Card(cardColor, cardValue.value, cardValue.point, cardValue.topIcon);
+    let check = addDeck.concat(checkDeck, commonDeck);
     const checkAvailable = check.filter(card => card == newCard);
 
     if(checkAvailable.length < 2){
@@ -81,18 +100,22 @@ const addCard = (addDeck, checkDeck, cardDeck) => {
         cardDeck.innerHTML += showCard(newCard.value, newCard.color, newCard.topIcon);
         return 0;
     }
-    addCard(addDeck, checkDeck);
+    addCard(addDeck, checkDeck, commonDeck, cardDeck);
 }
 
 const insertCard = () => {
-    addCard(playerDeck, computerDeck, playerContainer);
+    addCard(playerDeck, computerDeck, commonDeck, playerContainer);
     setTimeout(() => {
-        addCard(computerDeck, playerDeck, computerContainer);
+        addCard(computerDeck, playerDeck, commonDeck, computerContainer);
     }, 2000);
 }
 
+const colorIdentifier = bgColor => colorContainer.classList = `colorIdentifier bg${bgColor}`;
+
+
 beginCard(playerDeck, computerDeck, 7);
 beginCard(computerDeck, playerDeck, 7);
+playCard(commonDeck, computerDeck, playerDeck, commonContainer);
 
 playerDeck.forEach(card => {
     playerContainer.innerHTML += showCard(card.value, card.color, card.topIcon);
@@ -101,6 +124,3 @@ playerDeck.forEach(card => {
 computerDeck.forEach(card => {
     computerContainer.innerHTML += showCard(card.value, card.color, card.topIcon);
 });
-
-console.table(playerDeck);
-

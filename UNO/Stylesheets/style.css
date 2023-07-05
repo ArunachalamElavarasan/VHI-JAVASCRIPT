@@ -53,6 +53,9 @@ body{
 .bgDark{
     background-color: #191919;
 }
+.bgVilot{
+    background-color: #8500D1;
+}
 .textLight{
     color: #fff;
 }
@@ -149,3 +152,24 @@ body{
     top: 50px;
     margin: 10px 0px 0px 5px;
 }
+.common{
+    width: 350px;
+}
+.commonBox{
+    height: 140px;
+}
+.boxShadow{
+    box-shadow: 2px 2px black inset;
+}
+.colorIdentifier, .btn{
+    width: 35px;
+    height: 35px;
+    box-shadow: 1px 1px black inset;
+    transform: rotate(45deg);
+}
+.rotateAntiClockwise{
+    transform: rotate(-45deg);
+    font-size: 12px;
+}
+
+
