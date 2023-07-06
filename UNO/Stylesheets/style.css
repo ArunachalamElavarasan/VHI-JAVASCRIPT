@@ -171,5 +171,11 @@ body{
     transform: rotate(-45deg);
     font-size: 12px;
 }
-
+.disabled{
+    cursor: default;
+    opacity: 0.2;
+}
+.halfRotate{
+    transform: rotate(180deg);
+}
 
