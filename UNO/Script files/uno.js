@@ -52,7 +52,7 @@ let cardCollection = [];
 let computerDeck = [];
 let playerDeck = [];
 let commonDeck = [];
-let playedDeck = [];
+let throwDeck = [];
 let cardAddStatus = true;
 
 //DOM input declaration
@@ -73,11 +73,22 @@ const randomCard = (container, addDeck) => {
     container.innerHTML += showCard(commonDeck[card]);
     addDeck.push(commonDeck[card]);
     commonDeck.splice(card, 1);
-    console.log(card);
+}
+const throwCard = () => throwContainer.innerHTML = showCard(throwDeck.length - 1)
+
+const play = (playingSpeed) => {
+    if(cardAddStatus){
+        playerTurn();
+        cardAddStatus = false;
+        setTimeout(() => {
+            computerTurn();
+            setTimeout(() => cardAddStatus = true, playingSpeed)
+        }, playingSpeed);
+    }
 }
 
 //this function is used to change the color of color identifier container
-const colorIdentifier = bgColor => colorContainer.classList = `colorIdentifier bg${bgColor}`;
+const colorIdentifier = () => colorContainer.classList = `colorIdentifier bg${throwDeck[throwDeck.length - 1].color}`;
 
 const computerTurn = () => randomCard(computerContainer, computerDeck);
 
@@ -105,17 +116,6 @@ for(let outerIndex = 0; outerIndex < 4; outerIndex++){
 }
 cardCollection.map(card => commonDeck.push(card));
 
-const play = () => {
-    if(cardAddStatus){
-        playerTurn();
-        cardAddStatus = false;
-        setTimeout(() => {
-            computerTurn();
-            cardAddStatus = true;
-        }, 2000);
-    }
-}
-
-
-
-
+randomCard(throwContainer, throwDeck);
+colorIdentifier();
+console.log(colorContainer.classList)
