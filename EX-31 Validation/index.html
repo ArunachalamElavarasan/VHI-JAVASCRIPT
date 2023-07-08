@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Validation</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <main class="flexDisplay flexCenter">
+        <section
+          class="bgGreen textBlue operationContainer flexDisplay flexDirCol flexAround"
+        >
+          <section class="flexDisplay headerConteiner">
+            <h3 class="labelContainer">Exercise : 31</h3>
+            <h3>Validations</h3>
+          </section>
+          <section class="secondsContainer flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay inputContainer flexItemCenter flexBetween">
+              <section class="labelContainer">
+                <p>Enter the Name</p>
+              </section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="inputName"
+                  class="smallInput"
+                  onkeydown="preventNumber(event)"
+                  value="Arun"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter flexBetween">
+              <section class="labelContainer">
+                <p>Enter Email</p>
+              </section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="inputEmail"
+                  class="smallInput"
+                  onkeydown="preventSpace(event)"
+                  value="arun@gmail.com"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter flexBetween">
+              <section class="labelContainer">
+                <p>Enter Credit Card Number</p>
+              </section>
+              <section>
+                <input
+                  type="text"
+                  name=""
+                  id="inputCredit"
+                  class="smallInput"
+                  onkeydown="preventSpace(event); preventChar(event)"
+                  value="123456789012345"
+                />
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter flexBetween">
+              <section class="labelContainer">
+                <p>Enter Pan Number</p>
+              </section>
+              <section>
+                <input type="text" name="" id="inputPan" class="smallInput"  placeholder="Enter 10 digits" onkeydown="preventSpace(event)" value="ABCTY1234D"/>
+              </section>
+            </section>
+            <section class="flexDisplay inputContainer flexItemCenter flexBetween">
+              <section class="labelContainer">
+                <p>Enter GST Number</p>
+              </section>
+              <section>
+                <input type="text" name="" id="inputGST" class="smallInput" placeholder="Enter 10 digits" onkeydown="preventSpace(event)" value="22ABCTY1234D1Z5"/>
+              </section>
+            </section>
+            <section class="flexDisplay flexBetween">
+              <section class="labelContainer">
+                <button class="btn bgBlue textLight" onclick="validateInput()">
+                  Validate
+                </button>
+              </section>
+              <button class="btn bgBlue textLight" onclick="Reset()">
+                Reset
+              </button>
+            </section>
+          </section>
+        </section>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : Regex Validation</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/validate.js"></script>
+  </body>
+</html>
