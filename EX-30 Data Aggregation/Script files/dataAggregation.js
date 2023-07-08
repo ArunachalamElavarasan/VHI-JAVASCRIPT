@@ -13,8 +13,6 @@ document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
 //Constant variable declaration
 const supplierDataCollection = "Json/supplier.json";
 const salesDataCollection = "Json/supplierSales.json";
-const sellingDetail = ["UnitsInStock", "UnitsOnOrder", "UnitPrice"];
-const beginValue = 0;
 //DOM declaration
 const parentTable = document.getElementById('tableContainer');
 
@@ -25,7 +23,6 @@ const fetchData = async(dataCollection) => {
     let supplierCollection = await dataItem;
     return supplierCollection;        
 }
-
 //This function is used to add selleing details and show data in table
 const getData = (dataCol, idOfSupplier, detailType) => {
     let totalValue = dataCol.reduce((total, currentVal) => {
@@ -33,7 +30,7 @@ const getData = (dataCol, idOfSupplier, detailType) => {
                         return total +=currentVal[detailType];
                     }
                     return total;
-                }, beginValue);
+                }, 0);
     return totalValue;
 }
 //This function is used to show a user product details
@@ -51,40 +48,19 @@ const showData = async(supplierData, salesData) => {
     let supplierDetails = await supplierData;
     let salesDetails = await salesData;
 
-    supplierDetails.forEach(supplier => {
-        let addressCollection = [];
+    supplierDetails.forEach(supplier => {    
         let createRow = document.createElement('tr');
-
-        for(const key in supplier){
-            if(!(key == "ContactTitle" || key == "Region" || key == "PostalCode")){         //This codition written for avoid to add unwanted details
-                if(key == "Address" || key == "City" || key == "Country"){                  //If key is related to address that value push into array to join after
-                    addressCollection.push(supplier[key]);
-                }
-                else{                                                                       //the block will add value into table data
-                    let createData = document.createElement('td');
-                    createData.innerHTML = supplier[key]
-                    createRow.appendChild(createData);
-                }                
-            }
-        }
-                                          
-        let createData = document.createElement('td');
-        createData.innerHTML = addressCollection.join(", ");
-        createRow.appendChild(createData);
-
-        let createProductData = document.createElement('td');
-        createProductData.innerHTML = (productName(salesDetails, supplier.SupplierID)).join(", "); //In this step we call productName function to show collection of sellers products
-        createRow.appendChild(createProductData);
-
-        sellingDetail.forEach(item => {                                                     //this block is used to show a some selling details of seller
-            let createData = document.createElement('td');
-            createData.innerHTML = getData(salesDetails, supplier.SupplierID, item);
-            createRow.appendChild(createData);
-        })
+        createRow.innerHTML = `<td>${supplier.SupplierID}</td>`;
+        createRow.innerHTML += `<td>${supplier.CompanyName}</td>`;
+        createRow.innerHTML += `<td>${supplier.ContactName}</td>`;
+        createRow.innerHTML += `<td>${supplier.Address}, ${supplier.City}, ${supplier.Country}</td>`;
+        createRow.innerHTML += `<td>${(productName(salesDetails, supplier.SupplierID)).join(", ")} </td>`;
+        createRow.innerHTML += `<td>${getData(salesDetails, supplier.SupplierID, "UnitsInStock")}</td>`;
+        createRow.innerHTML += `<td>${getData(salesDetails, supplier.SupplierID, "UnitsOnOrder")}</td>`;
+        createRow.innerHTML += `<td>${getData(salesDetails, supplier.SupplierID, "UnitPrice")}</td>`;    
         parentTable.appendChild(createRow);
     });
 }
 const supplierDetails = fetchData(supplierDataCollection);
 const salesDetails = fetchData(salesDataCollection);
-
 showData(supplierDetails, salesDetails);
