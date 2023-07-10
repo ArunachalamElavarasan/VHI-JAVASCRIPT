@@ -63,19 +63,21 @@ const colorContainer = document.getElementById('colorIdentifier');
 const passButton = document.getElementById('passButton');
 
 //this function is return a card element that was showed
-const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick="dropCard(this)"><section class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol">
+const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick=dropCard(this)><section class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol">
                                         <section class="flexDisplay"><p class="textLight textBold">${card.topIcon}</p></section><section class="flexDisplay flexCenter rotateBox">
                                         <section class="bgLight innerCardContainer text${card.color} flexDisplay flexCenter flexItemCenter"><section class="cardIcon"><p class="cardValue">${card.value}</p></section></section></section>
                                         <section class="flexDisplay bottomIconRotate"><p class="textLight textBold">${card.topIcon}</p></section></section></div>`;
 
 const randomCard = (container, addDeck) => {
     let card = parseInt(Math.random() * commonDeck.length);
-    container.innerHTML += showCard(commonDeck[card]);
+    if(addDeck == computerDeck)container.innerHTML += showCard(commonDeck[card]);
+    else  container.innerHTML += showCard(commonDeck[card]);
     addDeck.push(commonDeck[card]);
     commonDeck.splice(card, 1);
+//    document.querySelector('#throwDeck .pointer').removeAttribute('onclick');
 }
 
-const dropCardContainer = () => dropContainer.innerHTML = showCard(dropDeck.length - 1)
+const dropCardContainer = () => dropContainer.innerHTML = showCard(dropDeck[(dropDeck.length) - 1]);
 
 const play = (playingSpeed) => {
     if(cardAddStatus){
@@ -89,14 +91,14 @@ const play = (playingSpeed) => {
 }
 
 //this function is used to change the color of color identifier container
-const colorIdentifier = color => colorContainer.classList = `colorIdentifier bg${color}`;
+const colorIdentifier = () => colorContainer.classList = `colorIdentifier bg${dropDeck[dropDeck.length - 1].color}`;
 
 const computerTurn = () => randomCard(computerContainer, computerDeck);
 
 const playerTurn = () => randomCard(playerContainer, playerDeck);
 
 const gameBegin = () => {
-    if(computerDeck.length > 2 && playerDeck.length > 2){
+    if(computerDeck.length > 5 && playerDeck.length > 5){
         cardAddStatus = true;
         return 0;
     }
@@ -109,14 +111,30 @@ const gameBegin = () => {
     }, 500);
 }
 
-const dropCard = card => {
+const dropCard = (card) => {
     if(cardAddStatus){
-        card.remove();
-        cardAddStatus = false;
-        setTimeout(() => {
-            computerTurn();
-            cardAddStatus = true;
-        }, 1000);
+        const playerCardCollection = document.querySelectorAll('#playerDeck .pointer');
+        let cardId = 0;
+        const cardPos = () => {
+            while(cardId < playerCardCollection.length){
+                if(playerCardCollection[cardId] == card){
+                    return cardId;
+                }
+                cardId++;
+            }
+        }
+        if(playerDeck[cardPos()].color == dropDeck[dropDeck.length - 1].color || playerDeck[cardPos()].value == dropDeck[dropDeck.length - 1].value){
+            let droppedCard = playerDeck.splice(cardPos(), 1);
+            dropDeck.push(droppedCard[0]);
+            card.remove();
+            colorIdentifier();
+            dropCardContainer(); 
+            cardAddStatus = false;
+            setTimeout(() => {
+                computerTurn();
+                cardAddStatus = true;
+            }, 1000);
+        }
     }
 }
 
@@ -143,5 +161,7 @@ for(let outerIndex = 0; outerIndex < 4; outerIndex++){
 cardCollection.map(card => commonDeck.push(card));
 
 randomCard(dropContainer, dropDeck);
-colorIdentifier(dropDeck[dropDeck.length - 1].color);
+
+colorIdentifier();
+
 gameBegin();
