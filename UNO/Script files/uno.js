@@ -71,6 +71,14 @@ const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCente
 const shuffleCards = deck => deck.sort(card => 0.5 - Math.random())
 
 const drawnCard = (container, addDeck) => {
+    if(commonDeck.length == 0){
+        for(let index = 0; index < (dropDeck.length - 1); index++){
+            let droppedCard = dropDeck.shift();
+            commonDeck.push(droppedCard);
+        }
+        shuffleCards(commonDeck);
+    }
+    
     let card = commonDeck.pop();
     if(addDeck == computerDeck)container.innerHTML += showCard(card);
     else  container.innerHTML += showCard(card);
@@ -189,8 +197,8 @@ for(let outerIndex = 0; outerIndex < 4; outerIndex++){
 cardCollection.map(card => commonDeck.push(card));
 
 shuffleCards(commonDeck);
+
 drawnCard(dropContainer, dropDeck);
 
 colorIdentifier();
-
 gameBegin();
