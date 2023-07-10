@@ -68,8 +68,10 @@ const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCente
                                         <section class="bgLight innerCardContainer text${card.color} flexDisplay flexCenter flexItemCenter"><section class="cardIcon"><p class="cardValue">${card.value}</p></section></section></section>
                                         <section class="flexDisplay bottomIconRotate"><p class="textLight textBold">${card.topIcon}</p></section></section></div>`;
 
+//this function is used to shuffle card to play
 const shuffleCards = deck => deck.sort(card => 0.5 - Math.random())
 
+//this function is used to drawn a card from deck
 const drawnCard = (container, addDeck) => {
     if(commonDeck.length == 0){
         for(let index = 0; index < (dropDeck.length - 1); index++){
@@ -78,16 +80,17 @@ const drawnCard = (container, addDeck) => {
         }
         shuffleCards(commonDeck);
     }
-    
+
     let card = commonDeck.pop();
     if(addDeck == computerDeck)container.innerHTML += showCard(card);
     else  container.innerHTML += showCard(card);
     addDeck.push(card);
-    document.querySelector('#throwDeck .pointer').removeAttribute('onclick');
 }
 
+//this function is used to drop card from container and show the card into dropped deck
 const dropCardContainer = () => dropContainer.innerHTML = showCard(dropDeck[(dropDeck.length) - 1]);
 
+//this function is executed when user clicks on card
 const play = (playingSpeed) => {
     if(cardAddStatus){
         playerTurn();
@@ -102,10 +105,10 @@ const play = (playingSpeed) => {
 //this function is used to change the color of color identifier container
 const colorIdentifier = () => colorContainer.classList = `colorIdentifier bg${dropDeck[dropDeck.length - 1].color}`;
 
-const computerTurn = () => {
-    drawnCard(computerContainer, computerDeck);
-};
+//this function is used to play as a computer
+const computerTurn = () => drawnCard(computerContainer, computerDeck)
 
+//this function is used to drop a card by computer
 const computerCardDrop = () => {
     const cardCollectionContainer = document.querySelector('#computerDeck');
     let cardIndex = 0;
@@ -121,17 +124,16 @@ const computerCardDrop = () => {
         cardCollectionContainer.removeChild(cardCollectionContainer.children[cardIndex]);
         colorIdentifier();
         dropCardContainer();
-        console.table(dropDeck[dropDeck.length - 1]);
-        console.log("\n\n\n");
-        console.table(computerDeck);
     }
     else{
         computerTurn(); 
     }
 }
 
+//this function is used to drop a card by player
 const playerTurn = () => drawnCard(playerContainer, playerDeck);
 
+//this function happen when match was begin
 const gameBegin = () => {
     if(computerDeck.length > 5 && playerDeck.length > 5){
         cardAddStatus = true;
@@ -146,6 +148,7 @@ const gameBegin = () => {
     }, 500);
 }
 
+//this function is used to drop a card 
 const dropCard = (card) => {
     if(cardAddStatus){
         const playerCardCollection = document.querySelectorAll('#playerDeck .pointer');
@@ -198,7 +201,10 @@ cardCollection.map(card => commonDeck.push(card));
 
 shuffleCards(commonDeck);
 
+gameBegin();
+
 drawnCard(dropContainer, dropDeck);
 
 colorIdentifier();
-gameBegin();
+
+document.querySelector('#throwDeck .pointer').removeAttribute('onclick');

@@ -13,7 +13,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
-  <body>
+  <body class="posRelative">
     <div class="flexDisplay flexCenter flexItemCenter disHeight">
         <div class="playingContainer flexDisplay flexDirCol flexBetween flexItemCenter">
             <section class="deckContainer flexDisplay flexCenter flexItemCenter" id="computerDeck">
@@ -81,6 +81,17 @@
             </section>
         </div>
     </div>
+    <section class="popUp posAbsolute flexDisplay flexCenter flexItemCenter popUpShow">
+        <div class="bgDark popUpContainer flexDisplay flexDirCol flexEvenly flexItemCenter">
+            <h2 class="textLight">SELECT A COLOR</h2>
+            <section class="flexDisplay flexAround btnContainer">
+                <section><button class="btn bgRed pointer" onclick="popUpAnimation()"></button></section>
+                <section><button class="btn bgGreen pointer" onclick="popUpAnimation()"></button></section>
+                <section><button class="btn bgBlue pointer" onclick="popUpAnimation()"></button></section>
+                <section><button class="btn bgYellow pointer" onclick="popUpAnimation()"></button></section>
+            </section>
+        </div>
+    </section>
     <script src="Script files/uno.js"></script>
   </body>
 </html>
