@@ -52,18 +52,18 @@ let cardCollection = [];
 let computerDeck = [];
 let playerDeck = [];
 let commonDeck = [];
-let throwDeck = [];
-let cardAddStatus = true;
+let dropDeck = [];
+let cardAddStatus = false;
 
 //DOM input declaration
 const playerContainer = document.getElementById('playerDeck');
 const computerContainer = document.getElementById('computerDeck');
-const throwContainer = document.getElementById('throwDeck');
+const dropContainer = document.getElementById('throwDeck');
 const colorContainer = document.getElementById('colorIdentifier');
 const passButton = document.getElementById('passButton');
 
 //this function is return a card element that was showed
-const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick="throwCard()"><section class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol">
+const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick="dropCard(this)"><section class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol">
                                         <section class="flexDisplay"><p class="textLight textBold">${card.topIcon}</p></section><section class="flexDisplay flexCenter rotateBox">
                                         <section class="bgLight innerCardContainer text${card.color} flexDisplay flexCenter flexItemCenter"><section class="cardIcon"><p class="cardValue">${card.value}</p></section></section></section>
                                         <section class="flexDisplay bottomIconRotate"><p class="textLight textBold">${card.topIcon}</p></section></section></div>`;
@@ -74,7 +74,8 @@ const randomCard = (container, addDeck) => {
     addDeck.push(commonDeck[card]);
     commonDeck.splice(card, 1);
 }
-const throwCard = () => throwContainer.innerHTML = showCard(throwDeck.length - 1)
+
+const dropCardContainer = () => dropContainer.innerHTML = showCard(dropDeck.length - 1)
 
 const play = (playingSpeed) => {
     if(cardAddStatus){
@@ -82,17 +83,42 @@ const play = (playingSpeed) => {
         cardAddStatus = false;
         setTimeout(() => {
             computerTurn();
-            setTimeout(() => cardAddStatus = true, playingSpeed)
+            cardAddStatus = true;
         }, playingSpeed);
     }
 }
 
 //this function is used to change the color of color identifier container
-const colorIdentifier = () => colorContainer.classList = `colorIdentifier bg${throwDeck[throwDeck.length - 1].color}`;
+const colorIdentifier = color => colorContainer.classList = `colorIdentifier bg${color}`;
 
 const computerTurn = () => randomCard(computerContainer, computerDeck);
 
 const playerTurn = () => randomCard(playerContainer, playerDeck);
+
+const gameBegin = () => {
+    if(computerDeck.length > 2 && playerDeck.length > 2){
+        cardAddStatus = true;
+        return 0;
+    }
+    playerTurn()
+    setTimeout(() =>{
+        computerTurn();
+        setTimeout(() => {
+            gameBegin();
+        }, 500);
+    }, 500);
+}
+
+const dropCard = card => {
+    if(cardAddStatus){
+        card.remove();
+        cardAddStatus = false;
+        setTimeout(() => {
+            computerTurn();
+            cardAddStatus = true;
+        }, 1000);
+    }
+}
 
 //this loops are used to store a card details as object
 for(let outerIndex = 0; outerIndex < colorCollection.length - 1; outerIndex++){
@@ -116,6 +142,6 @@ for(let outerIndex = 0; outerIndex < 4; outerIndex++){
 }
 cardCollection.map(card => commonDeck.push(card));
 
-randomCard(throwContainer, throwDeck);
-colorIdentifier();
-console.log(colorContainer.classList)
+randomCard(dropContainer, dropDeck);
+colorIdentifier(dropDeck[dropDeck.length - 1].color);
+gameBegin();
