@@ -68,12 +68,13 @@ const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCente
                                         <section class="bgLight innerCardContainer text${card.color} flexDisplay flexCenter flexItemCenter"><section class="cardIcon"><p class="cardValue">${card.value}</p></section></section></section>
                                         <section class="flexDisplay bottomIconRotate"><p class="textLight textBold">${card.topIcon}</p></section></section></div>`;
 
-const randomCard = (container, addDeck) => {
-    let card = parseInt(Math.random() * commonDeck.length);
-    if(addDeck == computerDeck)container.innerHTML += showCard(commonDeck[card]);
-    else  container.innerHTML += showCard(commonDeck[card]);
-    addDeck.push(commonDeck[card]);
-    commonDeck.splice(card, 1);
+const shuffleCards = deck => deck.sort(card => 0.5 - Math.random())
+
+const drawnCard = (container, addDeck) => {
+    let card = commonDeck.pop();
+    if(addDeck == computerDeck)container.innerHTML += showCard(card);
+    else  container.innerHTML += showCard(card);
+    addDeck.push(card);
     document.querySelector('#throwDeck .pointer').removeAttribute('onclick');
 }
 
@@ -94,31 +95,34 @@ const play = (playingSpeed) => {
 const colorIdentifier = () => colorContainer.classList = `colorIdentifier bg${dropDeck[dropDeck.length - 1].color}`;
 
 const computerTurn = () => {
-    randomCard(computerContainer, computerDeck);
+    drawnCard(computerContainer, computerDeck);
 };
 
 const computerCardDrop = () => {
+    const cardCollectionContainer = document.querySelector('#computerDeck');
     let cardIndex = 0;
-    let cardStatus = () => {
-        while(cardIndex < computerDeck.length){
-            if(dropDeck[dropDeck.length - 1].color == computerDeck[cardIndex].color){
-                return cardIndex;
-            }
-            else if(dropDeck[dropDeck.length - 1].value == computerDeck[cardIndex].value){
-                return cardIndex;
-            }
-            cardIndex++;
-        }
+    while(cardIndex < computerDeck.length){
+        if(dropDeck[dropDeck.length - 1].color == computerDeck[cardIndex].color)break;
+        else if(dropDeck[dropDeck.length - 1].value == computerDeck[cardIndex].value)break;
+        cardIndex++;
     }
-    if(!(cardStatus())){
-        computerTurn();
+
+    if((cardIndex) < computerDeck.length ){
+        let droppedCard = computerDeck.splice(cardIndex, 1);
+        dropDeck.push(droppedCard[0]);
+        cardCollectionContainer.removeChild(cardCollectionContainer.children[cardIndex]);
+        colorIdentifier();
+        dropCardContainer();
+        console.table(dropDeck[dropDeck.length - 1]);
+        console.log("\n\n\n");
+        console.table(computerDeck);
     }
-    else{            
-        console.log("Hello Peter!");
+    else{
+        computerTurn(); 
     }
 }
 
-const playerTurn = () => randomCard(playerContainer, playerDeck);
+const playerTurn = () => drawnCard(playerContainer, playerDeck);
 
 const gameBegin = () => {
     if(computerDeck.length > 5 && playerDeck.length > 5){
@@ -181,9 +185,11 @@ for(let outerIndex = 0; outerIndex < 4; outerIndex++){
         cardCollection.push(newCard);
     }
 }
+
 cardCollection.map(card => commonDeck.push(card));
 
-randomCard(dropContainer, dropDeck);
+shuffleCards(commonDeck);
+drawnCard(dropContainer, dropDeck);
 
 colorIdentifier();
 
