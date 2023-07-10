@@ -81,14 +81,14 @@
             </section>
         </div>
     </div>
-    <section class="popUp posAbsolute flexDisplay flexCenter flexItemCenter popUpShow">
+    <section class="popUp posAbsolute flexDisplay flexCenter flexItemCenter popUpShow srOnly" id="colorPopUp">
         <div class="bgDark popUpContainer flexDisplay flexDirCol flexEvenly flexItemCenter">
             <h2 class="textLight">SELECT A COLOR</h2>
             <section class="flexDisplay flexAround btnContainer">
-                <section><button class="btn bgRed pointer" onclick="popUpAnimation()"></button></section>
-                <section><button class="btn bgGreen pointer" onclick="popUpAnimation()"></button></section>
-                <section><button class="btn bgBlue pointer" onclick="popUpAnimation()"></button></section>
-                <section><button class="btn bgYellow pointer" onclick="popUpAnimation()"></button></section>
+                <section><button class="btn bgRed pointer" onclick="popUpAnimation(this.value)" value="Red"></button></section>
+                <section><button class="btn bgGreen pointer" onclick="popUpAnimation(this.value)" value="Green"></button></section>
+                <section><button class="btn bgBlue pointer" onclick="popUpAnimation(this.value)" value="Blue"></button></section>
+                <section><button class="btn bgYellow pointer" onclick="popUpAnimation(this.value)" value="Yellow"></button></section>
             </section>
         </div>
     </section>

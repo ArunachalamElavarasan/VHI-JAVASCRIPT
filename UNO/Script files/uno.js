@@ -6,38 +6,23 @@
                       *       Developer              : Arunachalam                         *
                       *       Creation date          : 03/07/2023      Ticket No:          *
                       *                                                                   **/
-//constant declaration
-const colorCollection = ["Blue", "Green", "Red", "Yellow", "Dark"];
-const valueCollection = [
-    {value: 0, topIcon: 0, point: 0},
-    {value: 1, topIcon: 1, point: 1},
-    {value: 2, topIcon: 2, point: 2},
-    {value: 3, topIcon: 3, point: 3},
-    {value: 4, topIcon: 4, point: 4},
-    {value: 5, topIcon: 5, point: 5},
-    {value: 6, topIcon: 6, point: 6},
-    {value: 7, topIcon: 7, point: 7},
-    {value: 8, topIcon: 8, point: 8},
-    {value: 9, topIcon: 9, point: 9},
-    {value: '<i class="fa-solid fa-rotate"></i>', topIcon: '<i class="fa-solid fa-rotate"></i>', point: 20},
-    {value: '<i class="fa-solid fa-ban"></i>', topIcon: '<i class="fa-solid fa-ban"></i>', point: 20},
-    {value: '<img src="/Images/twoCard.png" class="cardDraw">', topIcon: '+2', point: 20}
-];
+//Constant declaration
+const colorCollection = ["Blue", "Green", "Red", "Yellow"];
+const specialCollection = ['<i class="fa-solid fa-rotate"></i>', '<i class="fa-solid fa-ban"></i>', '<img src="/Images/twoCard.png" class="cardDraw">'];
+const specialIcon = ['<i class="fa-solid fa-rotate"></i>', '<i class="fa-solid fa-ban"></i>', '+2'];
 const colorBox =    `<section class="flexDisplay flexCenter flexItemCenter flexDirCol posRelative" style="height:60px; width:60px; transform: rotate(45deg)">
                     <section style="height: 50%; width: 100%;" class="flexDisplay"><section class="bgBlue boxShadow" style="height: 100%; width: 50%;"></section><section class="bgRed boxShadow" style="height: 100%; width: 50%;"></section></section>
                     <section style="height: 50%; width: 100%;" class="flexDisplay "><section class="bgGreen boxShadow" style="height: 100%; width: 50%;"></section><section class="bgYellow boxShadow" style="height: 100%; width: 50%;"></section></section>
                     <section class="posAbsolute"><h3 class="rotateAntiClockwise" style="font-size: 30px; color: black; text-shadow: 1px 2px 2px white;"></h3></section></section>`;
 
-const hiddenCard = `<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter"><section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
-                    <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative"><section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
-                    <section class="flexDisplay colorContainer"><section class="bgBlue smColorContainer boxShadow"></section><section class="bgRed smColorContainer boxShadow"></section></section><section class="flexDisplay colorContainer">
-                    <section class="bgGreen smColorContainer boxShadow"></section><section class="bgYellow smColorContainer boxShadow"></section></section></section><h1 class="textLight lgFont posAbsolute">4</h1></section></section></div>`;
+//Variable declaration
+let cardCollection = [];
+let playerDeck = [];
+let computerDeck = [];
+let commonDeck = [];
+let dropDeck = [];
+let cardAddStatus = false;
 
-
-const specialCollection = [
-    {value: colorBox, topIcon: "", point: 40 },
-    {value: colorBox, topIcon: "+4", point: 40 }
-]
 class Card{
     constructor(cardColor, cardValue, cardTopIcon, cardPoint){
         this.color = cardColor;
@@ -46,14 +31,42 @@ class Card{
         this.point = cardPoint;
     }
 }
+//this loop is used to push cards details into array as an object
+for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
+    for(let innerIndex = 0; innerIndex < 10; innerIndex++){
+        const newCard = new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex);
+        cardCollection.push(newCard);
+    }
+    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++){
+        const newCard = new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20);
+        cardCollection.push(newCard);
+    }
+    for(let innerIndex = 1; innerIndex < 10; innerIndex++){
+        const newCard = new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex);
+        cardCollection.push(newCard);
+    }
+    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++){
+        const newCard = new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20);
+        cardCollection.push(newCard);
+    }
+    let wildCard = new Card('Dark', colorBox, '', 50);
+    let wildDrawn = new Card('Dark', colorBox, '+4', 60);
+    cardCollection.push(wildCard, wildDrawn);
+}
+
+cardCollection.forEach(item => {
+    if(item.color == "Yellow"){
+        console.log(item);
+    }
+});
+
+const hiddenCard = `<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter"><section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
+                    <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative"><section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
+                    <section class="flexDisplay colorContainer"><section class="bgBlue smColorContainer boxShadow"></section><section class="bgRed smColorContainer boxShadow"></section></section><section class="flexDisplay colorContainer">
+                    <section class="bgGreen smColorContainer boxShadow"></section><section class="bgYellow smColorContainer boxShadow"></section></section></section><h1 class="textLight lgFont posAbsolute">4</h1></section></section></div>`;
 
 //Variables declaration
-let cardCollection = [];
-let computerDeck = [];
-let playerDeck = [];
-let commonDeck = [];
-let dropDeck = [];
-let cardAddStatus = false;
+
 
 //DOM input declaration
 const playerContainer = document.getElementById('playerDeck');
@@ -61,6 +74,7 @@ const computerContainer = document.getElementById('computerDeck');
 const dropContainer = document.getElementById('throwDeck');
 const colorContainer = document.getElementById('colorIdentifier');
 const passButton = document.getElementById('passButton');
+const colorSelector = document.getElementById('colorPopUp');
 
 //this function is return a card element that was showed
 const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick=dropCard(this)><section class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol">
@@ -70,6 +84,10 @@ const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCente
 
 //this function is used to shuffle card to play
 const shuffleCards = deck => deck.sort(card => 0.5 - Math.random())
+
+const popUpAnimation = item =>{
+    console.log(colorSelector.style.width);
+}
 
 //this function is used to drawn a card from deck
 const drawnCard = (container, addDeck) => {
@@ -177,25 +195,6 @@ const dropCard = (card) => {
 }
 
 //this loops are used to store a card details as object
-for(let outerIndex = 0; outerIndex < colorCollection.length - 1; outerIndex++){
-    for(let innerIndex = 0; innerIndex < valueCollection.length; innerIndex++){
-        const cardValue = valueCollection[innerIndex];
-        const newCard = new Card(colorCollection[outerIndex], cardValue.value, cardValue.topIcon, cardValue.point);
-        cardCollection.push(newCard);
-    }
-    for(let innerIndex = 1; innerIndex < valueCollection.length; innerIndex++){
-        const cardValue = valueCollection[innerIndex];
-        const newCard = new Card(colorCollection[outerIndex], cardValue.value, cardValue.topIcon, cardValue.point);
-        cardCollection.push(newCard);
-    }
-}
-for(let outerIndex = 0; outerIndex < 4; outerIndex++){
-    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++){
-        const cardValue = specialCollection[innerIndex];
-        const newCard = new Card(colorCollection[colorCollection.length - 1], cardValue.value, cardValue.topIcon, cardValue.point);
-        cardCollection.push(newCard);
-    }
-}
 
 cardCollection.map(card => commonDeck.push(card));
 
