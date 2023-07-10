@@ -74,7 +74,7 @@ const randomCard = (container, addDeck) => {
     else  container.innerHTML += showCard(commonDeck[card]);
     addDeck.push(commonDeck[card]);
     commonDeck.splice(card, 1);
-//    document.querySelector('#throwDeck .pointer').removeAttribute('onclick');
+    document.querySelector('#throwDeck .pointer').removeAttribute('onclick');
 }
 
 const dropCardContainer = () => dropContainer.innerHTML = showCard(dropDeck[(dropDeck.length) - 1]);
@@ -84,7 +84,7 @@ const play = (playingSpeed) => {
         playerTurn();
         cardAddStatus = false;
         setTimeout(() => {
-            computerTurn();
+            computerCardDrop();
             cardAddStatus = true;
         }, playingSpeed);
     }
@@ -93,7 +93,30 @@ const play = (playingSpeed) => {
 //this function is used to change the color of color identifier container
 const colorIdentifier = () => colorContainer.classList = `colorIdentifier bg${dropDeck[dropDeck.length - 1].color}`;
 
-const computerTurn = () => randomCard(computerContainer, computerDeck);
+const computerTurn = () => {
+    randomCard(computerContainer, computerDeck);
+};
+
+const computerCardDrop = () => {
+    let cardIndex = 0;
+    let cardStatus = () => {
+        while(cardIndex < computerDeck.length){
+            if(dropDeck[dropDeck.length - 1].color == computerDeck[cardIndex].color){
+                return cardIndex;
+            }
+            else if(dropDeck[dropDeck.length - 1].value == computerDeck[cardIndex].value){
+                return cardIndex;
+            }
+            cardIndex++;
+        }
+    }
+    if(!(cardStatus())){
+        computerTurn();
+    }
+    else{            
+        console.log("Hello Peter!");
+    }
+}
 
 const playerTurn = () => randomCard(playerContainer, playerDeck);
 
@@ -131,7 +154,7 @@ const dropCard = (card) => {
             dropCardContainer(); 
             cardAddStatus = false;
             setTimeout(() => {
-                computerTurn();
+                computerCardDrop();
                 cardAddStatus = true;
             }, 1000);
         }
