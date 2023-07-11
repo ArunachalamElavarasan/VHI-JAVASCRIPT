@@ -171,6 +171,7 @@ body{
     height: 35px;
     box-shadow: 1px 1px black inset;
     transform: rotate(45deg);
+    border: none;
 }
 .rotateAntiClockwise{
     transform: rotate(-45deg);
@@ -203,4 +204,10 @@ body{
 }
 .btnContainer{
     width: 300px;
+}
+.visibleNone{
+    visibility: hidden;
+}
+.rotateAnimation{
+    transform: rotate(1080deg);
 }

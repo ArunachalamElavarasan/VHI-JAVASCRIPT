@@ -34,16 +34,14 @@
 
         <section class="flexDisplay flexBetween flexItemCenter common">
           <section class="flexDisplay flexBetween flexDirCol commonBox">
-            <section>
+            <section id="tellUNO" class="visibleNone" style="transition: 1s;">
               <section
-                class="colorIdentifier textLight flexDisplay flexCenter flexItemCenter"
-                style="background-color: #06074b"
-              >
-                <p class="rotateAntiClockwise">UNO</p>
+                class="colorIdentifier bgLight flexDisplay flexCenter flexItemCenter">
+                <p class="rotateAntiClockwise"><b>UNO</b></p>
               </section>
             </section>
-            <section
-              class="colorIdentifier flexDisplay flexCenter flexItemCenter flexDirCol posRelative"
+            <button
+              class="colorIdentifier flexDisplay flexCenter flexItemCenter flexDirCol posRelative pointer visibleNone" onclick="tellUNO()" id="tellUNOButton"
             >
               <section style="height: 50%; width: 100%" class="flexDisplay">
                 <section
@@ -78,7 +76,7 @@
                 </h3>
               </section>
             </section>
-          </section>
+          </button>
 
           <section
             class="commonDeckContainer flexDisplay flexBetween flexItemCenter"
@@ -133,9 +131,9 @@
             <section>
               <section class="colorIdentifier" id="colorIdentifier"></section>
             </section>
-            <section>
+            <section >
               <button
-                class="btn bgVilot textLight pointer disabled"
+                class="btn bgVilot textLight pointer visibleNone"
                 id="passButton"
               >
                 <i class="fa-solid fa-angle-right cardIcon"></i>
