@@ -72,11 +72,9 @@ const shuffleCards = deck => {
 //this function is used to tell player has only one card
 const tellUNO = () => {    
     tellUNOContainer.classList.remove('visibleNone');
-    tellUNOContainer.classList.add('rotateAnimation');
     setTimeout(() => {
         tellUNOContainer.classList.add('visibleNone');
-        tellUNOContainer.classList.remove('rotateAnimation');
-    }, 3000);
+    }, 2000);
 }
 
 //this function is used to drawn a card from deck
@@ -98,6 +96,12 @@ const drawnCard = (container, addDeck) => {
         shuffleCards(commonDeck);
         drawnCard(dropContainer, dropDeck);
     }
+    if(playerDeck.length == 1){
+        tellUNOButton.classList.remove('visibleNone');
+    }
+    else{
+        tellUNOButton.classList.add('visibleNone');
+    }
 }
 
 //this function is used to change the color of color identifier container
@@ -110,7 +114,17 @@ const dropCardContainer = () => showCard(dropDeck[(dropDeck.length) - 1], dropCo
 const computerTurn = () => drawnCard(computerContainer, computerDeck);
 
 //this function is used to drop a card by player
-const playerTurn = () => drawnCard(playerContainer, playerDeck);
+const playerTurn = () => {
+    drawnCard(playerContainer, playerDeck);
+};
+
+//this function is used to add number of card as penalty
+const penalty = (cardCount, addDeck) => {
+    let cardAddContainer = (addDeck == playerDeck) ? playerContainer : computerContainer;
+    for(let index = 0; index < cardCount; index++){
+        drawnCard(cardAddContainer, addDeck);
+    }
+}
 
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
@@ -136,14 +150,14 @@ const computerCardDrop = () => {
 }
 
 //this function happen when match was begin
-const gameBegin = () => {
-    if(computerDeck.length > 5 && playerDeck.length > 5){
+const gameBegin = count => {
+    if(computerDeck.length > count && playerDeck.length > count){
         cardAddStatus = true;
         return 0;
     }
     playerTurn();
     computerTurn();
-    gameBegin();
+    gameBegin(count);
 }
 
 //this function is used to drop a card 
@@ -169,7 +183,7 @@ const dropCard = (card) => {
             setTimeout(() => {
                 computerCardDrop();
                 cardAddStatus = true;
-            }, 1000);
+            }, 500);
         }
     }
 }
@@ -195,13 +209,10 @@ for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50), new Card('Dark', colorBox.innerHTML, '+4', 60));
 }
 
-
 //this loops are used to store a card details as object
-
 cardCollection.map(card => commonDeck.push(card));
 
 shuffleCards(commonDeck);
-gameBegin();
+gameBegin(6);
 drawnCard(dropContainer, dropDeck);
 colorIdentifier();
-
