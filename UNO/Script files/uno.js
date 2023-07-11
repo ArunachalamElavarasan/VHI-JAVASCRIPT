@@ -47,12 +47,19 @@ const createHidedCard = () => {
 }
 
 //this function is return a card element that was showed
-const showCard = () => {
-    let card = openCardTemplate.content;
+const showCard = (cardItem, container) => {
+    let card = openCardTemplate.content.cloneNode(true);
     let cardColor = card.getElementById('cardColor');
-    cardColor.classList = "bgBlue card textLight flexDisplay flexBetween flexDirCol"
-    console.log(cardColor);
-    playerContainer.appendChild(card);
+    let topIcon = card.getElementById('topIcon');
+    let bottomIcon = card.getElementById('bottomIcon');
+    let textColor = card.getElementById('textColor');
+    let cardValue = card.getElementById('cardValue');
+    topIcon.innerHTML = bottomIcon.innerHTML = cardItem.topIcon;
+    cardValue.innerHTML = cardItem.value;
+    cardColor.classList = `bg${cardItem.color} card textLight flexDisplay flexBetween flexDirCol`
+    textColor.classList = `bgLight innerCardContainer text${cardItem.color} flexDisplay flexCenter flexItemCenter`
+    if(container == dropContainer && dropDeck.length > 1)dropContainer.removeChild(dropContainer.firstElementChild);
+    container.appendChild(card);
 };
 
 //this function is used to shuffle card to play
@@ -71,9 +78,6 @@ for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
 
 //Variables declaration
 
-
-
-
 const popUpAnimation = item =>{
     console.log(colorSelector.style.width);
 }
@@ -87,15 +91,13 @@ const drawnCard = (container, addDeck) => {
         }
         shuffleCards(commonDeck);
     }
-
     let card = commonDeck.pop();
-    if(addDeck == computerDeck)container.innerHTML += showCard(card);
-    else  container.innerHTML += showCard(card);
     addDeck.push(card);
+    (showCard(card, container))
 }
 
 //this function is used to drop card from container and show the card into dropped deck
-const dropCardContainer = () => dropContainer.innerHTML = showCard(dropDeck[(dropDeck.length) - 1]);
+const dropCardContainer = () => showCard(dropDeck[(dropDeck.length) - 1], dropContainer);
 
 //this function is executed when user clicks on card
 const play = (playingSpeed) => {
@@ -190,7 +192,6 @@ cardCollection.map(card => commonDeck.push(card));
 shuffleCards(commonDeck);
 
 gameBegin();
-
 drawnCard(dropContainer, dropDeck);
 
 colorIdentifier();
