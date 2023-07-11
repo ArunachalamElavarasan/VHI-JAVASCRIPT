@@ -10,10 +10,6 @@
 const colorCollection = ["Blue", "Green", "Red", "Yellow"];
 const specialCollection = ['<i class="fa-solid fa-rotate"></i>', '<i class="fa-solid fa-ban"></i>', '<img src="/Images/twoCard.png" class="cardDraw">'];
 const specialIcon = ['<i class="fa-solid fa-rotate"></i>', '<i class="fa-solid fa-ban"></i>', '+2'];
-const colorBox =    `<section class="flexDisplay flexCenter flexItemCenter flexDirCol posRelative" style="height:60px; width:60px; transform: rotate(45deg)">
-                    <section style="height: 50%; width: 100%;" class="flexDisplay"><section class="bgBlue boxShadow" style="height: 100%; width: 50%;"></section><section class="bgRed boxShadow" style="height: 100%; width: 50%;"></section></section>
-                    <section style="height: 50%; width: 100%;" class="flexDisplay "><section class="bgGreen boxShadow" style="height: 100%; width: 50%;"></section><section class="bgYellow boxShadow" style="height: 100%; width: 50%;"></section></section>
-                    <section class="posAbsolute"><h3 class="rotateAntiClockwise" style="font-size: 30px; color: black; text-shadow: 1px 2px 2px white;"></h3></section></section>`;
 
 //Variable declaration
 let cardCollection = [];
@@ -23,6 +19,15 @@ let commonDeck = [];
 let dropDeck = [];
 let cardAddStatus = false;
 
+const colorBox =
+    `<section class="flexDisplay flexCenter flexItemCenter flexDirCol posRelative" style="height:60px; width:60px; transform: rotate(45deg)">
+    <section style="height: 50%; width: 100%;" class="flexDisplay"><section class="bgBlue boxShadow" style="height: 100%; width: 50%;"></section><section class="bgRed boxShadow" style="height: 100%; width: 50%;"></section></section>
+    <section style="height: 50%; width: 100%;" class="flexDisplay "><section class="bgGreen boxShadow" style="height: 100%; width: 50%;"></section><section class="bgYellow boxShadow" style="height: 100%; width: 50%;"></section></section>
+    <section class="posAbsolute"><h3 class="rotateAntiClockwise" style="font-size: 30px; color: black; text-shadow: 1px 2px 2px white;"></h3></section></section>`;
+
+const createHidedCard = () => {
+    console.log("Hello Peter!g")
+}
 class Card{
     constructor(cardColor, cardValue, cardTopIcon, cardPoint){
         this.color = cardColor;
@@ -33,37 +38,17 @@ class Card{
 }
 //this loop is used to push cards details into array as an object
 for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
-    for(let innerIndex = 0; innerIndex < 10; innerIndex++){
-        const newCard = new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex);
-        cardCollection.push(newCard);
-    }
-    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++){
-        const newCard = new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20);
-        cardCollection.push(newCard);
-    }
-    for(let innerIndex = 1; innerIndex < 10; innerIndex++){
-        const newCard = new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex);
-        cardCollection.push(newCard);
-    }
-    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++){
-        const newCard = new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20);
-        cardCollection.push(newCard);
-    }
-    let wildCard = new Card('Dark', colorBox, '', 50);
-    let wildDrawn = new Card('Dark', colorBox, '+4', 60);
-    cardCollection.push(wildCard, wildDrawn);
+    for(let innerIndex = 0; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex));
+    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20));
+    for(let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex));
+    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20));
+    cardCollection.push(new Card('Dark', colorBox, '', 50), new Card('Dark', colorBox, '+4', 60));
 }
-
-cardCollection.forEach(item => {
-    if(item.color == "Yellow"){
-        console.log(item);
-    }
-});
 
 const hiddenCard = `<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter"><section class="bgDark card textLight flexDisplay flexCenter flexDirCol">
                     <section class="flexDisplay flexCenter flexItemCenter rotateBox posRelative"><section class="bgLight innerCardContainer textGreen flexDisplay flexCenter flexItemCenter flexDirCol">
                     <section class="flexDisplay colorContainer"><section class="bgBlue smColorContainer boxShadow"></section><section class="bgRed smColorContainer boxShadow"></section></section><section class="flexDisplay colorContainer">
-                    <section class="bgGreen smColorContainer boxShadow"></section><section class="bgYellow smColorContainer boxShadow"></section></section></section><h1 class="textLight lgFont posAbsolute">4</h1></section></section></div>`;
+                    <section class="bgGreen smColorContainer boxShadow"></section><section class="bgYellow smColorContainer boxShadow"></section></section></section><h1 class="textLight lgFont posAbsolute"></h1></section></section></div>`;
 
 //Variables declaration
 
