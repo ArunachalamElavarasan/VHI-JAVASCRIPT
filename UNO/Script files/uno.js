@@ -18,7 +18,9 @@ const dropContainer = document.getElementById('throwDeck');
 const colorContainer = document.getElementById('colorIdentifier');
 const passButton = document.getElementById('passButton');
 const colorSelector = document.getElementById('colorPopUp');
-const hidedCardTemplate = document.querySelector('template');
+const hidedCardTemplate = document.querySelector('#hidedCardTemplate');
+const colorBoxTemplate = document.querySelector('#colorBoxTemplate');
+const openCardTemplate = document.querySelector('#openCardTemplate')
 
 //Variable declaration
 let cardCollection = [];
@@ -38,15 +40,20 @@ class Card{
     }
 }
 
-const colorBox =
-    `<section class="flexDisplay flexCenter flexItemCenter flexDirCol posRelative" style="height:60px; width:60px; transform: rotate(45deg)">
-    <section style="height: 50%; width: 100%;" class="flexDisplay"><section class="bgBlue boxShadow" style="height: 100%; width: 50%;"></section><section class="bgRed boxShadow" style="height: 100%; width: 50%;"></section></section>
-    <section style="height: 50%; width: 100%;" class="flexDisplay "><section class="bgGreen boxShadow" style="height: 100%; width: 50%;"></section><section class="bgYellow boxShadow" style="height: 100%; width: 50%;"></section></section>
-    <section class="posAbsolute"><h3 class="rotateAntiClockwise" style="font-size: 30px; color: black; text-shadow: 1px 2px 2px white;"></h3></section></section>`;
+const colorBox = document.getElementById('colorBoxTemplate');
 
 const createHidedCard = () => {
     computerContainer.appendChild(hidedCardTemplate.content.cloneNode(true));
 }
+
+//this function is return a card element that was showed
+const showCard = () => {
+    let card = openCardTemplate.content;
+    let cardColor = card.getElementById('cardColor');
+    cardColor.classList = "bgBlue card textLight flexDisplay flexBetween flexDirCol"
+    console.log(cardColor);
+    playerContainer.appendChild(card);
+};
 
 //this function is used to shuffle card to play
 const shuffleCards = deck => {
@@ -59,16 +66,12 @@ for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
     for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20));
     for(let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex));
     for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20));
-    cardCollection.push(new Card('Dark', colorBox, '', 50), new Card('Dark', colorBox, '+4', 60));
+    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50), new Card('Dark', colorBox.innerHTML, '+4', 60));
 }
 
 //Variables declaration
 
-//this function is return a card element that was showed
-const showCard = card =>`<div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer" onclick=dropCard(this)><section class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol">
-                                        <section class="flexDisplay"><p class="textLight textBold">${card.topIcon}</p></section><section class="flexDisplay flexCenter rotateBox">
-                                        <section class="bgLight innerCardContainer text${card.color} flexDisplay flexCenter flexItemCenter"><section class="cardIcon"><p class="cardValue">${card.value}</p></section></section></section>
-                                        <section class="flexDisplay bottomIconRotate"><p class="textLight textBold">${card.topIcon}</p></section></section></div>`;
+
 
 
 const popUpAnimation = item =>{
@@ -185,14 +188,9 @@ const dropCard = (card) => {
 cardCollection.map(card => commonDeck.push(card));
 
 shuffleCards(commonDeck);
-shuffleCards(commonDeck);
 
 gameBegin();
 
 drawnCard(dropContainer, dropDeck);
 
 colorIdentifier();
-
-document.querySelector('#throwDeck .pointer').removeAttribute('onclick');
-
-createHidedCard();

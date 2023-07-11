@@ -11,9 +11,12 @@
       href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
       rel="stylesheet"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
+      rel="stylesheet"
+    />
     <script
       src="https://kit.fontawesome.com/1de50aa74b.js"
       crossorigin="anonymous"
@@ -187,7 +190,7 @@
         </section>
       </div>
     </section>
-    <template class="hidedCardTemplate">
+    <template id="hidedCardTemplate">
       <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter">
         <section
           class="bgDark card textLight flexDisplay flexCenter flexDirCol"
@@ -208,6 +211,69 @@
               </section>
             </section>
             <h1 class="textLight lgFont posAbsolute">UNO</h1>
+          </section>
+        </section>
+      </div>
+    </template>
+    <template id="colorBoxTemplate">
+      <section
+        class="flexDisplay flexCenter flexItemCenter flexDirCol posRelative"
+        style="height: 60px; width: 60px; transform: rotate(45deg)"
+      >
+        <section style="height: 50%; width: 100%" class="flexDisplay">
+          <section
+            class="bgBlue boxShadow"
+            style="height: 100%; width: 50%"
+          ></section>
+          <section
+            class="bgRed boxShadow"
+            style="height: 100%; width: 50%"
+          ></section>
+        </section>
+        <section style="height: 50%; width: 100%" class="flexDisplay">
+          <section
+            class="bgGreen boxShadow"
+            style="height: 100%; width: 50%"
+          ></section>
+          <section
+            class="bgYellow boxShadow"
+            style="height: 100%; width: 50%"
+          ></section>
+        </section>
+        <section class="posAbsolute">
+          <h3
+            class="rotateAntiClockwise"
+            style="
+              font-size: 30px;
+              color: black;
+              text-shadow: 1px 2px 2px white;
+            "
+          ></h3>
+        </section>
+      </section>
+    </template>
+    <template id="openCardTemplate">
+      <div
+        class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer"
+        onclick="dropCard(this)"
+      >
+        <section
+          class="bg${card.color} card textLight flexDisplay flexBetween flexDirCol"
+        id="cardColor">
+          <section class="flexDisplay">
+            <span class="textLight textBold" id="topIcon"></span>
+          </section>
+          <section class="flexDisplay flexCenter rotateBox">
+            <section
+              class="bgLight innerCardContainer text${card.color} flexDisplay flexCenter flexItemCenter"
+             id="textColor">
+              <section class="cardIcon">
+                <span class="cardValue" id="cardValue"></span>
+              </section>
+            </section>
+          </section>
+          <section class="flexDisplay bottomIconRotate">
+            <span class="textLight textBold" id="topIcon"></span>
           </section>
         </section>
       </div>
