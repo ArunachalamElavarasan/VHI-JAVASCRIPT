@@ -133,10 +133,12 @@ body{
     cursor: pointer;
 }
 .lgFont{
-    font-size: 50px;
+    font-size: 20px;
     transform: rotate(-45deg);
     z-index: 1;
-    right: 38%;
+    right: 22%;
+    font-family: 'Bungee', cursive;
+    text-shadow: 0 0 8px #FFBE00, 0 0 10px #FFBE00;
 }
 .colorContainer{
     height: 50%;
