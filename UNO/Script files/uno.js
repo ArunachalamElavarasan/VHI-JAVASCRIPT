@@ -153,20 +153,26 @@ const computerCardDrop = () => {
                     penalty(4, playerDeck);
                     setTimeout(() => {
                         computerCardDrop();
+                        playerTurnStatus = true;
                     }, 2000);
                 break;
                 case "+2":
                     penalty(2, playerDeck);
                     setTimeout(() => {
-                        computerCardDrop()
+                        computerCardDrop();    
+                        playerTurnStatus = true;
                     }, 2000);
                 break;
                 case specialIcon[0]:
+                case specialIcon[1]:
+                case specialIcon[2]:
                     setTimeout(() => {
-                        computerCardDrop();
+                        computerCardDrop();    
+                        playerTurnStatus = true;
                     }, 2000);
                 break;
-            }
+            }            
+            playerTurnStatus = true;
         }
         else{
             playerTurnStatus = true;
@@ -176,6 +182,7 @@ const computerCardDrop = () => {
     else{
         drawnCard(computerContainer, computerDeck);
     }
+    console.log(playerTurnStatus);
 }
 
 //this function is used to drop a card 
@@ -209,7 +216,9 @@ const dropCard = (card) => {
                 }
             }
             else playerTurnStatus = false;
-            
+                    
+            console.log(playerTurnStatus);
+
             if(!playerTurnStatus){
                 setTimeout(() => {
                     computerCardDrop();
@@ -225,13 +234,13 @@ const play = playingSpeed => {
     if(!checkCardAvailable && playerTurnStatus){
         drawnCard(playerContainer, playerDeck);
         playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? true : false;
-        if(!playerTurnStatus){
-            setTimeout(() => {
-                computerCardDrop();
-                playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? false : true;
-                if(!playerTurnStatus)play(playingSpeed);
-            }, playingSpeed);
-        }
+    }
+    if(!playerTurnStatus){
+        setTimeout(() => {
+            computerCardDrop();
+            playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? false : true;
+            if(!playerTurnStatus)play(playingSpeed);
+        }, playingSpeed);
     }
 }
 
@@ -249,10 +258,10 @@ cardCollection.map(card => commonDeck.push(card));
 shuffleCards(commonDeck);
 
 //this loop is used to drawn seven card for each player to begin match
-for(let index = 0; index < 7; index++){
+for(let index = 0; index < 3; index++){
     drawnCard(playerContainer, playerDeck);
     drawnCard(computerContainer, computerDeck);
 }
-gi
+
 drawnCard(dropContainer, dropDeck);
 colorIdentifier();
