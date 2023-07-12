@@ -209,7 +209,7 @@ for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50), new Card('Dark', colorBox.innerHTML, '+4', 60));
 }
 
-//this loops are used to store a card details as object
+//this loops are used to store a card details as objectgit
 cardCollection.map(card => commonDeck.push(card));
 
 shuffleCards(commonDeck);
