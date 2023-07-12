@@ -33,6 +33,19 @@ let commonDeck = [];
 let dropDeck = [];
 let playerTurnStatus = true;
 
+//this loop is used to push cards details into array as an object
+for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
+    for (let innerIndex = 0; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
+    for (let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
+    for (let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
+    for (let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
+    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 60, 'specialCard'));
+}
+
+//this loops are used to store a card details as objectgit
+cardCollection.map(card => commonDeck.push(card));
+shuffleCards(commonDeck);
+
 //Class declaration to create card details as objects
 class Card {
     constructor(cardColor, cardValue, cardTopIcon, cardPoint, cardType) {
@@ -72,7 +85,7 @@ const shuffleCards = deck => {
 const cardAvailableStatus = cardDeck => {
     let cardIndex = 0;
     while (cardIndex < cardDeck.length) {
-        if (dropDeck[dropDeck.length - 1].color == cardDeck[cardIndex].color || dropDeck[dropDeck.length - 1].color == 'dark') break;
+        if (dropDeck[dropDeck.length - 1].color == cardDeck[cardIndex].color || dropDeck[dropDeck.length - 1].topIcon == '+4' || dropDeck[dropDeck.length - 1].topIcon == '') break;
         else if (dropDeck[dropDeck.length - 1].value == cardDeck[cardIndex].value) break;
         cardIndex++;
     }
@@ -80,9 +93,13 @@ const cardAvailableStatus = cardDeck => {
 }
 
 //this function is used to tell player has only one card
-const tellUNO = () => {
-    clearTimeout(penaltyCard)
+const tellUNO = penaltyItem => {
+
     tellUNOContainer.classList.remove('visibleNone');
+
+    setTimeout(() => {
+        tellUNOContainer.classList.add('visibleNone');
+    }, 2000);
 }
 
 //this function is used to drawn a card from deck
@@ -155,7 +172,7 @@ const computerCardDrop = () => {
                     colorSelector.classList.add('popUpAnimation')
                     setTimeout(() => {
                         computerCardDrop();
-                    }, 1000);
+                    }, 2000);
                     break;
                 case "+2":
                     penalty(2, playerDeck);
@@ -196,7 +213,7 @@ const dropCard = (card) => {
                 cardId++;
             }
         }
-        if (playerDeck[cardPos()].color == dropDeck[dropDeck.length - 1].color || playerDeck[cardPos()].value == dropDeck[dropDeck.length - 1].value || playerDeck[cardPos()].color == 'Dark'){
+        if (playerDeck[cardPos()].color == dropDeck[dropDeck.length - 1].color || playerDeck[cardPos()].value == dropDeck[dropDeck.length - 1].value || playerDeck[cardPos()].color == 'Dark') {
             let droppedCard = playerDeck.splice(cardPos(), 1);
             dropDeck.push(droppedCard[0]);
             card.remove();
@@ -206,13 +223,17 @@ const dropCard = (card) => {
                 switch (droppedCard[0].topIcon) {
                     case "+4":
                         penalty(4, computerDeck);
-                        setTimeout(() => {    
+                        setTimeout(() => {
                             colorSelector.classList.add('popUpShow');
                         }, 500);
                         break;
                     case "":
-                        setTimeout(() => {    
+                        setTimeout(() => {
                             colorSelector.classList.add('popUpShow');
+                            playerTurnStatus = false;
+                            setTimeout(() => {
+                                computerCardDrop();
+                            }, 2000);
                         }, 500);
                         break;
                     case "+2":
@@ -221,12 +242,13 @@ const dropCard = (card) => {
                 }
             }
             else playerTurnStatus = false;
-            
+
             if (playerDeck.length == 1) {
                 tellUNOButton.classList.remove('visibleNone');
                 let penaltyCard = setTimeout(() => {
                     penalty(2, playerDeck);
                 }, 2000);
+                tellUNOButton.onclick = tellUNO;
             }
             else {
                 tellUNOButton.classList.add('visibleNone');
@@ -247,10 +269,10 @@ const play = playingSpeed => {
 
     if (!checkCardAvailable && playerTurnStatus) {
         drawnCard(playerContainer, playerDeck);
-        if(dropDeck[dropDeck.length - 1].type == 'specialCard'){
+        if (dropDeck[dropDeck.length - 1].type == 'specialCard') {
             playerTurnStatus = true;
         }
-        else{
+        else {
             playerTurnStatus = false;
         }
         if (!playerTurnStatus) {
@@ -264,21 +286,8 @@ const play = playingSpeed => {
 
 }
 
-//this loop is used to push cards details into array as an object
-for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
-    for (let innerIndex = 0; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
-    for (let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
-    for (let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
-    for (let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
-    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 60, 'specialCard'));
-}
-
-//this loops are used to store a card details as objectgit
-cardCollection.map(card => commonDeck.push(card));
-shuffleCards(commonDeck);
-
 //this loop is used to drawn seven card for each player to begin match
-for (let index = 0; index < 5; index++) {
+for (let index = 0; index < 7; index++) {
     drawnCard(playerContainer, playerDeck);
     drawnCard(computerContainer, computerDeck);
 }
