@@ -33,7 +33,6 @@ let commonDeck = [];
 let dropDeck = [];
 let cardAddStatus = false;
 let playerTurnStatus = true;
-let cardAvailableStatus = false;
 
 //Class declaration to create card details as objects
 class Card{
@@ -67,6 +66,17 @@ const createHidedCard = () => computerContainer.appendChild(hidedCardTemplate.co
 //this function is used to shuffle card to play
 const shuffleCards = deck => {
     for(let index = 0; index < 3; index++)deck.sort(card => 0.50 - Math.random())
+}
+
+//this function is allows user to drawn card from common deck when matching card is not available
+const cardAvailableStatus = cardDeck => {
+    let cardIndex = 0;
+    while(cardIndex < cardDeck.length){
+        if(dropDeck[dropDeck.length - 1].color == cardDeck[cardIndex].color)break;
+        else if(dropDeck[dropDeck.length - 1].value == cardDeck[cardIndex].value)break;
+        cardIndex++;
+    }
+    return cardIndex;
 }
 
 //this function is used to tell player has only one card
@@ -129,14 +139,9 @@ const penalty = (cardCount, addDeck) => {
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
     const cardCollectionContainer = document.querySelector('#computerDeck');
-    let cardIndex = 0;
-    while(cardIndex < computerDeck.length){
-        if(dropDeck[dropDeck.length - 1].color == computerDeck[cardIndex].color)break;
-        else if(dropDeck[dropDeck.length - 1].value == computerDeck[cardIndex].value)break;
-        cardIndex++;
-    }
+    const cardIndex = cardAvailableStatus(computerDeck);
 
-    if((cardIndex) < computerDeck.length ){
+    if(cardIndex < computerDeck.length){
         let droppedCard = computerDeck.splice(cardIndex, 1);
         dropDeck.push(droppedCard[0]);
         cardCollectionContainer.removeChild(cardCollectionContainer.children[cardIndex]);
@@ -190,7 +195,8 @@ const dropCard = (card) => {
 
 //this function is executed when user clicks on card
 const play = (playingSpeed) => {
-    if(cardAddStatus){
+    const checkCardAvailable = (cardAvailableStatus(playerDeck) < playerDeck.length) ? true : false;
+    if(!checkCardAvailable && cardAddStatus){
         playerTurn();
         cardAddStatus = false;
         setTimeout(() => {
