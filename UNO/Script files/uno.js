@@ -31,16 +31,16 @@ let playerDeck = [];
 let computerDeck = [];
 let commonDeck = [];
 let dropDeck = [];
-let cardAddStatus = false;
 let playerTurnStatus = true;
 
 //Class declaration to create card details as objects
 class Card{
-    constructor(cardColor, cardValue, cardTopIcon, cardPoint){
+    constructor(cardColor, cardValue, cardTopIcon, cardPoint, cardType){
         this.color = cardColor;
         this.value = cardValue;
         this.topIcon = cardTopIcon;
         this.point = cardPoint;
+        this.type = cardType;
     }
 }
 
@@ -147,6 +147,25 @@ const computerCardDrop = () => {
         cardCollectionContainer.removeChild(cardCollectionContainer.children[cardIndex]);
         colorIdentifier();
         dropCardContainer();
+        if(droppedCard[0].type == "specialCard"){
+            playerTurnStatus = false;
+            switch(droppedCard[0].topIcon){
+                case "+4":
+                    penalty(4, playerDeck);
+                break;
+                case "+2":
+                    penalty(2, playerDeck);
+                break;
+                case specialIcon[0]:
+                    setTimeout(() => {
+                        computerCardDrop(g);
+                    }, 1100);
+                break;
+            }
+        }
+        else{
+            playerTurnStatus = true;
+        }
         if(computerDeck.length == 1)tellUNO();
     }
     else{
@@ -157,7 +176,7 @@ const computerCardDrop = () => {
 //this function happen when match was begin
 const gameBegin = count => {
     if(computerDeck.length > count && playerDeck.length > count){
-        cardAddStatus = true;
+        playerTurnStatus = true;
         return 0;
     }
     playerTurn();
@@ -167,7 +186,7 @@ const gameBegin = count => {
 
 //this function is used to drop a card 
 const dropCard = (card) => {
-    if(cardAddStatus){
+    if(playerTurnStatus){
         const playerCardCollection = document.querySelectorAll('#playerDeck .pointer');
         let cardId = 0;
         const cardPos = () => {
@@ -184,35 +203,51 @@ const dropCard = (card) => {
             card.remove();
             colorIdentifier();
             dropCardContainer(); 
-            cardAddStatus = false;
-            setTimeout(() => {
-                computerCardDrop();
-                cardAddStatus = true;
-            }, 500);
+            if(droppedCard[0].type == "specialCard"){
+                playerTurnStatus = true
+                switch(droppedCard[0].topIcon){
+                    case "+4":
+                        penalty(4, computerDeck);
+                    break;
+                    case "+2":
+                        penalty(2, computerDeck);
+                    break;
+                }
+            }
+            else playerTurnStatus = false;
+            
+            if(!playerTurnStatus){
+                setTimeout(() => {
+                    computerCardDrop();
+                }, 500);
+            }
         }
     }
 }
 
 //this function is executed when user clicks on card
-const play = (playingSpeed) => {
+const play = playingSpeed => {
     const checkCardAvailable = (cardAvailableStatus(playerDeck) < playerDeck.length) ? true : false;
-    if(!checkCardAvailable && cardAddStatus){
+    if(!checkCardAvailable && playerTurnStatus){
         playerTurn();
-        cardAddStatus = false;
+        playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? true : false;
+    }
+    if(!playerTurnStatus){
         setTimeout(() => {
             computerCardDrop();
-            cardAddStatus = true;
+            playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? false : true;
+            if(!playerTurnStatus)play(playingSpeed);
         }, playingSpeed);
     }
 }
 
 //this loop is used to push cards details into array as an object
 for(let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++){
-    for(let innerIndex = 0; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex));
-    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20));
-    for(let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex));
-    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20));
-    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50), new Card('Dark', colorBox.innerHTML, '+4', 60));
+    for(let innerIndex = 0; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
+    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
+    for(let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
+    for(let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
+    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 60, 'specialCard'));
 }
 
 //this loops are used to store a card details as objectgit
