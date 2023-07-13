@@ -82,8 +82,8 @@
             class="commonDeckContainer flexDisplay flexBetween flexItemCenter"
           >
             <div
-              class="cardContainer bgLight flexDisplay flexCenter flexItemCenter pointer"
-              onclick="play(500)"
+              class="cardContainer bgLight flexDisplay flexCenter flexItemCenter"
+              onclick="play(500)" id="drawnDeck"
             >
               <section
                 class="bgDark card textLight flexDisplay flexCenter flexDirCol"
@@ -129,7 +129,7 @@
           </section>
           <section class="flexDisplay flexBetween flexDirCol commonBox">
             <section>
-              <section class="colorIdentifier" id="colorIdentifier"></section>
+              <section class="colorIdentifier visibleNone" id="colorIdentifier"></section>
             </section>
             <section >
               <button
