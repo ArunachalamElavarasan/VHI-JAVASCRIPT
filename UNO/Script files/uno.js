@@ -94,18 +94,16 @@ const passTurn = () => {
 //this function is allows user to drawn card from common deck when matching card is not available
 const cardAvailableStatus = cardDeck => {
     for(let index = 0; index < cardDeck.length; index++){
-        console.log(dropDeck[dropDeck.length - 1]);
         if (dropDeck[dropDeck.length - 1].color == cardDeck[index].color){
             return index;
         }
-        if(dropDeck[dropDeck.length - 1].value == colorBox.innerHTML){
+        if(cardDeck[index].value == colorBox.innerHTML){
             return index;
         }
         if (dropDeck[dropDeck.length - 1].value == cardDeck[index].value) {
             return index;
         };
     }
-    console.log(cardDeck.length + " it returns because there is no card was matched.")
     return (cardDeck.length + 1);
 }
 
@@ -249,8 +247,8 @@ const computerCardDrop = () => {
     else {
         drawnCard(computerContainer, computerDeck);
         playerTurnStatus = true;
+        colorIdentifier();
     }
-    console.log(playerTurnStatus + ". This was show from computerDropCard function.")
 }
 
 //this function is used to drop a card 
@@ -292,7 +290,6 @@ const dropCard = (card) => {
                 }
             }
             else playerTurnStatus = false;
-            console.log(playerTurnStatus + ". The status was show from dropCard function.");
             if (playerDeck.length == 1) {
                 tellUNOButton.classList.remove('visibleNone');
                 let penaltyCard = setTimeout(() => {
@@ -321,7 +318,6 @@ const play = playingSpeed => {
     if (!checkCardAvailable && playerTurnStatus) {
         drawnCard(playerContainer, playerDeck);
         let check = (cardAvailableStatus(playerDeck) < playerDeck.length) ? true : false;
-        console.log('Hello')
         if (check) {
             playerTurnStatus = true;
             passButton.classList.remove('visibleNone');
