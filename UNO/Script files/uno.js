@@ -63,13 +63,8 @@ const showCard = (cardItem, container) => {
     container.appendChild(card);
 };
 
-//this function is used to create a closed card
-// const createHidedCard = () => computerContainer.appendChild();
-
 //this function is used to shuffle card to play
-const shuffleCards = deck => {
-    deck.sort(() => 0.50 - Math.random())
-}
+const shuffleCards = deck => deck.sort(() => 0.50 - Math.random());
 
 //this loop is used to push cards details into array as an object
 for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
@@ -80,7 +75,7 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 60, 'specialCard'));
 }
 
-//this loops are used to store a card details as objectgit
+//this loops are used to store a card details as object
 cardCollection.map(card => commonDeck.push(card));
 shuffleCards(commonDeck);
 
@@ -89,21 +84,15 @@ const passTurn = () => {
     passButton.classList.add('visibleNone');
     setTimeout(() => {
         computerCardDrop();
-    }, 2000);
+    }, 3000);
 }
 
 //this function is allows user to drawn card from common deck when matching card is not available
 const cardAvailableStatus = cardDeck => {
     for (let index = 0; index < cardDeck.length; index++) {
-        if (dropDeck[dropDeck.length - 1].color == cardDeck[index].color) {
-            return index;
-        }
-        if (cardDeck[index].value == colorBox.innerHTML) {
-            return index;
-        }
-        if (dropDeck[dropDeck.length - 1].value == cardDeck[index].value) {
-            return index;
-        };
+        if (dropDeck[dropDeck.length - 1].color == cardDeck[index].color) return index;
+        if (cardDeck[index].value == colorBox.innerHTML) return index;
+        if (dropDeck[dropDeck.length - 1].value == cardDeck[index].value) return index;
     }
     return (cardDeck.length + 1);
 }
@@ -120,31 +109,13 @@ const tellUNO = () => {
 //this function is used to drawn a card from deck
 const drawnCard = (container, addDeck) => {
     if (commonDeck.length == 0) {
-        for (let index = 0; index < (dropDeck.length - 1); index++) {
-            let droppedCard = dropDeck.shift();
-            commonDeck.push(droppedCard);
-        }
+        for (let index = 0; index < (dropDeck.length - 1); index++) commonDeck.push(dropDeck.shift());
         shuffleCards(commonDeck);
     }
     let card = commonDeck.pop();
     if ((addDeck == dropDeck && card.value >= 0 && card.value < 10) || addDeck == playerDeck || addDeck == computerDeck) {
         addDeck.push(card);
         showCard(card, container);
-        // if(dropDeck[dropDeck.length - 1].color == card.color){
-        //     console.log('Hello Peter!');
-        // }
-        // else{
-        //     console.log('Peter is not here');
-        // }
-        try {
-            if (dropDeck[dropDeck.length - 1].color == card.color) {
-
-            }
-            else {
-                playerTurnStatus = false;
-            }
-        } catch (error) {
-        }
     }
     // else if(addDeck == computerDeck){
     //     addDeck.push(card);
@@ -178,7 +149,6 @@ const colorIdentifier = () => {
 
 const popUpAnimation = color => {
     colorSelector.classList.remove('popUpShow');
-    console.log('choosed color is : ' + color)
     dropDeck[dropDeck.length - 1].color = color;
     colorIdentifier();
     if (dropDeck[dropDeck.length - 1].topIcon == "") {
@@ -257,7 +227,6 @@ const computerCardDrop = () => {
 
 //this function is used to drop a card 
 const dropCard = (card) => {
-    console.log(card);
     if (playerTurnStatus) {
         const playerCardCollection = document.querySelectorAll('#playerDeck .pointer');
         let cardId = 0;
