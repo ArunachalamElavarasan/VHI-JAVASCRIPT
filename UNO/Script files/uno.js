@@ -36,7 +36,7 @@ let dropDeck = [];
 let playerTurnStatus = true;
 let unoPenalty;
 
-//Class declaration to create card details as objects
+//Class to create a card object
 class Card {
     constructor(cardColor, cardValue, cardTopIcon, cardPoint, cardType) {
         this.color = cardColor;
@@ -47,44 +47,20 @@ class Card {
     }
 }
 
-//this function is return a card element that was showed
-const showCard = (cardItem, container) => {
-    let card = openCardTemplate.content.cloneNode(true);
-    let cardColor = card.getElementById('cardColor');
-    let topIcon = card.getElementById('topIcon');
-    let bottomIcon = card.getElementById('bottomIcon');
-    let textColor = card.getElementById('textColor');
-    let cardValue = card.getElementById('cardValue');
-    topIcon.innerHTML = bottomIcon.innerHTML = cardItem.topIcon;
-    cardValue.innerHTML = cardItem.value;
-    cardColor.classList = `bg${cardItem.color} card textLight flexDisplay flexBetween flexDirCol`
-    textColor.classList = `bgLight innerCardContainer text${cardItem.color} flexDisplay flexCenter flexItemCenter`
-    if (container == dropContainer && dropDeck.length > 1) dropContainer.removeChild(dropContainer.firstElementChild);
-    container.appendChild(card);
-};
-
-//this function is used to shuffle card to play
-const shuffleCards = deck => deck.sort(() => 0.50 - Math.random());
-
-//this loop is used to push cards details into array as an object
+//push 108 cards as an object into array 
 for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
-    for (let innerIndex = 0; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
-    for (let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
-    for (let innerIndex = 1; innerIndex < 10; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
-    for (let innerIndex = 0; innerIndex < specialCollection.length; innerIndex++)cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[innerIndex], specialIcon[innerIndex], 20, 'specialCard'));
-    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 60, 'specialCard'));
-}
-
-//this loops are used to store a card details as object
-cardCollection.map(card => commonDeck.push(card));
-shuffleCards(commonDeck);
-
-const passTurn = () => {
-    playerTurnStatus = false;
-    passButton.classList.add('visibleNone');
-    setTimeout(() => {
-        computerCardDrop();
-    }, 3000);
+    for (let count = 0; count < 2; count++) {
+        for (let innerIndex = 0; innerIndex < 13; innerIndex++) {
+            if (innerIndex < 10) {
+                if (count == 1 && innerIndex == 0) continue;
+                cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
+            }
+            else {
+                cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[(innerIndex % 10)], specialIcon[(innerIndex % 10)], 20, 'specialCard'));
+            }
+        }
+    }
+    cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
 }
 
 //this function is allows user to drawn card from common deck when matching card is not available
@@ -105,71 +81,6 @@ const tellUNO = () => {
         tellUNOContainer.classList.add('visibleNone');
     }, 2000);
 }
-
-//this function is used to drawn a card from deck
-const drawnCard = (container, addDeck) => {
-    if (commonDeck.length == 0) {
-        for (let index = 0; index < (dropDeck.length - 1); index++) commonDeck.push(dropDeck.shift());
-        shuffleCards(commonDeck);
-    }
-    let card = commonDeck.pop();
-    if ((addDeck == dropDeck && card.value >= 0 && card.value < 10) || addDeck == playerDeck || addDeck == computerDeck) {
-        addDeck.push(card);
-        showCard(card, container);
-    }
-    // else if(addDeck == computerDeck){
-    //     addDeck.push(card);
-    //     console.log("Hello peter!")
-    //     createHidedCard();
-    // }
-    else {
-        commonDeck.push(card);
-        shuffleCards(commonDeck);
-        drawnCard(dropContainer, dropDeck);
-    }
-    if (playerDeck.length == 1) {
-        tellUNOButton.classList.remove('visibleNone');
-    }
-    else {
-        tellUNOButton.classList.add('visibleNone');
-    }
-}
-
-//this function is used to change the color of color identifier container
-const colorIdentifier = () => {
-    colorContainer.classList = "";
-    colorContainer.classList.add('visibleNone');
-
-    if (dropDeck[dropDeck.length - 1].topIcon == "" || dropDeck[dropDeck.length - 1].topIcon == "+4") {
-        colorContainer.classList.add('colorIdentifier', `bg${dropDeck[dropDeck.length - 1].color}`);
-        colorContainer.classList.remove('visibleNone');
-        console.log('It happends');
-    }
-};
-
-const popUpAnimation = color => {
-    colorSelector.classList.remove('popUpShow');
-    dropDeck[dropDeck.length - 1].color = color;
-    colorIdentifier();
-    if (dropDeck[dropDeck.length - 1].topIcon == "") {
-        playerTurnStatus = false;
-        setTimeout(() => {
-            computerCardDrop();
-        }, 3000);
-    }
-}
-
-//this function is used to drop card from container and show the card into dropped deck
-const dropCardContainer = () => showCard(dropDeck[(dropDeck.length) - 1], dropContainer);
-
-//this function is used to add number of card as penalty
-const penalty = (cardCount, addDeck) => {
-    let cardAddContainer = (addDeck == playerDeck) ? playerContainer : computerContainer;
-    for (let index = 0; index < cardCount; index++) {
-        drawnCard(cardAddContainer, addDeck);
-    }
-}
-
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
     const cardCollectionContainer = document.querySelector('#computerDeck');
@@ -226,22 +137,13 @@ const computerCardDrop = () => {
 }
 
 //this function is used to drop a card 
-const dropCard = (card) => {
+const dropCard = card => {
     if (playerTurnStatus) {
-        const playerCardCollection = document.querySelectorAll('#playerDeck .pointer');
-        let cardId = 0;
-        const cardPos = () => {
-            while (cardId < playerCardCollection.length) {
-                if (playerCardCollection[cardId] == card) {
-                    return cardId;
-                }
-                cardId++;
-            }
-        }
-        if (playerDeck[cardPos()].color == dropDeck[dropDeck.length - 1].color || playerDeck[cardPos()].value == dropDeck[dropDeck.length - 1].value || playerDeck[cardPos()].color == 'Dark') {
-            let droppedCard = playerDeck.splice(cardPos(), 1);
+        const cardPos = playerDeck.indexOf(card);
+        if (card.color == dropDeck[dropDeck.length - 1].color || card.value == dropDeck[dropDeck.length - 1].value || card.color == 'Dark') {
+            let droppedCard = playerDeck.splice(cardPos, 1);
             dropDeck.push(droppedCard[0]);
-            card.remove();
+            playerContainer.removeChild(playerContainer.children[cardPos]);
             dropCardContainer();
             if (droppedCard[0].type == "specialCard") {
                 switch (droppedCard[0].topIcon) {
@@ -283,6 +185,100 @@ const dropCard = (card) => {
         }
     }
 }
+//this function is return a card element that was showed
+const createCard = (cardItem, container) => {
+    let card = openCardTemplate.content.cloneNode(true);
+    let cardColor = card.getElementById('cardColor');
+    let topIcon = card.getElementById('topIcon');
+    let bottomIcon = card.getElementById('bottomIcon');
+    let textColor = card.getElementById('textColor');
+    let cardValue = card.getElementById('cardValue');
+    topIcon.innerHTML = bottomIcon.innerHTML = cardItem.topIcon;
+    cardValue.innerHTML = cardItem.value;
+    cardColor.classList = `bg${cardItem.color} card textLight flexDisplay flexBetween flexDirCol`
+    textColor.classList = `bgLight innerCardContainer text${cardItem.color} flexDisplay flexCenter flexItemCenter`
+    if (container == dropContainer && dropDeck.length > 1) dropContainer.removeChild(dropContainer.firstElementChild);
+    container.appendChild(card);
+    let click = container.lastElementChild;
+    click.addEventListener('click', () => dropCard(cardItem));
+};
+
+//shuffle common deck cards
+const shuffleCommonDeck = () => commonDeck.sort(() => 0.50 - Math.random());
+
+//this loops are used to store a card details as object
+cardCollection.map(card => commonDeck.push(card));
+shuffleCommonDeck();
+
+//pass or play function
+const passTurn = () => {
+    playerTurnStatus = false;
+    passButton.classList.add('visibleNone');
+    setTimeout(() => {
+        computerCardDrop();
+    }, 3000);
+}
+
+//this function is used to drawn a card from deck
+const drawnCard = (container, addDeck) => {
+    if (commonDeck.length == 0) {
+        for (let index = 0; index < (dropDeck.length - 1); index++) commonDeck.push(dropDeck.shift());
+        shuffleCommonDeck(commonDeck);
+    }
+    let card = commonDeck.pop();
+    if ((addDeck == dropDeck && card.value >= 0 && card.value < 10) || addDeck == playerDeck || addDeck == computerDeck) {
+        addDeck.push(card);
+        createCard(card, container);
+    }
+    // else if(addDeck == computerDeck){
+    //     addDeck.push(card);
+    //     createHidedCard();
+    // }
+    else {
+        commonDeck.push(card);
+        shuffleCommonDeck(commonDeck);
+        drawnCard(dropContainer, dropDeck);
+    }
+    if (playerDeck.length == 1) tellUNOButton.classList.remove('visibleNone');
+    else tellUNOButton.classList.add('visibleNone');
+}
+
+//this function is used to change the color of color identifier container
+const colorIdentifier = () => {
+    colorContainer.classList = "";
+    colorContainer.classList.add('visibleNone');
+
+    if (dropDeck[dropDeck.length - 1].topIcon == "" || dropDeck[dropDeck.length - 1].topIcon == "+4") {
+        colorContainer.classList.add('colorIdentifier', `bg${dropDeck[dropDeck.length - 1].color}`);
+        colorContainer.classList.remove('visibleNone');
+        console.log('It happends');
+    }
+};
+
+const popUpAnimation = color => {
+    colorSelector.classList.remove('popUpShow');
+    dropDeck[dropDeck.length - 1].color = color;
+    colorIdentifier();
+    if (dropDeck[dropDeck.length - 1].topIcon == "") {
+        playerTurnStatus = false;
+        setTimeout(() => {
+            computerCardDrop();
+        }, 3000);
+    }
+}
+
+//this function is used to drop card from container and show the card into dropped deck
+const dropCardContainer = () => createCard(dropDeck[(dropDeck.length) - 1], dropContainer);
+
+//this function is used to add number of card as penalty
+const penalty = (cardCount, addDeck) => {
+    let cardAddContainer = (addDeck == playerDeck) ? playerContainer : computerContainer;
+    for (let index = 0; index < cardCount; index++) {
+        drawnCard(cardAddContainer, addDeck);
+    }
+}
+
+
 
 //this function is executed when user clicks on card
 const play = playingSpeed => {
