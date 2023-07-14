@@ -17,9 +17,15 @@ const computerContainer = document.getElementById('computerDeck');
 const dropContainer = document.getElementById('throwDeck');
 const drawnDeckContainer = document.getElementById('drawnDeckContainer');
 const colorContainer = document.getElementById('colorIdentifier');
+const startBtnContainer = document.getElementById('startBtnContainer');
 const passButton = document.getElementById('passButton');
 const colorSelector = document.getElementById('colorPopUp');
+const popUpContainer = document.getElementById('popUp');
 const colorBox = document.getElementById('colorBoxTemplate');
+const wonStatusContainer = document.getElementById('wonStatusContainer');
+const computerPoints = document.getElementById('computerPoints');
+const playerPoints = document.getElementById('playerPoints');
+const matchStatus = document.getElementById('matchStatus');
 const tellUNOContainer = document.getElementById('tellUNO');
 const tellUNOButton = document.getElementById('tellUNOButton');
 const hidedCardTemplate = document.querySelector('#hidedCardTemplate');
@@ -28,6 +34,7 @@ const openCardTemplate = document.querySelector('#openCardTemplate');
 const createHidedCard = hidedCardTemplate.content.cloneNode(true);
 
 //Variable declaration
+const computerPlayTime = 2000;
 let cardCollection = [];
 let playerDeck = [];
 let computerDeck = [];
@@ -63,6 +70,21 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
 }
 
+const gameFinished = () => {
+    const getPoints = (deck) => {
+        let score = 0;
+        for (let index = 0; index < deck.length; index++) score = score + deck[index].point;
+        return score;
+    }
+    let playerPoint = getPoints(computerDeck);
+    let computerPoint = getPoints(playerDeck);
+    playerPoints.innerHTML = `${playerPoint} Points`;
+    computerPoints.innerHTML = `${computerPoint} Points`
+    matchStatus.innerHTML = (playerPoint > computerPoint) ? 'YOU WON' : (computerPoint > playerPoint) ? 'COMPUTER WON' : 'MATCH TIED';
+    wonStatusContainer.classList.remove('displayNone');
+    popUpContainer.classList.add('popUpShow');
+}
+
 //this function is allows user to drawn card from common deck when matching card is not available
 const cardAvailableStatus = cardDeck => {
     for (let index = 0; index < cardDeck.length; index++) {
@@ -81,26 +103,42 @@ const tellUNO = () => {
         tellUNOContainer.classList.add('visibleNone');
     }, 2000);
 }
+
+//this function is used to change the color of color identifier container
+const colorIdentifier = () => {
+    colorContainer.classList = "";
+    colorContainer.classList.add('visibleNone');
+
+    if (dropDeck[dropDeck.length - 1].topIcon == "" || dropDeck[dropDeck.length - 1].topIcon == "+4") {
+        colorContainer.classList.add('colorIdentifier', `bg${dropDeck[dropDeck.length - 1].color}`);
+        colorContainer.classList.remove('visibleNone');
+    }
+};
+
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
-    const cardCollectionContainer = document.querySelector('#computerDeck');
     const cardIndex = cardAvailableStatus(computerDeck);
     if (cardIndex < computerDeck.length) {
         let droppedCard = computerDeck.splice(cardIndex, 1);
         dropDeck.push(droppedCard[0]);
-        cardCollectionContainer.removeChild(cardCollectionContainer.children[cardIndex]);
+        computerContainer.removeChild(computerContainer.children[cardIndex]);
         dropCardContainer();
+        if (computerDeck.length == 0) {
+            gameFinished();
+            playerTurnStatus = false;
+            return 0;
+        }
         if (droppedCard[0].type == "specialCard") {
             playerTurnStatus = false;
             switch (droppedCard[0].topIcon) {
                 case "+4":
-                    penalty(4, playerDeck);
+                    penalty(4, playerDeck, playerContainer);
                     let randColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
                     dropDeck[dropDeck.length - 1].color = randColor;
                     colorIdentifier();
                     setTimeout(() => {
                         computerCardDrop();
-                    }, 2000);
+                    }, computerPlayTime);
                     break;
                 case "":
                     let wildColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
@@ -109,30 +147,37 @@ const computerCardDrop = () => {
                     playerTurnStatus = true;
                     break;
                 case "+2":
-                    penalty(2, playerDeck);
+                    penalty(2, playerDeck, playerContainer);
                     setTimeout(() => {
                         computerCardDrop();
-                    }, 2000);
+                    }, computerPlayTime);
                     break;
                 case specialIcon[0]:
                 case specialIcon[1]:
                 case specialIcon[2]:
                     setTimeout(() => {
                         computerCardDrop();
-                    }, 2000);
+                    }, computerPlayTime);
                     break;
             }
         }
-        else {
-            playerTurnStatus = true;
-        }
+        else playerTurnStatus = true;
         if (computerDeck.length == 1) tellUNO();
     }
     else {
         drawnCard(computerContainer, computerDeck);
-        playerTurnStatus = true;
-        colorContainer.classList = "";
-        colorContainer.classList.add('visibleNone');
+        let checkCard = cardAvailableStatus(computerDeck);
+        if (checkCard < computerDeck.length) {
+            playerTurnStatus = false;
+            setTimeout(() => {
+                computerCardDrop();
+            }, computerPlayTime);
+        }
+        else {
+            playerTurnStatus = true;
+            colorContainer.classList = "";
+            colorContainer.classList.add('visibleNone');
+        }
     }
 }
 
@@ -145,32 +190,40 @@ const dropCard = card => {
             dropDeck.push(droppedCard[0]);
             playerContainer.removeChild(playerContainer.children[cardPos]);
             dropCardContainer();
+            if (playerDeck.length == 0) {
+                gameFinished();
+                playerTurnStatus = true;
+                return 0;
+            }
             if (droppedCard[0].type == "specialCard") {
                 switch (droppedCard[0].topIcon) {
                     case "+4":
-                        penalty(4, computerDeck);
+                        penalty(4, computerDeck, computerContainer);
                         playerTurnStatus = true;
                         setTimeout(() => {
-                            colorSelector.classList.add('popUpShow');
+                            popUpContainer.classList.add('popUpShow');
+                            colorSelector.classList.remove('displayNone');
                         }, 500);
                         break;
                     case "":
                         setTimeout(() => {
-                            colorSelector.classList.add('popUpShow');
+                            popUpContainer.classList.add('popUpShow');
+                            colorSelector.classList.remove('displayNone');
                         }, 500);
                         break;
                     case "+2":
-                        penalty(2, computerDeck);
+                        penalty(2, computerDeck, computerContainer);
                         playerTurnStatus = true;
                         break;
                 }
             }
             else playerTurnStatus = false;
-            colorIdentifier();
+            colorContainer.classList = "";
+            colorContainer.classList.add('visibleNone');
             if (playerDeck.length == 1) {
                 tellUNOButton.classList.remove('visibleNone');
                 unoPenalty = setTimeout(() => {
-                    penalty(2, playerDeck);
+                    penalty(2, playerDeck, playerContainer);
                 }, 2000);
             }
             else {
@@ -180,7 +233,7 @@ const dropCard = card => {
             if (!playerTurnStatus) {
                 setTimeout(() => {
                     computerCardDrop();
-                }, 1000);
+                }, computerPlayTime);
             }
         }
     }
@@ -216,7 +269,7 @@ const passTurn = () => {
     passButton.classList.add('visibleNone');
     setTimeout(() => {
         computerCardDrop();
-    }, 3000);
+    }, computerPlayTime);
 }
 
 //this function is used to drawn a card from deck
@@ -243,27 +296,17 @@ const drawnCard = (container, addDeck) => {
     else tellUNOButton.classList.add('visibleNone');
 }
 
-//this function is used to change the color of color identifier container
-const colorIdentifier = () => {
-    colorContainer.classList = "";
-    colorContainer.classList.add('visibleNone');
-
-    if (dropDeck[dropDeck.length - 1].topIcon == "" || dropDeck[dropDeck.length - 1].topIcon == "+4") {
-        colorContainer.classList.add('colorIdentifier', `bg${dropDeck[dropDeck.length - 1].color}`);
-        colorContainer.classList.remove('visibleNone');
-        console.log('It happends');
-    }
-};
-
 const popUpAnimation = color => {
-    colorSelector.classList.remove('popUpShow');
+    popUpContainer.classList.remove('popUpShow');
+    setTimeout(() => {
+        colorSelector.classList.add('displayNone');
+    }, 1000);
     dropDeck[dropDeck.length - 1].color = color;
-    colorIdentifier();
     if (dropDeck[dropDeck.length - 1].topIcon == "") {
         playerTurnStatus = false;
         setTimeout(() => {
             computerCardDrop();
-        }, 3000);
+        }, computerPlayTime);
     }
 }
 
@@ -271,19 +314,22 @@ const popUpAnimation = color => {
 const dropCardContainer = () => createCard(dropDeck[(dropDeck.length) - 1], dropContainer);
 
 //this function is used to add number of card as penalty
-const penalty = (cardCount, addDeck) => {
-    let cardAddContainer = (addDeck == playerDeck) ? playerContainer : computerContainer;
-    for (let index = 0; index < cardCount; index++) {
-        drawnCard(cardAddContainer, addDeck);
-    }
+const penalty = (cardCount, addDeck, container) => {
+    let count = 0;
+    playerTurnStatus = false;
+    let addPenaltyCard = setInterval(() => {
+        drawnCard(container, addDeck);
+        count++;
+        if (count == cardCount) {
+            clearInterval(addPenaltyCard);
+            playerTurnStatus = true;
+        }
+    }, 300);
 }
 
-
-
 //this function is executed when user clicks on card
-const play = playingSpeed => {
+const play = () => {
     const checkCardAvailable = (cardAvailableStatus(playerDeck) < playerDeck.length) ? true : false;
-
     if (!checkCardAvailable && playerTurnStatus) {
         drawnCard(playerContainer, playerDeck);
         let check = (cardAvailableStatus(playerDeck) < playerDeck.length) ? true : false;
@@ -291,24 +337,25 @@ const play = playingSpeed => {
             playerTurnStatus = true;
             passButton.classList.remove('visibleNone');
         }
-        else {
-            playerTurnStatus = false;
-        }
+        else playerTurnStatus = false;
         if (!playerTurnStatus) {
             setTimeout(() => {
                 computerCardDrop();
                 playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? false : true;
-                if (!playerTurnStatus) play(playingSpeed);
-            }, playingSpeed);
+                if (!playerTurnStatus) play();
+            }, computerPlayTime);
         }
     }
-
 }
 
-//this loop is used to drawn seven card for each player to begin match
-for (let index = 0; index < 7; index++) {
-    drawnCard(playerContainer, playerDeck);
-    drawnCard(computerContainer, computerDeck);
+const startGame = () => {
+    popUpContainer.classList.remove('popUpShow');
+    startBtnContainer.classList.add('displayNone');
+    setTimeout(() => {
+        for (let index = 0; index < 7; index++) {
+            drawnCard(playerContainer, playerDeck);
+            drawnCard(computerContainer, computerDeck);
+        }
+        drawnCard(dropContainer, dropDeck);
+    }, 500);
 }
-
-drawnCard(dropContainer, dropDeck);

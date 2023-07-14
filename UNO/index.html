@@ -36,8 +36,8 @@
           <section class="flexDisplay flexBetween flexDirCol commonBox">
             <section id="tellUNO" class="visibleNone" style="transition: 1s;">
               <section
-                class="colorIdentifier bgLight flexDisplay flexCenter flexItemCenter">
-                <p class="rotateAntiClockwise"><b>UNO</b></p>
+                class="colorIdentifierflexDisplay flexCenter flexItemCenter">
+                <p><img src="Images/uno.png" alt="" style="width: 50px; height: auto;"></p>
               </section>
             </section>
             <button
@@ -149,11 +149,36 @@
       </div>
     </div>
     <section
-      class="popUp posAbsolute flexDisplay flexCenter flexItemCenter"
-      id="colorPopUp"
+      class="popUp posAbsolute flexDisplay flexCenter flexItemCenter popUpShow" id="popUp"
     >
+    <div class="flexDisplay flexDirCol flexBetween flexItemCenter textLight">
+      <section class="bgDark statusContainer flexDisplay flexItemCenter flexDirCol displayNone" id="wonStatusContainer">
+        <h2 id="matchStatus"></h2>
+        <section style="width: 100%; height: 100px;" class="flexDisplay flexItemCenter flexAround flexDirCol">
+          <section style="width: 90%;" class="flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay flexBetween">
+              <h2>Player</h2>
+              <h2 id="playerPoints">0 Points</h2>
+            </section>
+            <section class="thinLine bgLight"></section>
+          </section>
+          <section style="width: 90%;" class="flexDisplay flexDirCol flexBetween">
+            <section class="flexDisplay flexBetween">
+              <h2>Computer</h2>
+              <h2 id="computerPoints">0 Points</h2>
+            </section>
+            <section class="thinLine bgLight"></section>
+          </section>
+        </section>
+        </section>
+    </div>
+      <div style="width: 100%; height: 250px;" class="flexDisplay flexDirCol flexBetween flexItemCenter" id="startBtnContainer">
+        <img src="Images/UNO icon.png" alt="" class="introImage">
+        <button class="pointer bgVilot textLight startBtn" onclick="startGame()">Start Game</button>
+      </div>
       <div
-        class="bgDark popUpContainer flexDisplay flexDirCol flexEvenly flexItemCenter"
+        class="bgDark popUpContainer flexDisplay flexDirCol flexEvenly flexItemCenter displayNone"
+        id="colorPopUp"
       >
         <h2 class="textLight">SELECT A COLOR</h2>
         <section class="flexDisplay flexAround btnContainer">
@@ -187,6 +212,27 @@
           </section>
         </section>
       </div>
+    </section>
+    <section class="textLight posAbsolute playerName nonTurn" style="top: 61%;">
+      <b>Player</b>      
+      <section class="thinLine bgLight"></section>
+    </section>
+    <section class="textLight posAbsolute playerName nonTurn " style="top: 31%;">
+      <section class="thinLine bgLight"></section>
+      <b>Computer</b>
+    </section>
+    <section class="textLight posAbsolute" style="width: 80px; top: 40%; font-size: 30px; left: 10%;">
+      <ul class="flexDisplay flexBetween"> 
+        <li id="minutes">
+          05
+        </li>
+        <li>
+           : 
+        </li>
+        <li id="seconds">
+          00
+        </li>
+      </ul>
     </section>
     <template id="hidedCardTemplate">
       <div class="cardContainer bgLight flexDisplay flexCenter flexItemCenter">

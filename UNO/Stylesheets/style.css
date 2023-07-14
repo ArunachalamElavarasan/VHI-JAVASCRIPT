@@ -2,6 +2,7 @@
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
+    list-style-type: none;
 }
 body{
     background: url("../Images/backgroundImage") center no-repeat;
@@ -184,10 +185,34 @@ body{
 .halfRotate{
     transform: rotate(180deg);
 }
+.introImage{
+    width: 400px;
+    height: auto;
+}
+.displayNone{
+    display: none;
+}
+.startBtn{
+    width: 150px;
+    height: 40px;
+    font-size: 22px;
+    border: none;
+    border-radius: 30px;
+    transition: 0.2s;
+}
+.statusContainer{
+    width: 400px;
+    height: 200px;
+}
+/* .startBtn:hover{
+    width: 180px;
+    height: 50px;
+    font-size: 26px;
+} */
 .popUp{
     width: 100%;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.9);
     z-index: 2;
     top: 100vh;
     transition: 0.5s;
@@ -209,4 +234,17 @@ body{
 }
 .rotateAnimation{
     transform: rotate(1080deg);
+}
+.playerName{
+    left: 25%;
+    font-size: 25px;
+    transition: 0.5s;
+}
+.nonTurn{
+    opacity: 20%;
+    width: 50%;
+}
+.thinLine{
+    height: 3px;
+    border-radius: 50%;   
 }
