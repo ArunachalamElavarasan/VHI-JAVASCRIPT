@@ -4,7 +4,7 @@
  *       Developed for          : VHITECH Training Program            *
  *       Maintenance History                                          *
  *       Developer              : Arunachalam                         *
- *       Creation date          : 03/07/2023      Ticket No:          *
+ *       Creation date          : 10/07/2023      Ticket No:          *
  *                                                                   **/
 //Constant declaration
 const colorCollection = ["Blue", "Green", "Red", "Yellow"];
@@ -23,6 +23,8 @@ const colorSelector = document.getElementById('colorPopUp');
 const popUpContainer = document.getElementById('popUp');
 const colorBox = document.getElementById('colorBoxTemplate');
 const wonStatusContainer = document.getElementById('wonStatusContainer');
+const outputMinutes = document.getElementById('minutes');
+const outputSeconds = document.getElementById('seconds');
 const computerPoints = document.getElementById('computerPoints');
 const playerPoints = document.getElementById('playerPoints');
 const matchStatus = document.getElementById('matchStatus');
@@ -42,6 +44,9 @@ let commonDeck = [];
 let dropDeck = [];
 let playerTurnStatus = true;
 let unoPenalty;
+let stopWatch;
+let stopMinutes = 1;
+let stopSeconds = 60;
 
 //Class to create a card object
 class Card {
@@ -70,14 +75,16 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
 }
 
+//this function happends when games has been finished
 const gameFinished = () => {
+    clearInterval(stopWatch);
     const getPoints = (deck) => {
         let score = 0;
         for (let index = 0; index < deck.length; index++) score = score + deck[index].point;
         return score;
     }
-    let playerPoint = getPoints(computerDeck);
-    let computerPoint = getPoints(playerDeck);
+    const playerPoint = getPoints(computerDeck);
+    const computerPoint = getPoints(playerDeck);
     playerPoints.innerHTML = `${playerPoint} Points`;
     computerPoints.innerHTML = `${computerPoint} Points`
     matchStatus.innerHTML = (playerPoint > computerPoint) ? 'YOU WON' : (computerPoint > playerPoint) ? 'COMPUTER WON' : 'MATCH TIED';
@@ -259,10 +266,6 @@ const createCard = (cardItem, container) => {
 //shuffle common deck cards
 const shuffleCommonDeck = () => commonDeck.sort(() => 0.50 - Math.random());
 
-//this loops are used to store a card details as object
-cardCollection.map(card => commonDeck.push(card));
-shuffleCommonDeck();
-
 //pass or play function
 const passTurn = () => {
     playerTurnStatus = false;
@@ -351,11 +354,28 @@ const play = () => {
 const startGame = () => {
     popUpContainer.classList.remove('popUpShow');
     startBtnContainer.classList.add('displayNone');
+    cardCollection.map(card => commonDeck.push(card));
+    shuffleCommonDeck();
     setTimeout(() => {
-        for (let index = 0; index < 7; index++) {
+        for (let index = 0; index < 2; index++) {
             drawnCard(playerContainer, playerDeck);
             drawnCard(computerContainer, computerDeck);
         }
         drawnCard(dropContainer, dropDeck);
     }, 500);
+    outputMinutes.innerHTML = stopMinutes;
+    outputSeconds.innerHTML = stopSeconds;
+    stopWatch = setInterval(() => {
+        stopSeconds--;
+        if(stopSeconds == 0){
+            stopMinutes--;
+            if(stopMinutes == 0){
+                clearInterval(startTime);
+                gameFinished();
+            }
+            outputMinutes.innerHTML = stopMinutes;
+        }
+        if(stopSeconds == 0) stopSeconds = 60;
+        outputSeconds.innerHTML = stopSeconds;
+    }, 1000);
 }
