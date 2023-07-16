@@ -45,8 +45,8 @@ let dropDeck = [];
 let playerTurnStatus = true;
 let unoPenalty;
 let stopWatch;
-let stopMinutes = 1;
-let stopSeconds = 60;
+let stopMinutes = 4;
+let stopSeconds = 59;
 
 //Class to create a card object
 class Card {
@@ -78,6 +78,7 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
 //this function happends when games has been finished
 const gameFinished = () => {
     clearInterval(stopWatch);
+    playerTurnStatus = true;
     const getPoints = (deck) => {
         let score = 0;
         for (let index = 0; index < deck.length; index++) score = score + deck[index].point;
@@ -122,33 +123,47 @@ const colorIdentifier = () => {
     }
 };
 
+//this function is used to add number of card as penalty
+const penalty = (cardCount, addDeck, container) => {
+    let count = 0;
+    playerTurnStatus = false;
+    let addPenaltyCard = setInterval(() => {
+        drawnCard(container, addDeck);
+        count++;
+        if (count == cardCount) {
+            clearInterval(addPenaltyCard);
+            playerTurnStatus = true;
+        }
+    }, 300);
+}
+
 const wildDrawnCard = (count, addDeck, addContainer) => {
     penalty(count, addDeck, addContainer);
-    if(addDeck == playerDeck){
+    if (addDeck == playerDeck) {
         let randColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
-            dropDeck[dropDeck.length - 1].color = randColor;
-            colorIdentifier();
-            setTimeout(() => {
-                computerCardDrop();
-            }, computerPlayTime);
+        dropDeck[dropDeck.length - 1].color = randColor;
+        colorIdentifier();
+        setTimeout(() => {
+            computerCardDrop();
+        }, computerPlayTime);
         return "";
     }
     playerTurnStatus = true;
     setTimeout(() => {
         popUpContainer.classList.add('popUpShow');
         colorSelector.classList.remove('displayNone');
-    }, 500);            
+    }, 500);
 }
 
 const wildCard = deck => {
-    if(deck == playerDeck){
+    if (deck == playerDeck) {
         setTimeout(() => {
             popUpContainer.classList.add('popUpShow');
             colorSelector.classList.remove('displayNone');
         }, 500);
         return ""
     }
-    if(deck == computerDeck){
+    if (deck == computerDeck) {
         let wildColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
         dropDeck[dropDeck.length - 1].color = wildColor;
         colorIdentifier();
@@ -158,36 +173,40 @@ const wildCard = deck => {
 
 const addTwoCards = (addDeck, addContainer) => {
     penalty(2, addDeck, addContainer);
-    if(deck == playerDeck){
+    if (addDeck == playerDeck) {
         setTimeout(() => computerCardDrop(), computerPlayTime);
         return "";
     }
     playerTurnStatus = true;
 }
 const specialCardDrop = (card, deck) => {
-    if (card.type == 'specialCard') {
+    if (card[0].type == 'specialCard') {
         let oppositePlayer = (deck == playerDeck) ? computerDeck : playerDeck;
-        let oppositeContainer = (deck == playerDeck) ? playerContainer : computerContainer;
+        let oppositeContainer = (deck == playerDeck) ? computerContainer : playerContainer;
         playerTurnStatus = (deck == playerDeck) ? true : false;
 
-        if (card.topIcon == "+4") {
+        if (card[0].topIcon == "+4") {
             wildDrawnCard(4, oppositePlayer, oppositeContainer);
             return "";
         }
-        if (card.topIcon == "") {
+        if (card[0].topIcon == "") {
             wildCard(deck);
             return "";
         }
-        if (card.topIcon == "+2") {
+        if (card[0].topIcon == "+2") {
             addTwoCards(oppositePlayer, oppositeContainer);
             return "";
         }
-        if (card.topIcon == specialIcon[0] || card.topIcon == specialIcon[1] || card.topIcon == specialIcon[2] && deck == computerDeck) {
+        if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1] || card[0].topIcon == specialIcon[2]) && deck == computerDeck) {
+            console.log('Hello peter!')
             setTimeout(() => computerCardDrop(), computerPlayTime);
             return "";
         }
+        else{
+            playerTurnStatus = true;
+        }
     }
-    else playerTurnStatus = true;
+    else playerTurnStatus = (deck == playerDeck) ? false : true;
 }
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
@@ -236,6 +255,7 @@ const dropCard = card => {
                 return "";
             }
             specialCardDrop(droppedCard, playerDeck);
+
             colorContainer.classList = "";
             colorContainer.classList.add('visibleNone');
             if (playerDeck.length == 1) {
@@ -299,7 +319,7 @@ const drawnCard = (container, addDeck) => {
     }
     // else if(addDeck == computerDeck){
     //     addDeck.push(card);
-    //     createHidedCard();
+    //     computerContainer.appendChild(createHidedCard);
     // }
     else {
         commonDeck.push(card);
@@ -326,20 +346,6 @@ const popUpAnimation = color => {
 
 //this function is used to drop card from container and show the card into dropped deck
 const dropCardContainer = () => createCard(dropDeck[(dropDeck.length) - 1], dropContainer);
-
-//this function is used to add number of card as penalty
-const penalty = (cardCount, addDeck, container) => {
-    let count = 0;
-    playerTurnStatus = false;
-    let addPenaltyCard = setInterval(() => {
-        drawnCard(container, addDeck);
-        count++;
-        if (count == cardCount) {
-            clearInterval(addPenaltyCard);
-            playerTurnStatus = true;
-        }
-    }, 300);
-}
 
 //this function is executed when user clicks on card
 const play = () => {
@@ -368,7 +374,7 @@ const startGame = () => {
     cardCollection.map(card => commonDeck.push(card));
     shuffleCommonDeck();
     setTimeout(() => {
-        for (let index = 0; index < 2; index++) {
+        for (let index = 0; index < 7; index++) {
             drawnCard(playerContainer, playerDeck);
             drawnCard(computerContainer, computerDeck);
         }
@@ -381,7 +387,7 @@ const startGame = () => {
         if (stopSeconds == 0) {
             stopMinutes--;
             if (stopMinutes == 0) {
-                clearInterval(startTime);
+                clearInterval(stopWatch);
                 gameFinished();
             }
             outputMinutes.innerHTML = stopMinutes;
