@@ -122,6 +122,73 @@ const colorIdentifier = () => {
     }
 };
 
+const wildDrawnCard = (count, addDeck, addContainer) => {
+    penalty(count, addDeck, addContainer);
+    if(addDeck == playerDeck){
+        let randColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
+            dropDeck[dropDeck.length - 1].color = randColor;
+            colorIdentifier();
+            setTimeout(() => {
+                computerCardDrop();
+            }, computerPlayTime);
+        return "";
+    }
+    playerTurnStatus = true;
+    setTimeout(() => {
+        popUpContainer.classList.add('popUpShow');
+        colorSelector.classList.remove('displayNone');
+    }, 500);            
+}
+
+const wildCard = deck => {
+    if(deck == playerDeck){
+        setTimeout(() => {
+            popUpContainer.classList.add('popUpShow');
+            colorSelector.classList.remove('displayNone');
+        }, 500);
+        return ""
+    }
+    if(deck == computerDeck){
+        let wildColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
+        dropDeck[dropDeck.length - 1].color = wildColor;
+        colorIdentifier();
+        playerTurnStatus = true;
+    }
+}
+
+const addTwoCards = (addDeck, addContainer) => {
+    penalty(2, addDeck, addContainer);
+    if(deck == playerDeck){
+        setTimeout(() => computerCardDrop(), computerPlayTime);
+        return "";
+    }
+    playerTurnStatus = true;
+}
+const specialCardDrop = (card, deck) => {
+    if (card.type == 'specialCard') {
+        let oppositePlayer = (deck == playerDeck) ? computerDeck : playerDeck;
+        let oppositeContainer = (deck == playerDeck) ? playerContainer : computerContainer;
+        playerTurnStatus = (deck == playerDeck) ? true : false;
+
+        if (card.topIcon == "+4") {
+            wildDrawnCard(4, oppositePlayer, oppositeContainer);
+            return "";
+        }
+        if (card.topIcon == "") {
+            wildCard(deck);
+            return "";
+        }
+        if (card.topIcon == "+2") {
+            addTwoCards(oppositePlayer, oppositeContainer);
+            return "";
+        }
+        if (card.topIcon == specialIcon[0] || card.topIcon == specialIcon[1] || card.topIcon == specialIcon[2] && deck == computerDeck) {
+            setTimeout(() => computerCardDrop(), computerPlayTime);
+            return "";
+        }
+    }
+    else playerTurnStatus = true;
+}
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
     const cardIndex = cardAvailableStatus(computerDeck);
@@ -135,40 +202,7 @@ const computerCardDrop = () => {
             playerTurnStatus = false;
             return 0;
         }
-        if (droppedCard[0].type == "specialCard") {
-            playerTurnStatus = false;
-            switch (droppedCard[0].topIcon) {
-                case "+4":
-                    penalty(4, playerDeck, playerContainer);
-                    let randColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
-                    dropDeck[dropDeck.length - 1].color = randColor;
-                    colorIdentifier();
-                    setTimeout(() => {
-                        computerCardDrop();
-                    }, computerPlayTime);
-                    break;
-                case "":
-                    let wildColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
-                    dropDeck[dropDeck.length - 1].color = wildColor;
-                    colorIdentifier();
-                    playerTurnStatus = true;
-                    break;
-                case "+2":
-                    penalty(2, playerDeck, playerContainer);
-                    setTimeout(() => {
-                        computerCardDrop();
-                    }, computerPlayTime);
-                    break;
-                case specialIcon[0]:
-                case specialIcon[1]:
-                case specialIcon[2]:
-                    setTimeout(() => {
-                        computerCardDrop();
-                    }, computerPlayTime);
-                    break;
-            }
-        }
-        else playerTurnStatus = true;
+        specialCardDrop(droppedCard, computerDeck);
         if (computerDeck.length == 1) tellUNO();
     }
     else {
@@ -199,32 +233,9 @@ const dropCard = card => {
             dropCardContainer();
             if (playerDeck.length == 0) {
                 gameFinished();
-                playerTurnStatus = true;
-                return 0;
+                return "";
             }
-            if (droppedCard[0].type == "specialCard") {
-                switch (droppedCard[0].topIcon) {
-                    case "+4":
-                        penalty(4, computerDeck, computerContainer);
-                        playerTurnStatus = true;
-                        setTimeout(() => {
-                            popUpContainer.classList.add('popUpShow');
-                            colorSelector.classList.remove('displayNone');
-                        }, 500);
-                        break;
-                    case "":
-                        setTimeout(() => {
-                            popUpContainer.classList.add('popUpShow');
-                            colorSelector.classList.remove('displayNone');
-                        }, 500);
-                        break;
-                    case "+2":
-                        penalty(2, computerDeck, computerContainer);
-                        playerTurnStatus = true;
-                        break;
-                }
-            }
-            else playerTurnStatus = false;
+            specialCardDrop(droppedCard, playerDeck);
             colorContainer.classList = "";
             colorContainer.classList.add('visibleNone');
             if (playerDeck.length == 1) {
@@ -367,15 +378,15 @@ const startGame = () => {
     outputSeconds.innerHTML = stopSeconds;
     stopWatch = setInterval(() => {
         stopSeconds--;
-        if(stopSeconds == 0){
+        if (stopSeconds == 0) {
             stopMinutes--;
-            if(stopMinutes == 0){
+            if (stopMinutes == 0) {
                 clearInterval(startTime);
                 gameFinished();
             }
             outputMinutes.innerHTML = stopMinutes;
         }
-        if(stopSeconds == 0) stopSeconds = 60;
+        if (stopSeconds == 0) stopSeconds = 60;
         outputSeconds.innerHTML = stopSeconds;
     }, 1000);
 }
