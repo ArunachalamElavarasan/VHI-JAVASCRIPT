@@ -44,8 +44,8 @@ let dropDeck = [];
 let playerTurnStatus = true;
 let unoPenalty;
 let stopWatch;
-let stopMinutes = 4;
-let stopSeconds = 59;
+let stopMinutes = 5;
+let stopSeconds = 0;
 
 //Class to create a card object
 class Card {
@@ -77,6 +77,7 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
 //this function happends when games has been finished
 const gameFinished = () => {
     clearInterval(stopWatch);
+    clearInterval(unoPenalty);
     playerTurnStatus = true;
     const getPoints = (deck) => {
         let score = 0;
@@ -107,7 +108,10 @@ const tellUNO = () => {
     clearTimeout(unoPenalty);
     tellUNOContainer.classList.remove('visibleNone');
     setTimeout(() => tellUNOContainer.classList.add('visibleNone'), 2000);
+    tellUNOButton.classList.add('visibleNone');    
 }
+
+const timePattern = num => num = (num < 10) ? `0${num}` : num;
 
 //this function is used to change the color of color identifier container
 const colorIdentifier = () => {
@@ -241,19 +245,27 @@ const dropCard = card => {
             dropDeck.push(droppedCard[0]);
             playerContainer.removeChild(playerContainer.children[cardPos]);
             dropCardContainer();
+            if (playerDeck.length == 1) {
+                if(droppedCard[0].topIcon == '+4' || droppedCard[0].topIcon == ''){
+                    setTimeout(() => specialCardDrop(droppedCard, playerDeck), 2000);
+                    tellUNOButton.classList.remove('visibleNone');
+                    unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
+                    setTimeout(() => {unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 3000);
+                    }, 5000);
+                }
+                else {
+                    tellUNOButton.classList.remove('visibleNone');
+                    unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
+                    specialCardDrop(droppedCard, playerDeck);
+                }
+            }
+            else tellUNOButton.classList.add('visibleNone');
             if (playerDeck.length == 0) {
                 gameFinished();
                 return "";
             }
-            specialCardDrop(droppedCard, playerDeck);
-
             colorContainer.classList = "";
             colorContainer.classList.add('visibleNone');
-            if (playerDeck.length == 1) {
-                tellUNOButton.classList.remove('visibleNone');
-                unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2000);
-            }
-            else tellUNOButton.classList.add('visibleNone');
             passButton.classList.add('visibleNone');
             if (!playerTurnStatus) setTimeout(() => computerCardDrop(), computerPlayTime);
         }
@@ -300,7 +312,7 @@ const drawnCard = (container, addDeck) => {
         addDeck.push(card);
         createCard(card, container);
     }
-    else if(addDeck == computerDeck){
+    else if (addDeck == computerDeck) {
         addDeck.push(card);
         computerContainer.appendChild(createHidedCard());
     }
@@ -353,25 +365,25 @@ const startGame = () => {
     cardCollection.map(card => commonDeck.push(card));
     shuffleCommonDeck();
     setTimeout(() => {
-        for (let index = 0; index < 7; index++) {
+        for (let index = 0; index < 2; index++) {
             drawnCard(playerContainer, playerDeck);
             drawnCard(computerContainer, computerDeck);
         }
         drawnCard(dropContainer, dropDeck);
     }, 500);
-    outputMinutes.innerHTML = stopMinutes;
-    outputSeconds.innerHTML = stopSeconds;
+    outputMinutes.innerHTML = timePattern(stopMinutes);
+    outputSeconds.innerHTML = timePattern(stopSeconds);
     stopWatch = setInterval(() => {
         stopSeconds--;
-        if (stopSeconds == 0) {
+        if (stopSeconds <= 0) {
             stopMinutes--;
-            if (stopMinutes == 0) {
+            if (stopMinutes == 0) {gi
                 clearInterval(stopWatch);
                 gameFinished();
             }
-            outputMinutes.innerHTML = stopMinutes;
+            outputMinutes.innerHTML = timePattern(stopMinutes);
         }
-        if (stopSeconds == 0) stopSeconds = 60;
-        outputSeconds.innerHTML = stopSeconds;
+        if (stopSeconds <= 0) stopSeconds = 59;
+        outputSeconds.innerHTML = timePattern(stopSeconds);
     }, 1000);
 }
