@@ -374,16 +374,18 @@ const startGame = () => {
     outputMinutes.innerHTML = timePattern(stopMinutes);
     outputSeconds.innerHTML = timePattern(stopSeconds);
     stopWatch = setInterval(() => {
-        stopSeconds--;
-        if (stopSeconds <= 0) {
-            stopMinutes--;
-            if (stopMinutes == 0) {gi
+        --stopSeconds;
+        if (stopSeconds < 0) {
+            --stopMinutes;
+            stopSeconds = 59;
+            if (stopMinutes < 0) {
+                stopMinutes = 0;
+                stopSeconds = 0;
                 clearInterval(stopWatch);
                 gameFinished();
             }
             outputMinutes.innerHTML = timePattern(stopMinutes);
         }
-        if (stopSeconds <= 0) stopSeconds = 59;
         outputSeconds.innerHTML = timePattern(stopSeconds);
     }, 1000);
 }
