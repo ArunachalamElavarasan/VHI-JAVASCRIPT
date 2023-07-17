@@ -168,7 +168,8 @@ const wildCard = deck => {
         }, 500);
     }
     if (deck == computerDeck) {
-        playerTurnStatus = false;
+        playerTurnStatus = true;
+        console.log('Hello everyone');
         let wildColor = () => {
             let setColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
             if (setColor != 'Dark') return setColor;
@@ -349,6 +350,7 @@ const drawnCard = (container, addDeck) => {
 
 const popUpAnimation = color => {
     popUpContainer.classList.remove('popUpShow');
+    playerTurnStatus = false;
     setTimeout(() => colorSelector.classList.add('displayNone'), 1000);
     dropDeck[dropDeck.length - 1].color = color;
     if (dropDeck[dropDeck.length - 1].topIcon == "") {
