@@ -66,10 +66,14 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
                 if (count == 1 && innerIndex == 0) continue;
                 cardCollection.push(new Card(colorCollection[outerIndex], innerIndex, innerIndex, innerIndex, 'normalCard'));
             }
-            else {
-                cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[(innerIndex % 10)], specialIcon[(innerIndex % 10)], 20, 'specialCard'));
-            }
+            else cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[(innerIndex % 10)], specialIcon[(innerIndex % 10)], 20, 'specialCard'));
         }
+    }
+    for(let item = 0; item < 5; item++){
+        // for(let index = 0; index < specialIcon.length; index++){
+        //     cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[(index)], specialIcon[(index)], 20, 'specialCard'));
+        // }
+        new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard')
     }
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
 }
@@ -161,7 +165,7 @@ const dropCard = card => {
                 if (droppedCard[0].point == 50) {
                     tellUNOButton.classList.remove('visibleNone');
                     unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
-                    setTimeout(() => specialCardDrop(droppedCard, computerDeck), 4000);
+                    setTimeout(() => specialCardDrop(droppedCard, computerDeck), 3000);
                 }
                 else if(droppedCard[0].type == 'specialCard'){
                     specialCardDrop(droppedCard, computerDeck);
@@ -177,7 +181,7 @@ const dropCard = card => {
                 specialCardDrop(droppedCard, computerDeck);
                 tellUNOButton.classList.add('visibleNone');
             }
-            else playerTurnStatus = false;
+            else if(droppedCard[0].type != 'specialCard') playerTurnStatus = false;
             
             colorContainer.classList.add('visibleNone');
             passButton.classList.add('visibleNone');
@@ -219,7 +223,7 @@ const computerCardDrop = () => {
         drawnCard(computerContainer, computerDeck);
         if (cardAvailableStatus(computerDeck) >= 0) {
             playerTurnStatus = false;
-            setTimeout(() => computerCardDrop(), computerPlayTime);
+            setTimeout(() => computerCardDrop(), 1000);
         }
         else playerTurnStatus = true;
     }
