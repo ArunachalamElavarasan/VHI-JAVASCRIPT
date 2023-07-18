@@ -69,12 +69,6 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
             else cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[(innerIndex % 10)], specialIcon[(innerIndex % 10)], 20, 'specialCard'));
         }
     }
-    for(let item = 0; item < 5; item++){
-        // for(let index = 0; index < specialIcon.length; index++){
-        //     cardCollection.push(new Card(colorCollection[outerIndex], specialCollection[(index)], specialIcon[(index)], 20, 'specialCard'));
-        // }
-        new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard')
-    }
     cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
 }
 
@@ -209,6 +203,7 @@ const computerCardDrop = () => {
         else playerTurnStatus = true;
 
         if(dropDeck[dropDeck.length - 1].point == 50){
+            colorContainer.classList = "";
             colorContainer.classList.add('colorIdentifier', `bg${dropDeck[dropDeck.length - 1].color}`);
             colorContainer.classList.remove('visibleNone');
         }
@@ -338,13 +333,15 @@ const wildCard = deck => {
 }
 
 const addTwoCards = (addDeck, addContainer) => {
+    penalty(2, addDeck, addContainer);
+
     if (addDeck == playerDeck) {
         playerTurnStatus = false;
         setTimeout(() => computerCardDrop(), 2000);
     }
     else playerTurnStatus = true;
-    penalty(2, addDeck, addContainer);
 }
+
 const specialCardDrop = (card, oppositeDeck) => {
     let oppositeContainer = (oppositeDeck == playerDeck) ? playerContainer : computerContainer;
 
