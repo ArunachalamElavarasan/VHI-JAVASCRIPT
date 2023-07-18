@@ -274,20 +274,16 @@ const createCard = (cardItem, container) => {
     if (container == dropContainer && dropDeck.length > 1) dropContainer.removeChild(dropContainer.firstElementChild);
     container.appendChild(card);
     let click = container.lastElementChild;
-    click.addEventListener('click', () => dropCard(cardItem));
+    if(container != dropContainer) click.addEventListener('click', () => dropCard(cardItem));
 };
 const createHidedCard = () => hidedCardTemplate.content.cloneNode(true);
 
 //this function happends when games has been finished
 const gameFinished = () => {
+    const getPoints = deck =>  deck.reduce((total, currentCard) => total = total + currentCard.point , 0);
     clearInterval(stopWatch);
     clearInterval(unoPenalty);
     playerTurnStatus = true;
-    const getPoints = (deck) => {
-        let score = 0;
-        for (let index = 0; index < deck.length; index++) score = score + deck[index].point;
-        return score;
-    }
     const playerPoint = getPoints(computerDeck);
     const computerPoint = getPoints(playerDeck);
     playerPoints.innerHTML = `${playerPoint} Points`;
