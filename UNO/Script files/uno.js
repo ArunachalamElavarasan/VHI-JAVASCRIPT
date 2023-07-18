@@ -158,33 +158,31 @@ const dropCard = card => {
             colorContainer.classList.add('visibleNone');
 
             if (playerDeck.length == 1) {
-                if (droppedCard[0].topIcon == '+4' || droppedCard[0].topIcon == '') {
+                if (droppedCard[0].point == 50) {
                     tellUNOButton.classList.remove('visibleNone');
-                    playerTurnStatus = true;
                     unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
-                    setTimeout(() => specialCardDrop(droppedCard, computerDeck), 3000);
+                    setTimeout(() => specialCardDrop(droppedCard, computerDeck), 4000);
+                }
+                else if(droppedCard[0].type == 'specialCard'){
+                    specialCardDrop(droppedCard, computerDeck);
+                    tellUNOButton.classList.remove('visibleNone');
+                    unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
                 }
                 else {
-                    playerTurnStatus = true;
                     tellUNOButton.classList.remove('visibleNone');
                     unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
                 }
             }
-            if (droppedCard[0].type == 'specialCard') {
-                playerTurnStatus = true;
+            if (droppedCard[0].type == 'specialCard' && playerDeck.length > 1) {
                 specialCardDrop(droppedCard, computerDeck);
-                if (droppedCard[0].topIcon == "+2") addTwoCards(computerDeck, computerContainer);
                 tellUNOButton.classList.add('visibleNone');
             }
             else playerTurnStatus = false;
-            colorContainer.classList = "";
+            
             colorContainer.classList.add('visibleNone');
             passButton.classList.add('visibleNone');
-            setTimeout(() => {
-                if (!playerTurnStatus) {
-                    setTimeout(() => computerCardDrop(), 2000)
-                };
-            }, 1000);
+    
+            if (!playerTurnStatus) setTimeout(() => computerCardDrop(), computerPlayTime);
         }
     }
 }
@@ -202,14 +200,8 @@ const computerCardDrop = () => {
             playerTurnStatus = true;
             return '';
         }
-        if (droppedCard[0].type == 'specialCard') {
-            playerTurnStatus = false;
-            specialCardDrop(droppedCard, playerDeck);
-            if (droppedCard[0].topIcon == "+2") {
-                playerTurnStatus = false;
-                addTwoCards(playerDeck, playerContainer);
-            }
-        }
+
+        if (droppedCard[0].type == 'specialCard') specialCardDrop(droppedCard, playerDeck);
         else playerTurnStatus = true;
 
         if(dropDeck[dropDeck.length - 1].point == 50){
@@ -255,8 +247,6 @@ const drawnCard = (container, addDeck) => {
         shuffleCommonDeck(commonDeck);
         drawnCard(dropContainer, dropDeck);
     }
-    if (playerDeck.length == 1) tellUNOButton.classList.remove('visibleNone');
-    else tellUNOButton.classList.add('visibleNone');
 }
 
 //this two functions are used to create card element
@@ -346,7 +336,7 @@ const wildCard = deck => {
 const addTwoCards = (addDeck, addContainer) => {
     if (addDeck == playerDeck) {
         playerTurnStatus = false;
-        setTimeout(() => computerCardDrop(), 4000);
+        setTimeout(() => computerCardDrop(), 2000);
     }
     else playerTurnStatus = true;
     penalty(2, addDeck, addContainer);
@@ -362,7 +352,12 @@ const specialCardDrop = (card, oppositeDeck) => {
         wildCard(oppositeDeck);
         return "";
     }
-    if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1] || card[0].topIcon == specialIcon[2]) && oppositeDeck == computerDeck) {
+    if(card[0].topIcon == specialIcon[2]){
+        addTwoCards(oppositeDeck, oppositeContainer);
+        return "";
+    }
+    if((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1]) && oppositeDeck == computerDeck) playerTurnStatus = true;
+    if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1]) && oppositeDeck == playerDeck) {
         setTimeout(() => computerCardDrop(), computerPlayTime);
         return "";
     }
