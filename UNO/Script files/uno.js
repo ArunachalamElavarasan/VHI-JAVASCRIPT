@@ -77,13 +77,15 @@ const startGame = () => {
     startBtnContainer.classList.add('displayNone');
     cardCollection.map(card => commonDeck.push(card));
     shuffleCommonDeck();
+
     setTimeout(() => {
-        for (let index = 0; index < 7; index++) {
+        for (let index = 0; index < 5; index++) {
             drawnCard(playerContainer, playerDeck);
             drawnCard(computerContainer, computerDeck);
         }
         drawnCard(dropContainer, dropDeck);
     }, 500);
+    
     outputMinutes.innerHTML = timePattern(stopMinutes);
     outputSeconds.innerHTML = timePattern(stopSeconds);
     stopWatch = setInterval(() => {
@@ -126,7 +128,7 @@ const play = () => {
     else {
         if (playerTurnStatus) {
             playerContainer.children[cardPos].classList.add('topMargin');
-            setTimeout(() => playerContainer.children[cardPos].classList.remove('topMargin'), 1000);
+            setTimeout(() => playerContainer.children[cardPos].classList.remove('topMargin'), 500);
         }
     }
 }
@@ -216,10 +218,8 @@ const computerCardDrop = () => {
     }
     else {
         drawnCard(computerContainer, computerDeck);
-        if (cardAvailableStatus(computerDeck) >= 0) {
-            playerTurnStatus = false;
-            setTimeout(() => computerCardDrop(), 1000);
-        }
+        playerTurnStatus = false;
+        if (cardAvailableStatus(computerDeck) >= 0) setTimeout(() => computerCardDrop(), 1000);
         else playerTurnStatus = true;
     }
 }
@@ -246,61 +246,6 @@ const drawnCard = (container, addDeck) => {
         shuffleCommonDeck(commonDeck);
         drawnCard(dropContainer, dropDeck);
     }
-}
-
-//this two functions are used to create card element
-const createCard = (cardItem, container) => {
-    let card = openCardTemplate.content.cloneNode(true);
-    let cardColor = card.getElementById('cardColor');
-    let topIcon = card.getElementById('topIcon');
-    let bottomIcon = card.getElementById('bottomIcon');
-    let textColor = card.getElementById('textColor');
-    let cardValue = card.getElementById('cardValue');
-    topIcon.innerHTML = bottomIcon.innerHTML = cardItem.topIcon;
-    cardValue.innerHTML = cardItem.value;
-    cardColor.classList = `bg${cardItem.color} card textLight flexDisplay flexBetween flexDirCol`
-    textColor.classList = `bgLight innerCardContainer text${cardItem.color} flexDisplay flexCenter flexItemCenter`
-    if (container == dropContainer && dropDeck.length > 1) dropContainer.removeChild(dropContainer.firstElementChild);
-    container.appendChild(card);
-    let click = container.lastElementChild;
-    if(container != dropContainer) click.addEventListener('click', () => dropCard(cardItem));
-};
-const createHidedCard = () => hidedCardTemplate.content.cloneNode(true);
-
-//this function happends when games has been finished
-const gameFinished = () => {
-    const getPoints = deck =>  deck.reduce((total, currentCard) => total = total + currentCard.point , 0);
-    clearInterval(stopWatch);
-    clearInterval(unoPenalty);
-    playerTurnStatus = true;
-    const playerPoint = getPoints(computerDeck);
-    const computerPoint = getPoints(playerDeck);
-    playerPoints.innerHTML = `${playerPoint} Points`;
-    computerPoints.innerHTML = `${computerPoint} Points`
-    matchStatus.innerHTML = (playerPoint > computerPoint) ? 'YOU WON' : (computerPoint > playerPoint) ? 'COMPUTER WON' : 'MATCH TIED';
-    wonStatusContainer.classList.remove('displayNone');
-    popUpContainer.classList.add('popUpShow');
-}
-
-const tellUNO = () => {
-    clearTimeout(unoPenalty);
-    tellUNOContainer.classList.remove('visibleNone');
-    setTimeout(() => tellUNOContainer.classList.add('visibleNone'), 2000);
-    tellUNOButton.classList.add('visibleNone');
-}
-
-const timePattern = num => num = (num < 10) ? `0${num}` : num;
-
-//this function is used to add number of card as penalty
-const penalty = (cardCount, addDeck, container) => {
-    let count = 0;
-    let addPenaltyCard = setInterval(() => {
-        drawnCard(container, addDeck);
-        count++;
-        if (count == cardCount) {
-            clearInterval(addPenaltyCard);
-        }
-    }, 300);
 }
 
 const wildDrawnCard = (count, addDeck, addContainer) => {
@@ -364,6 +309,46 @@ const specialCardDrop = (card, oppositeDeck) => {
     }
 }
 
+const tellUNO = () => {
+    clearTimeout(unoPenalty);
+    tellUNOContainer.classList.remove('visibleNone');
+    setTimeout(() => tellUNOContainer.classList.add('visibleNone'), 2000);
+    tellUNOButton.classList.add('visibleNone');
+}
+
+//this function is used to add number of card as penalty
+const penalty = (cardCount, addDeck, container) => {
+    let count = 0;
+    let addPenaltyCard = setInterval(() => {
+        drawnCard(container, addDeck);
+        count++;
+        if (count == cardCount) {
+            clearInterval(addPenaltyCard);
+        }
+    }, 300);
+}
+
+//this two functions are used to create card element
+const createCard = (cardItem, container) => {
+    let card = openCardTemplate.content.cloneNode(true);
+    let cardColor = card.getElementById('cardColor');
+    let topIcon = card.getElementById('topIcon');
+    let bottomIcon = card.getElementById('bottomIcon');
+    let textColor = card.getElementById('textColor');
+    let cardValue = card.getElementById('cardValue');
+    topIcon.innerHTML = bottomIcon.innerHTML = cardItem.topIcon;
+    cardValue.innerHTML = cardItem.value;
+    cardColor.classList = `bg${cardItem.color} card textLight flexDisplay flexBetween flexDirCol`
+    textColor.classList = `bgLight innerCardContainer text${cardItem.color} flexDisplay flexCenter flexItemCenter`
+    if (container == dropContainer && dropDeck.length > 1) dropContainer.removeChild(dropContainer.firstElementChild);
+    container.appendChild(card);
+    let click = container.lastElementChild;
+    if(container != dropContainer) click.addEventListener('click', () => dropCard(cardItem));
+};
+const createHidedCard = () => hidedCardTemplate.content.cloneNode(true);
+
+const timePattern = num => num = (num < 10) ? `0${num}` : num;
+
 const popUpAnimation = color => {
     popUpContainer.classList.remove('popUpShow');
     setTimeout(() => colorSelector.classList.add('displayNone'), 1000);
@@ -382,3 +367,18 @@ const randColor = () => {
 
 //shuffle common deck cards
 const shuffleCommonDeck = () => commonDeck.sort(() => 0.50 - Math.random());
+
+//this function happends when games has been finished
+const gameFinished = () => {
+    const getPoints = deck =>  deck.reduce((total, currentCard) => total = total + currentCard.point , 0);
+    clearInterval(stopWatch);
+    clearInterval(unoPenalty);
+    playerTurnStatus = true;
+    const playerPoint = getPoints(computerDeck);
+    const computerPoint = getPoints(playerDeck);
+    playerPoints.innerHTML = `${playerPoint} Points`;
+    computerPoints.innerHTML = `${computerPoint} Points`
+    matchStatus.innerHTML = (playerPoint > computerPoint) ? 'YOU WON' : (computerPoint > playerPoint) ? 'COMPUTER WON' : 'MATCH TIED';
+    wonStatusContainer.classList.remove('displayNone');
+    popUpContainer.classList.add('popUpShow');
+}
