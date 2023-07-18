@@ -162,7 +162,7 @@ const dropCard = card => {
                     tellUNOButton.classList.remove('visibleNone');
                     playerTurnStatus = true;
                     unoPenalty = setTimeout(() => penalty(2, playerDeck, playerContainer), 2500);
-                    setTimeout(() => specialCardDrop(droppedCard, playerDeck), 3000);
+                    setTimeout(() => specialCardDrop(droppedCard, computerDeck), 3000);
                 }
                 else {
                     playerTurnStatus = true;
@@ -172,7 +172,7 @@ const dropCard = card => {
             }
             if (droppedCard[0].type == 'specialCard') {
                 playerTurnStatus = true;
-                specialCardDrop(droppedCard, playerDeck);
+                specialCardDrop(droppedCard, computerDeck);
                 if (droppedCard[0].topIcon == "+2") addTwoCards(computerDeck, computerContainer);
                 tellUNOButton.classList.add('visibleNone');
             }
@@ -204,7 +204,7 @@ const computerCardDrop = () => {
         }
         if (droppedCard[0].type == 'specialCard') {
             playerTurnStatus = false;
-            specialCardDrop(droppedCard, computerDeck);
+            specialCardDrop(droppedCard, playerDeck);
             if (droppedCard[0].topIcon == "+2") {
                 playerTurnStatus = false;
                 addTwoCards(playerDeck, playerContainer);
@@ -305,13 +305,11 @@ const timePattern = num => num = (num < 10) ? `0${num}` : num;
 //this function is used to add number of card as penalty
 const penalty = (cardCount, addDeck, container) => {
     let count = 0;
-    playerTurnStatus = false;
     let addPenaltyCard = setInterval(() => {
         drawnCard(container, addDeck);
         count++;
         if (count == cardCount) {
             clearInterval(addPenaltyCard);
-            playerTurnStatus = true;
         }
     }, 300);
 }
@@ -320,11 +318,6 @@ const wildDrawnCard = (count, addDeck, addContainer) => {
     penalty(count, addDeck, addContainer);
     if (addDeck == playerDeck) {
         playerTurnStatus = false;
-        let randColor = () => {
-            let setColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
-            if (setColor != 'Dark') return setColor;
-            randColor();
-        }
         dropDeck[dropDeck.length - 1].color = randColor();
         setTimeout(() => computerCardDrop(), computerPlayTime);
         return "";
@@ -337,21 +330,16 @@ const wildDrawnCard = (count, addDeck, addContainer) => {
 }
 
 const wildCard = deck => {
-    if (deck == playerDeck) {
-        playerTurnStatus = true;
+    if (deck == computerDeck) {
         setTimeout(() => {
             popUpContainer.classList.add('popUpShow');
             colorSelector.classList.remove('displayNone');
         }, 500);
+        return '';
     }
-    if (deck == computerDeck) {
+    if (deck == playerDeck) {
         playerTurnStatus = true;
-        function chooseColor() {
-            let setColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
-            if (setColor != 'Dark') return setColor;
-            chooseColor();
-        }
-        dropDeck[dropDeck.length - 1].color = chooseColor();
+        dropDeck[dropDeck.length - 1].color = randColor();
     }
 }
 
@@ -363,19 +351,18 @@ const addTwoCards = (addDeck, addContainer) => {
     else playerTurnStatus = true;
     penalty(2, addDeck, addContainer);
 }
-const specialCardDrop = (card, deck) => {
-    let oppositePlayer = (deck == playerDeck) ? computerDeck : playerDeck;
-    let oppositeContainer = (deck == playerDeck) ? computerContainer : playerContainer;
+const specialCardDrop = (card, oppositeDeck) => {
+    let oppositeContainer = (oppositeDeck == playerDeck) ? playerContainer : computerContainer;
 
     if (card[0].topIcon == "+4") {
-        wildDrawnCard(4, oppositePlayer, oppositeContainer);
+        wildDrawnCard(4, oppositeDeck, oppositeContainer);
         return "";
     }
     if (card[0].topIcon == "") {
-        wildCard(deck);
+        wildCard(oppositeDeck);
         return "";
     }
-    if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1] || card[0].topIcon == specialIcon[2]) && deck == computerDeck) {
+    if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1] || card[0].topIcon == specialIcon[2]) && oppositeDeck == computerDeck) {
         setTimeout(() => computerCardDrop(), computerPlayTime);
         return "";
     }
@@ -389,6 +376,12 @@ const popUpAnimation = color => {
         playerTurnStatus = false;
         setTimeout(() => computerCardDrop(), computerPlayTime);
     }
+}
+
+const randColor = () => {
+    let setColor = computerDeck[parseInt(Math.random() * computerDeck.length)].color;
+    if (setColor != 'Dark') return setColor;
+    randColor();
 }
 
 //shuffle common deck cards
