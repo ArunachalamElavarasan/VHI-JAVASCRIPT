@@ -46,6 +46,7 @@ let unoPenalty = null;
 let stopWatch = null;
 let stopMinutes = 5;
 let stopSeconds = 0;
+let playStatus = [];
 
 //Class to create a card object
 class Card {
@@ -70,7 +71,7 @@ for (let outerIndex = 0; outerIndex < colorCollection.length; outerIndex++) {
         }
     }
 }
-for(let index = 0; index < 4; index++)cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
+for (let index = 0; index < 4; index++)cardCollection.push(new Card('Dark', colorBox.innerHTML, '', 50, 'specialCard'), new Card('Dark', colorBox.innerHTML, '+4', 50, 'specialCard'));
 
 const startGame = () => {
     popUpContainer.classList.remove('popUpShow');
@@ -84,7 +85,7 @@ const startGame = () => {
             drawnCard(computerContainer, computerDeck);
         }
         drawnCard(dropContainer, dropDeck);
-        }, 500);
+    }, 500);
 
     outputMinutes.innerHTML = timePattern(stopMinutes);
     outputSeconds.innerHTML = timePattern(stopSeconds);
@@ -102,6 +103,11 @@ const startGame = () => {
         }
         outputSeconds.innerHTML = timePattern(stopSeconds);
     }, 1000);
+    for(let index = 10; index > 0; index--){
+        for(let item = 0; item < 3; item++){
+            cardCollection.push(new Card(colorCollection[item], specialCollection[(item)], specialIcon[(item)], 20, 'specialCard'));
+        }
+    }
 }
 
 //user drawn a card from closed deck
@@ -110,20 +116,13 @@ const play = () => {
 
     if ((!(cardPos >= 0)) && playerTurnStatus) {
         drawnCard(playerContainer, playerDeck);
-        console.log('player played');
         if ((cardAvailableStatus(playerDeck) >= 0)) {
             playerTurnStatus = true;
             passButton.classList.remove('visibleNone');
         }
         else playerTurnStatus = false;
 
-        if (!playerTurnStatus) {
-            setTimeout(() => {
-                computerCardDrop();
-                playerTurnStatus = ((dropDeck[dropDeck.length - 1]).type == 'specialCard') ? false : true;
-                if (!playerTurnStatus) computerCardDrop();
-            }, computerPlayTime);
-        }
+        if (!playerTurnStatus) setTimeout(() => computerCardDrop(), computerPlayTime);
     }
     else {
         if (playerTurnStatus) {
@@ -146,8 +145,7 @@ const passTurn = () => {
 const dropCard = card => {
     if (playerTurnStatus) {
         const cardPos = playerDeck.indexOf(card);
-        if ((card.color == dropDeck[dropDeck.length - 1].color) || (card.value == dropDeck[dropDeck.length - 1].value) || (card.value == colorBox.innerHTML)) {
-            console.log('user Played')
+        if ((card.color == dropDeck[dropDeck.length - 1].color) || (card.value == dropDeck[dropDeck.length - 1].value) || (card.point == 50)) {
             let droppedCard = playerDeck.splice(cardPos, 1);
             dropDeck.push(droppedCard[0]);
             playerContainer.removeChild(playerContainer.children[cardPos]);
@@ -188,7 +186,6 @@ const dropCard = card => {
 
 //this function is used to drop a card by computer
 const computerCardDrop = () => {
-    console.log('computer Played')
     const cardIndex = cardAvailableStatus(computerDeck);
     if (cardIndex >= 0) {
         let droppedCard = computerDeck.splice(cardIndex, 1);
@@ -200,7 +197,6 @@ const computerCardDrop = () => {
             playerTurnStatus = true;
             return '';
         }
-
         if (droppedCard[0].type == 'specialCard') specialCardDrop(droppedCard, playerDeck);
         else playerTurnStatus = true;
 
@@ -218,13 +214,15 @@ const computerCardDrop = () => {
     }
     else {
         drawnCard(computerContainer, computerDeck);
-        playerTurnStatus = false;
+        playStatus.push('computer drawn a card from deck');
+        playerTurnStatus = true;
         if ((cardAvailableStatus(computerDeck) >= 0)) {
+            playerTurnStatus = false;
             setTimeout(() => {
                 computerCardDrop();
             }, 2000);
         }
-        else {playerTurnStatus = true;}
+        else { playerTurnStatus = true; }
     }
 }
 
@@ -255,7 +253,7 @@ const wildDrawnCard = (count, addDeck, addContainer) => {
     if (addDeck == playerDeck) {
         let setCardColor = randColor();
         dropDeck[dropDeck.length - 1].color = setCardColor;
-        setTimeout(() => computerCardDrop(), computerPlayTime);
+        if (!playerTurnStatus) setTimeout(() => computerCardDrop(), computerPlayTime);
         return "";
     }
     playerTurnStatus = true;
@@ -307,7 +305,9 @@ const specialCardDrop = (card, oppositeDeck) => {
     if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1]) && oppositeDeck == computerDeck) playerTurnStatus = true;
     if ((card[0].topIcon == specialIcon[0] || card[0].topIcon == specialIcon[1]) && oppositeDeck == playerDeck) {
         playerTurnStatus = false;
-        setTimeout(() => computerCardDrop(), computerPlayTime);
+        setTimeout(() => {
+            computerCardDrop();
+        }, computerPlayTime);
         return "";
     }
 }
@@ -363,14 +363,14 @@ const popUpAnimation = color => {
     }
 }
 
-function randColor(){
+function randColor() {
     let setColor = computerDeck[parseInt(Math.random() * (computerDeck.length))].color;
     if ((setColor != 'Dark') && setColor) return setColor;
     return randColor();
 }
 
 //shuffle common deck cards
-const shuffleCommonDeck = () => commonDeck.sort(() => 0.6 - Math.random());
+const shuffleCommonDeck = () => commonDeck.sort(() => 0.52 - Math.random());
 
 //this function happends when games has been finished
 const gameFinished = () => {
