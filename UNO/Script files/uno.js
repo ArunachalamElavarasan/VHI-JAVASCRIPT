@@ -213,7 +213,6 @@ const computerCardDrop = () => {
     }
     else {
         drawnCard(computerContainer, computerDeck);
-        playStatus.push('computer drawn a card from deck');
         playerTurnStatus = true;
         if ((cardAvailableStatus(computerDeck) >= 0)) {
             playerTurnStatus = false;
@@ -232,14 +231,14 @@ const drawnCard = (container, addDeck) => {
         shuffleCommonDeck(commonDeck);
     }
     let card = commonDeck.pop();
-    if ((addDeck == dropDeck && card.value >= 0 && card.value < 10) || addDeck == playerDeck || addDeck == computerDeck) {
+    if ((addDeck == dropDeck && card.value >= 0 && card.value < 10) || addDeck == playerDeck) {
         addDeck.push(card);
         createCard(card, container);
     }
-    // else if (addDeck == computerDeck) {
-    //     addDeck.push(card);
-    //     computerContainer.appendChild(createHidedCard());
-    // }
+    else if (addDeck == computerDeck) {
+        addDeck.push(card);
+        computerContainer.appendChild(createHidedCard());
+    }
     else {
         commonDeck.push(card);
         shuffleCommonDeck(commonDeck);
