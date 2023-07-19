@@ -46,7 +46,6 @@ let unoPenalty = null;
 let stopWatch = null;
 let stopMinutes = 5;
 let stopSeconds = 0;
-let playStatus = [];
 
 //Class to create a card object
 class Card {
