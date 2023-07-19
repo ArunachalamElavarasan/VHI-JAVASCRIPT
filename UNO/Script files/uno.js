@@ -102,11 +102,6 @@ const startGame = () => {
         }
         outputSeconds.innerHTML = timePattern(stopSeconds);
     }, 1000);
-    for(let index = 10; index > 0; index--){
-        for(let item = 0; item < 3; item++){
-            cardCollection.push(new Card(colorCollection[item], specialCollection[(item)], specialIcon[(item)], 20, 'specialCard'));
-        }
-    }
 }
 
 //user drawn a card from closed deck
