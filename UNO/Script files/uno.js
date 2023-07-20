@@ -126,7 +126,7 @@ const play = () => {
     }
 }
 //this return available card position
-const cardAvailableStatus = cardDeck => cardDeck.findIndex(cardItem => ((dropDeck[dropDeck.length - 1].color == cardItem.color) || (dropDeck[dropDeck.length - 1].value == cardItem.value) || cardItem.value == colorBox.innerHTML));
+const cardAvailableStatus = cardDeck => cardDeck.findIndex(cardItem => ((cardItem.point == 50) || (dropDeck[dropDeck.length - 1].color == cardItem.color) || (dropDeck[dropDeck.length - 1].value == cardItem.value)));
 
 //pass or play function
 const passTurn = () => {
@@ -211,11 +211,9 @@ const computerCardDrop = () => {
         playerTurnStatus = true;
         if ((cardAvailableStatus(computerDeck) >= 0)) {
             playerTurnStatus = false;
-            setTimeout(() => {
-                computerCardDrop();
-            }, 2000);
+            setTimeout(() => computerCardDrop(), 2000);
         }
-        else { playerTurnStatus = true; }
+        else playerTurnStatus = true;
     }
 }
 
@@ -363,7 +361,12 @@ function randColor() {
 }
 
 //shuffle common deck cards
-const shuffleCommonDeck = () => commonDeck.sort(() => 0.52 - Math.random());
+const shuffleCommonDeck = () => { 
+        for (let index = commonDeck.length - 1; index > 0; index--) { 
+          const randomPos = Math.floor(Math.random() * (index + 1)); 
+          [commonDeck[index], commonDeck[randomPos]] = [commonDeck[randomPos], commonDeck[index]]; 
+        }
+}
 
 //this function happends when games has been finished
 const gameFinished = () => {
