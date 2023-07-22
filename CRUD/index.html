@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <link rel="stylesheet" href="Stylesheet/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bgGreen">
+    <main class="main flexDisplay flexDirCol flexBetween">
+      <header class="bgBlue textLight flexDisplay flexBetween flexItemCenter">
+        <section class="flexDisplay">
+          <section class="logoContainer">
+            <img src="Images/infologo.png" alt="" />
+          </section>
+          <section class="logoContainer">
+            <h3>INFOTECH</h3>
+            <h3>ASHRAM</h3>
+          </section>
+        </section>
+        <h2>Javascript Training Program</h2>
+        <section class="dateTimeContainer flexDisplay flexBetween">
+          <ul>
+            <li>Date :</li>
+            <li>Time :</li>
+          </ul>
+          <ul>
+            <li id="date"></li>
+            <li id="time"></li>
+          </ul>
+        </section>
+      </header>
+      <br>
+      <main class="container flexDisplay flexDirCol flexBetween">
+        <div class="flexDisplay flexBetween">
+          <div class="flexDisplay flexEvenly uploadContainer">
+            <section class="imgContainer">
+              <img src="" alt="" class="imgFluid visibleNone" id="uploadImage">
+            </section>
+            <section class="flexDisplay flexItemCenter">
+              <button class="btn textLight btnGreen" id="uploadBtn">
+                Upload
+              </button>
+              &nbsp;
+              <span class="textDanger">*</span>
+            </section>
+          </div>
+          <div class="flexDisplay flexBetween flexDirCol inputCollectionContainer">
+            <main class="flexDisplay flexBetween">
+              <div>
+                <label>Select Organization</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <select name="" id="organization" class="inputField">
+                    <option selected hidden disabled>Select Organization</option>
+                    <option value="">ABC institute of technology</option>
+                    <option value="">EFG institute of technology</option>
+                    <option value="">COV institute of technology</option>
+                  </select>
+                </section>
+                <section>
+                  <small class="textDanger visibleNone"></small>
+                </section>
+              </div>
+              <div>
+                <label for="firstName">First Name</label>  
+                &nbsp;
+              <span class="textDanger">*</span>
+                <section>
+                  <input type="text" name="" id="firstName" class="inputField" onkeydown="preventNumber(event)">
+                </section>
+                <section>
+                  <small class="textDanger visibleNone">This field is required</small>
+                </section>
+              </div>
+            </main>
+            <main class="flexDisplay flexBetween">
+              <div>
+                <label for="lastName">Last Name</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <input type="text" name="" id="lastName" class="inputField" onkeydown="preventNumber(event)">
+                </section>
+                <section>
+                  <small class="textDanger visibleNone">This field is required</small>
+                </section>
+              </div>
+              <div class="inputField">
+                <label>Gender</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section class="flexDisplay flexBetween genderCollection">
+                  <section class="flexDisplay flexBetween genderContainer"><input type="radio" name="gender" id="male" value="male" checked><label for="male">Male</label></section>
+                  <section class="flexDisplay flexBetween femaleGender"><input type="radio" name="gender" id="female" value="female"><label for="female">Female</label></section>
+                </section>
+              </div>
+            </main>
+          </div>
+        </div>
+        <main>
+          <section class="flexDisplay flexBetween flexItemCenter inputBox">
+            <div>
+              <label for="dob">Date of Birth</label>
+              &nbsp;
+              <span class="textDanger">*</span>
+              <section>
+                <input type="date" name="" id="dob" class="inputField" min="01-01-1900">
+              </section>
+              <section>
+                <small class="textDanger visibleNone">This field is required</small>
+              </section>
+            </div>
+            <section class="inputCollectionContainer flexDisplay flexBetween">
+              <div>
+                <label for="mobileNumber">Mobile No</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <input type="number" name="" id="mobileNumber" class="inputField">
+                </section>
+                <section>
+                  <small class="textDanger visibleNone">This field is required</small>
+                </section>
+              </div>
+              <div>
+                <label for="userEmail">Email ID</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <input type="email" name="" id="userEmail" class="inputField">
+                </section>
+                <section>
+                  <small class="textDanger visibleNone">This field is required</small>
+                </section>
+              </div>
+            </section>
+          </section>
+          <section class="flexDisplay flexBetween flexItemCenter inputBox">
+            <div>
+              <label for="userCountry">Select Country</label>
+              &nbsp;
+              <span class="textDanger">*</span>
+              <section>
+                <select name="" id="userCountry" class="inputField"></select>
+              </section>
+              <section>
+                <small class="textDanger visibleNone">This field is required</small>
+              </section>
+            </div>
+            <section class="inputCollectionContainer flexDisplay flexBetween">
+              <div class="visibleNone" id="selectStateContainer">
+                <label for="userState">Select State</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <select name="" id="userState" class="inputField"></select>
+                </section>
+                <section>
+                  <small class="textDanger visibleNone">This field is required</small>
+                </section>
+              </div>
+              <div class="visibleNone" id="cityContainer">
+                <label for="userCity">City</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <input type="text" name="" id="userCity" class="inputField" onkeydown="preventNumber(event)">
+                </section>
+                <section>
+                  <small class="textDanger visibleNone">This field is required</small>
+                </section>
+              </div>
+            </section>
+          </section>
+        </main>
+        <main class="flexDisplay flexBetween">
+          <div>
+            <label for="communicationAddress">Communication Address</label>
+            &nbsp;
+            <span class="textDanger">*</span>
+            <section>
+              <textarea name="" id="communicationAddress" cols="80" rows="5"></textarea>
+            </section>
+            <section>
+              <small class="textDanger visibleNone">This field is required</small>
+            </section>
+          </div>
+          <div>
+            <label for="permanentAddress">Permanent Address</label>
+            &nbsp;
+            <span class="textDanger">*</span>
+            <section>
+              <textarea name="" id="permanentAddress" cols="80" rows="5"></textarea>
+            </section>
+            <section>
+              <small class="textDanger visibleNone">This field is required</small>
+            </section>
+          </div>
+        </main>
+        <div>
+          <input type="checkbox" name="" id="addressCheckBox">
+          <label for="addressCheckBox">Communication Address same as Permanent Address</label>
+        </div>
+        <br>
+        <div>
+          <label for="pin">Pincode</label>
+          &nbsp;
+          <span class="textDanger">*</span>
+          <section>
+            <input type="number" name="" id="pin" class="inputField">
+          </section>
+          <section>
+            <small class="textDanger visibleNone">This field is required</small>
+          </section>
+        </div>
+        <div class="widthBlock flexDisplay flexEnd">
+          <section class="flexDisplay flexBetween btnContainer">
+            <button class="btn textLight btnGreen" id="actionBtn" onclick="performAction()">Register</button>
+            <button class="btn textLight btnGreen" id="resetBtn">Reset</button>
+          </section>
+        </div>
+        <br>
+      </main>
+      <section class="bgSkyBlue">
+        <footer
+          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
+        >
+          <section class="footerObjective">
+            <p>Learning Objective : Local Storage</p>
+          </section>
+          <section class="flexDisplay flexItemCenter">
+            <section class="footerObjective">
+              <p>Powered by :</p>
+            </section>
+            <section>
+              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+            </section>
+          </section>
+        </footer>
+      </section>
+    </main>
+    <script src="Script files/crud.js"></script>
+  </body>
+</html>
