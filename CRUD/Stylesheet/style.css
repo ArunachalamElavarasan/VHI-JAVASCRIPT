@@ -82,6 +82,10 @@
 .uploadContainer{
     width: 330px;
     height: 140px;
+    position: relative;
+}
+#uploadBtn{
+    display: none;
 }
 .imgContainer{
     width: 100px;
@@ -123,6 +127,7 @@ textarea{
 }
 .widthBlock{
     width: 100%;
+    height: 40px;
 }
 .btnContainer{
     width: 300px;
@@ -136,4 +141,16 @@ textarea{
 }
 .visibleNone{
     visibility: hidden;
+}
+form input, form select, form textarea{
+    display: block;
+}
+input[type = 'checkbox']{
+    display: inline;
+}
+form main div{
+    min-height: 70px;
+}
+.textAreaContainer{
+    min-height: 120px;
 }

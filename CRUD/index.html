@@ -38,198 +38,199 @@
         </section>
       </header>
       <br>
-      <main class="container flexDisplay flexDirCol flexBetween">
-        <div class="flexDisplay flexBetween">
-          <div class="flexDisplay flexEvenly uploadContainer">
-            <section class="imgContainer">
-              <img src="" alt="" class="imgFluid visibleNone" id="uploadImage">
-            </section>
-            <section class="flexDisplay flexItemCenter">
-              <button class="btn textLight btnGreen" id="uploadBtn">
-                Upload
-              </button>
-              &nbsp;
-              <span class="textDanger">*</span>
-            </section>
-          </div>
-          <div class="flexDisplay flexBetween flexDirCol inputCollectionContainer">
-            <main class="flexDisplay flexBetween">
-              <div>
-                <label>Select Organization</label>
+      <form action="" method="post">
+        <main class="container flexDisplay flexDirCol flexBetween">
+          <div class="flexDisplay flexBetween">
+            <div class="flexDisplay flexEvenly uploadContainer">
+              <section class="imgContainer">
+                <img src="" alt="" class="imgFluid visibleNone" id="imgContainer">
+              </section>
+              <section class="flexDisplay flexItemCenter">
+                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/png, image/jpeg, image/gif">
+                <label class="btn textLight btnGreen" for="uploadBtn" style="text-align: center;">
+                  Upload
+                </label>
                 &nbsp;
                 <span class="textDanger">*</span>
-                <section>
-                  <select name="" id="organization" class="inputField">
-                    <option selected hidden disabled>Select Organization</option>
-                    <option value="">ABC institute of technology</option>
-                    <option value="">EFG institute of technology</option>
-                    <option value="">COV institute of technology</option>
-                  </select>
-                </section>
-                <section>
+              </section>
+              <small style="position: absolute; bottom: 10px; left: 0px;" class="textDanger"></small>
+            </div>
+            <div class="flexDisplay flexBetween flexDirCol inputCollectionContainer">
+              <main class="flexDisplay flexBetween">
+                <div>
+                  <label>Select Organization</label>
+                  &nbsp;
+                  <span class="textDanger">*</span>
+                  <section>
+                    <select name="" id="organization" class="inputField">
+                      <option selected hidden disabled value="">Select Organization</option>
+                      <option value="ABC institute of technology">ABC institute of technology</option>
+                      <option value="EFG institute of technology">EFG institute of technology</option>
+                      <option value="COV institute of technology">COV institute of technology</option>
+                    </select>
+                  </section>
                   <small class="textDanger visibleNone"></small>
-                </section>
-              </div>
-              <div>
-                <label for="firstName">First Name</label>  
-                &nbsp;
-              <span class="textDanger">*</span>
-                <section>
-                  <input type="text" name="" id="firstName" class="inputField" onkeydown="preventNumber(event)">
-                </section>
-                <section>
-                  <small class="textDanger visibleNone">This field is required</small>
-                </section>
-              </div>
-            </main>
-            <main class="flexDisplay flexBetween">
-              <div>
-                <label for="lastName">Last Name</label>
-                &nbsp;
+                </div>
+                <div>
+                  <label for="firstName ">First Name</label>  
+                  &nbsp;
                 <span class="textDanger">*</span>
-                <section>
-                  <input type="text" name="" id="lastName" class="inputField" onkeydown="preventNumber(event)">
-                </section>
-                <section>
-                  <small class="textDanger visibleNone">This field is required</small>
-                </section>
-              </div>
-              <div class="inputField">
-                <label>Gender</label>
-                &nbsp;
-                <span class="textDanger">*</span>
-                <section class="flexDisplay flexBetween genderCollection">
-                  <section class="flexDisplay flexBetween genderContainer"><input type="radio" name="gender" id="male" value="male" checked><label for="male">Male</label></section>
-                  <section class="flexDisplay flexBetween femaleGender"><input type="radio" name="gender" id="female" value="female"><label for="female">Female</label></section>
-                </section>
-              </div>
-            </main>
+                  <section>
+                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')">
+                  </section>
+                  <small class="textDanger"></small>
+                </div>
+              </main>
+              <main class="flexDisplay flexBetween">
+                <div>
+                  <label for="lastName">Last Name</label>
+                  &nbsp;
+                  <span class="textDanger">*</span>
+                  <section>
+                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')">
+                  </section>
+                  <small class="textDanger"></small>
+                </div>
+                <div class="inputField">
+                  <label>Gender</label>
+                  &nbsp;
+                  <section class="flexDisplay flexBetween genderCollection">
+                    <section class="flexDisplay flexBetween genderContainer"><input type="radio" name="gender" id="male" value="male" checked><label for="male">Male</label></section>
+                    <section class="flexDisplay flexBetween femaleGender"><input type="radio" name="gender" id="female" value="female"><label for="female">Female</label></section>
+                  </section>
+                </div>
+              </main>
+            </div>
           </div>
-        </div>
-        <main>
-          <section class="flexDisplay flexBetween flexItemCenter inputBox">
-            <div>
-              <label for="dob">Date of Birth</label>
+          <main>
+            <section class="flexDisplay flexBetween flexItemCenter inputBox">
+              <div>
+                <label for="dob">Date of Birth</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <input type="date" name="" id="dob" class="inputField" min="01-01-1900">
+                </section>
+                <small class="textDanger"></small>
+              </div>
+              <section class="inputCollectionContainer flexDisplay flexBetween">
+                <div>
+                  <label for="mobileNumber">Mobile No</label>
+                  &nbsp;
+                  <span class="textDanger">*</span>
+                  <section>
+                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')">
+                  </section>
+                  <small class="textDanger"></small>
+                </div>
+                <div>
+                  <label for="userEmail">Email ID</label>
+                  &nbsp;
+                  <span class="textDanger">*</span>
+                  <section class="flexDisplay flexDirCol" style="justify-content: flex-start;">
+                    <input type="email" name="EmailID" id="userEmail" class="inputField">
+                  </section>
+                  <small class="textDanger"></small>
+                </div>
+              </section>
+            </section>
+            <section class="flexDisplay flexBetween flexItemCenter inputBox">
+              <div>
+                <label for="userCountry">Select Country</label>
+                &nbsp;
+                <span class="textDanger">*</span>
+                <section>
+                  <select name="" id="userCountry" class="inputField"></select>
+                </section>
+                <small class="textDanger"></small>
+              </div>
+              <section class="inputCollectionContainer flexDisplay flexBetween">
+                <div class="visibleNone" id="selectStateContainer">
+                  <label for="userState">Select State</label>
+                  &nbsp;
+                  <span class="textDanger">*</span>
+                  <section>
+                    <select name="" id="userState" class="inputField"></select>
+                  </section>
+                  <small class="textDanger"></small>
+                </div>
+                <div class="visibleNone" id="cityContainer">
+                  <label for="userCity">City</label>
+                  &nbsp;
+                  <span class="textDanger">*</span>
+                  <section>
+                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')">
+                  </section>
+                  <small class="textDanger"></small>
+                </div>
+              </section>
+            </section>
+          </main>
+          <main class="flexDisplay flexBetween">
+            <div class="textAreaContainer">
+              <label for="communicationAddress">Communication Address</label>
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <input type="date" name="" id="dob" class="inputField" min="01-01-1900">
+                <textarea name="" id="communicationAddress" cols="80" rows="5"></textarea>
               </section>
-              <section>
-                <small class="textDanger visibleNone">This field is required</small>
-              </section>
+              <small class="textDanger"></small>
             </div>
-            <section class="inputCollectionContainer flexDisplay flexBetween">
-              <div>
-                <label for="mobileNumber">Mobile No</label>
-                &nbsp;
-                <span class="textDanger">*</span>
-                <section>
-                  <input type="number" name="" id="mobileNumber" class="inputField">
-                </section>
-                <section>
-                  <small class="textDanger visibleNone">This field is required</small>
-                </section>
-              </div>
-              <div>
-                <label for="userEmail">Email ID</label>
-                &nbsp;
-                <span class="textDanger">*</span>
-                <section>
-                  <input type="email" name="" id="userEmail" class="inputField">
-                </section>
-                <section>
-                  <small class="textDanger visibleNone">This field is required</small>
-                </section>
-              </div>
-            </section>
-          </section>
-          <section class="flexDisplay flexBetween flexItemCenter inputBox">
-            <div>
-              <label for="userCountry">Select Country</label>
+            <div class="textAreaContainer">
+              <label for="permanentAddress">Permanent Address</label>
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <select name="" id="userCountry" class="inputField"></select>
+                <textarea name="" id="permanentAddress" cols="80" rows="5"></textarea>
               </section>
-              <section>
-                <small class="textDanger visibleNone">This field is required</small>
-              </section>
+              <small class="textDanger"></small>
             </div>
-            <section class="inputCollectionContainer flexDisplay flexBetween">
-              <div class="visibleNone" id="selectStateContainer">
-                <label for="userState">Select State</label>
-                &nbsp;
-                <span class="textDanger">*</span>
-                <section>
-                  <select name="" id="userState" class="inputField"></select>
-                </section>
-                <section>
-                  <small class="textDanger visibleNone">This field is required</small>
-                </section>
-              </div>
-              <div class="visibleNone" id="cityContainer">
-                <label for="userCity">City</label>
-                &nbsp;
-                <span class="textDanger">*</span>
-                <section>
-                  <input type="text" name="" id="userCity" class="inputField" onkeydown="preventNumber(event)">
-                </section>
-                <section>
-                  <small class="textDanger visibleNone">This field is required</small>
-                </section>
-              </div>
-            </section>
-          </section>
-        </main>
-        <main class="flexDisplay flexBetween">
+          </main>
+          <div style="height: 30px;">
+            <input type="checkbox" name="" id="addressCheckBox">
+            <label for="addressCheckBox">Communication Address same as Permanent Address</label>
+          </div>
+          <br>
           <div>
-            <label for="communicationAddress">Communication Address</label>
+            <label for="pin">Pincode</label>
             &nbsp;
             <span class="textDanger">*</span>
             <section>
-              <textarea name="" id="communicationAddress" cols="80" rows="5"></textarea>
+              <input type="number" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')">
             </section>
-            <section>
-              <small class="textDanger visibleNone">This field is required</small>
-            </section>
+            <small class="textDanger"></small>
           </div>
-          <div>
-            <label for="permanentAddress">Permanent Address</label>
-            &nbsp;
-            <span class="textDanger">*</span>
-            <section>
-              <textarea name="" id="permanentAddress" cols="80" rows="5"></textarea>
+          <section class="widthBlock flexDisplay flexEnd">
+            <section class="flexDisplay flexBetween btnContainer">
+              <button class="btn textLight btnGreen" id="actionBtn" type="button" onclick="performAction()">Register</button>
+              <button class="btn textLight btnGreen" id="resetBtn" type="reset" onclick="resetForm()">Reset</button>
             </section>
-            <section>
-              <small class="textDanger visibleNone">This field is required</small>
-            </section>
-          </div>
+          </section>
+          <br>
         </main>
-        <div>
-          <input type="checkbox" name="" id="addressCheckBox">
-          <label for="addressCheckBox">Communication Address same as Permanent Address</label>
-        </div>
-        <br>
-        <div>
-          <label for="pin">Pincode</label>
-          &nbsp;
-          <span class="textDanger">*</span>
-          <section>
-            <input type="number" name="" id="pin" class="inputField">
-          </section>
-          <section>
-            <small class="textDanger visibleNone">This field is required</small>
-          </section>
-        </div>
-        <div class="widthBlock flexDisplay flexEnd">
-          <section class="flexDisplay flexBetween btnContainer">
-            <button class="btn textLight btnGreen" id="actionBtn" onclick="performAction()">Register</button>
-            <button class="btn textLight btnGreen" id="resetBtn">Reset</button>
-          </section>
-        </div>
-        <br>
-      </main>
+      </form>
+      <div>
+        <table border="1px">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Date of Birth</th>
+              <th>Mobile Number</th>
+              <th>Email ID</th>
+              <th>Country</th>
+              <th>State</th>
+              <th>City</th>
+              <th>PIN Code</th>
+              <th>Update</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+
+          </tbody>
+        </table>
+      </div>
       <section class="bgSkyBlue">
         <footer
           class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
@@ -242,7 +243,7 @@
               <p>Powered by :</p>
             </section>
             <section>
-              <img src="Images/logo.jpeg" alt="" class="footerLogo" />
+              <img src="Images/logo.png" alt="" class="footerLogo" />
             </section>
           </section>
         </footer>
