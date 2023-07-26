@@ -18,6 +18,7 @@ const countryCollection = 'https://raw.githubusercontent.com/dr5hn/countries-sta
 let dataStorage = [];
 let statusAvailbleStatus = true;
 let imageSource = null;
+let updateStatus = false;
 
 const userFormData = document.getElementById('userDataForm');
 const imageContainer = document.getElementById('imgContainer');
@@ -39,7 +40,8 @@ const userPermAddress = document.getElementById('permanentAddress');
 const addressCheckBox = document.getElementById('addressCheckBox');
 const userPINCode = document.getElementById('pin');
 const permanentAddressHelper = document.getElementById('permanentHelper');
-const tableContainer = document.getElementById('tableBody')
+const tableContainer = document.getElementById('tableBody');
+const actionBtn = document.getElementById('actionBtn');
 
 //all inputs collection
 const inputCollection = [...document.querySelectorAll('form input'), ...document.querySelectorAll('form select'), ...document.querySelectorAll('form textArea')];
@@ -60,17 +62,13 @@ window.onload = () => {
         dataStorage.forEach(dataItem => {
             let createTableRow = document.createElement('tr');
             let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.dateOfBirth}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
-            <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight" onclick = "updataData(${dataItem.createdTime})"><i class="fa-solid fa-pen"></i></button></td>
-            <td><button class = "bgRed textLight" onclick = "deleteData(${dataItem.createdTime})"><i class="fa-solid fa-trash"></i></button></td>`;
+            <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight" onclick = "updateData(this)"><i class="fa-solid fa-pen"></i></button></td>
+            <td><button class = "bgRed textLight" onclick = "deleteData(this)"><i class="fa-solid fa-trash"></i></button></td>`;
 
             createTableRow.innerHTML = tableData;
             tableContainer.appendChild(createTableRow);
         })
     }
-}
-
-const deleteData = (dataCreatedTime) => {
-    
 }
 
 const performAction = (action) => {
@@ -94,7 +92,8 @@ const performAction = (action) => {
                 dataCollection[formData[index][0]] = val;
             }
         }
-        dataCollection[createdTime] = new Date();
+        let currentTime = new Date();
+        dataCollection.createdTime = currentTime.toISOString().split('T').join();
         dataStorage.push(dataCollection);
         localStorage.setItem('userData', JSON.stringify(dataStorage));
         userPermAddress.disabled = (addressCheckBox.checked) ? true : false;
@@ -103,6 +102,25 @@ const performAction = (action) => {
     else{
         action.preventDefault()
     }
+}
+
+const deleteData = (dataItem) => {
+    let pos = dataItem.parentNode.parentNode;
+    if(confirm('Data will be deleted permanently. Do you like to continue?')){
+        dataStorage.splice((pos.rowIndex - 1), 1);
+        localStorage.setItem('userData', JSON.stringify(dataStorage));
+        pos.remove();
+    }
+}
+
+const updateData = (dataItem) => {
+    let pos = dataItem.parentNode.parentNode.rowIndex - 1;
+    let updateDataItem = dataStorage[pos];
+    updateStatus = true;
+    imageContainer.src = updateDataItem.uploadBtn;
+    imageContainer.classList.remove('visibleNone');
+    countryOption.value = updateDataItem.userCountry;
+    actionBtn.innerHTML = 'Update'
 }
 
 const isFormValid = () => {
@@ -156,12 +174,12 @@ const showOption = async () => {
     country = (await country).json();
     country = await country;
     createOption(country, countryOption, 'Country');
-    countryOption.addEventListener('change', () => {
+    countryOption.addEventListener('input', () => {
         const userCountry = (countryOption.selectedIndex) - 1;
 
         if (country[userCountry].states.length > 0) {
             createOption(country[userCountry].states, stateOption, 'State');
-            stateOption.addEventListener('change', () => cityContainer.classList.remove('visibleNone'));
+            stateOption.addEventListener('input', () => cityContainer.classList.remove('visibleNone'));
             cityContainer.classList.add('visibleNone');
             stateContainer.classList.remove('visibleNone');
         }
@@ -235,3 +253,7 @@ const resetForm = () => {
 }
 showOption();
 userDOB.setAttribute('max', todayDate[0]);
+
+countryOption.addEventListener('input', () => {
+
+})
