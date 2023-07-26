@@ -154,3 +154,38 @@ form main div{
 .textAreaContainer{
     min-height: 120px;
 }
+#addressCheckBox{
+    cursor: pointer;
+}
+table button {
+    cursor: pointer;
+}
+table td{
+    text-align: center;
+    min-width: 50px;
+    padding: 10px;
+}
+tr{
+    border-bottom: 1px solid #ddd;
+}
+table{
+    margin: 30px auto;
+    margin-bottom: 50px;
+}
+table td button{
+    padding: 8px;    
+    border: 1px black solid;
+}
+.bgRed{
+    background-color: red;
+}
+tr:nth-child(even) {
+    background-color: #D6EEEE;
+}
+thead tr{
+    background-color: black;
+    color: white;
+}
+thead th{
+    padding: 5px;
+}

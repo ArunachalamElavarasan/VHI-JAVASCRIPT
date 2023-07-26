@@ -12,6 +12,10 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:ital@1&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/1de50aa74b.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body class="bgGreen">
     <main class="main flexDisplay flexDirCol flexBetween">
@@ -38,7 +42,7 @@
         </section>
       </header>
       <br>
-      <form action="" method="post">
+      <form action="index.html" method="post" id="userDataForm" onsubmit="">
         <main class="container flexDisplay flexDirCol flexBetween">
           <div class="flexDisplay flexBetween">
             <div class="flexDisplay flexEvenly uploadContainer">
@@ -46,7 +50,7 @@
                 <img src="" alt="" class="imgFluid visibleNone" id="imgContainer">
               </section>
               <section class="flexDisplay flexItemCenter">
-                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/png, image/jpeg, image/gif">
+                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/png, image/jpeg, image/gif" onchange="noValueCheck(this, '')">
                 <label class="btn textLight btnGreen" for="uploadBtn" style="text-align: center;">
                   Upload
                 </label>
@@ -62,7 +66,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <select name="" id="organization" class="inputField">
+                    <select name="userOrganization" id="organization" class="inputField" onchange="noValueCheck(this, '')">
                       <option selected hidden disabled value="">Select Organization</option>
                       <option value="ABC institute of technology">ABC institute of technology</option>
                       <option value="EFG institute of technology">EFG institute of technology</option>
@@ -76,7 +80,7 @@
                   &nbsp;
                 <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')">
+                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')" onkeyup="noValueCheck(this, 'Value is invalid')">
                   </section>
                   <small class="textDanger"></small>
                 </div>
@@ -87,7 +91,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')">
+                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')" onkeyup="noValueCheck(this, 'Value is invalid')">
                   </section>
                   <small class="textDanger"></small>
                 </div>
@@ -109,7 +113,7 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <input type="date" name="" id="dob" class="inputField" min="01-01-1900">
+                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900" onchange="noValueCheck(this, '')">
                 </section>
                 <small class="textDanger"></small>
               </div>
@@ -119,7 +123,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')">
+                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')" onkeyup="noValueCheck(this, 'Mobile Number is Invalid')">
                   </section>
                   <small class="textDanger"></small>
                 </div>
@@ -128,7 +132,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section class="flexDisplay flexDirCol" style="justify-content: flex-start;">
-                    <input type="email" name="EmailID" id="userEmail" class="inputField">
+                    <input type="email" name="EmailID" id="userEmail" class="inputField" onkeyup="noValueCheck(this, 'Email is Invalid')">
                   </section>
                   <small class="textDanger"></small>
                 </div>
@@ -140,7 +144,7 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <select name="" id="userCountry" class="inputField"></select>
+                  <select name="userCountry" id="userCountry" class="inputField" onchange="noValueCheck(this, '')"></select>
                 </section>
                 <small class="textDanger"></small>
               </div>
@@ -150,7 +154,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <select name="" id="userState" class="inputField"></select>
+                    <select name="userState" id="userState" class="inputField" onchange="noValueCheck(this, '')"></select>
                   </section>
                   <small class="textDanger"></small>
                 </div>
@@ -159,7 +163,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')">
+                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')" onkeyup="noValueCheck(this, 'Invalid City Name')">
                   </section>
                   <small class="textDanger"></small>
                 </div>
@@ -172,7 +176,7 @@
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <textarea name="" id="communicationAddress" cols="80" rows="5"></textarea>
+                <textarea name="communicationAddress" id="communicationAddress" cols="80" rows="5" onkeyup="noValueCheck(this, '')"></textarea>
               </section>
               <small class="textDanger"></small>
             </div>
@@ -181,13 +185,14 @@
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <textarea name="" id="permanentAddress" cols="80" rows="5"></textarea>
+                <textarea name="permanentAddress" id="permanentAddress" cols="80" rows="5" onkeyup="noValueCheck(this, '')"></textarea>
               </section>
-              <small class="textDanger"></small>
+              <small class="textDanger" id="permanentHelper"></small>
             </div>
           </main>
           <div style="height: 30px;">
-            <input type="checkbox" name="" id="addressCheckBox">
+            <input type="hidden" name="addressCheck" value="no">
+            <input type="checkbox" name="addressCheck" id="addressCheckBox" value="yes">
             <label for="addressCheckBox">Communication Address same as Permanent Address</label>
           </div>
           <br>
@@ -196,13 +201,13 @@
             &nbsp;
             <span class="textDanger">*</span>
             <section>
-              <input type="number" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')">
+              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')" onkeyup="noValueCheck(this, 'Invalid PIN code')">
             </section>
             <small class="textDanger"></small>
           </div>
           <section class="widthBlock flexDisplay flexEnd">
             <section class="flexDisplay flexBetween btnContainer">
-              <button class="btn textLight btnGreen" id="actionBtn" type="button" onclick="performAction()">Register</button>
+              <button class="btn textLight btnGreen" id="actionBtn" type="submit" onclick="performAction(event)">Register</button>
               <button class="btn textLight btnGreen" id="resetBtn" type="reset" onclick="resetForm()">Reset</button>
             </section>
           </section>
@@ -210,7 +215,7 @@
         </main>
       </form>
       <div>
-        <table border="1px">
+        <table>
           <thead>
             <tr>
               <th>Name</th>
@@ -231,23 +236,6 @@
           </tbody>
         </table>
       </div>
-      <section class="bgSkyBlue">
-        <footer
-          class="textBlue flexDisplay flexBetween footerContainer flexItemCenter"
-        >
-          <section class="footerObjective">
-            <p>Learning Objective : Local Storage</p>
-          </section>
-          <section class="flexDisplay flexItemCenter">
-            <section class="footerObjective">
-              <p>Powered by :</p>
-            </section>
-            <section>
-              <img src="Images/logo.png" alt="" class="footerLogo" />
-            </section>
-          </section>
-        </footer>
-      </section>
     </main>
     <script src="Script files/crud.js"></script>
   </body>

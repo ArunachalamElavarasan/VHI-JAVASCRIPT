@@ -15,7 +15,11 @@ document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
 //constant declaration
 const todayDate = dateAndTime.toISOString().split('T');
 const countryCollection = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json';
+let dataStorage = [];
+let statusAvailbleStatus = true;
+let imageSource = null;
 
+const userFormData = document.getElementById('userDataForm');
 const imageContainer = document.getElementById('imgContainer');
 const imageUploadBtn = document.getElementById('uploadBtn');
 const selectOrganization = document.getElementById('organization');
@@ -33,7 +37,9 @@ const cityContainer = document.getElementById('cityContainer');
 const userComAddress = document.getElementById('communicationAddress');
 const userPermAddress = document.getElementById('permanentAddress');
 const addressCheckBox = document.getElementById('addressCheckBox');
-const userPINCode = document.getElementById('pin')
+const userPINCode = document.getElementById('pin');
+const permanentAddressHelper = document.getElementById('permanentHelper');
+const tableContainer = document.getElementById('tableBody')
 
 //all inputs collection
 const inputCollection = [...document.querySelectorAll('form input'), ...document.querySelectorAll('form select'), ...document.querySelectorAll('form textArea')];
@@ -43,23 +49,94 @@ const NO_VALUE_ERR = "This field is required";
 
 //pattern
 const namePattern = /^([A-Za-z]+)$/
-const emailPattern = /^([A-Za-z0-9\.-]+)@([A-Za-z0-9\.-]+).([a-z]{2,15}).([a-z]{2,10})?$/
+const emailPattern = /^([A-Za-z0-9\.-]+)@([A-Za-z0-9\.-]+).([a-z]{2,15}).([a-z]{2,10}?)$/
 const mobileNumberPattern = /^([9 | 8 | 7| 6])([0-9]{9})$/
 const pinCodePattern = /^[0-9]{6}$/
 
-const performAction = () => {
-    inputCollection.forEach(inputField => {
-        if (inputField.type != 'radio' && inputField.type != 'checkbox') noValueCheck(inputField);
-    })
+window.onload = () => {
+    dataStorage = JSON.parse(localStorage.getItem('userData')) || [];
+
+    if(dataStorage.length > 0){
+        dataStorage.forEach(dataItem => {
+            let createTableRow = document.createElement('tr');
+            let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.dateOfBirth}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
+            <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight" onclick = "updataData(${dataItem.createdTime})"><i class="fa-solid fa-pen"></i></button></td>
+            <td><button class = "bgRed textLight" onclick = "deleteData(${dataItem.createdTime})"><i class="fa-solid fa-trash"></i></button></td>`;
+
+            createTableRow.innerHTML = tableData;
+            tableContainer.appendChild(createTableRow);
+        })
+    }
 }
 
-const noValueCheck = (val, checkPattern, errorMessage) => {
+const deleteData = (dataCreatedTime) => {
+    
+}
+
+const performAction = (action) => {
+    inputCollection.map(inputField => {
+        if (inputField.type != 'radio' && inputField.type != 'checkbox') {
+            inputValueStatus = noValueCheck(inputField);
+        }
+    });
+
+    if(isFormValid()){
+        action.preventDefault()
+        userPermAddress.disabled = (addressCheckBox.checked) ? false : false;
+        let formData = [...new FormData(userFormData)]
+        let dataCollection = {}
+        for (let index = 0; index < formData.length; index++) {
+            let val = formData[index][1];
+            if(formData[index][0] == 'uploadBtn') {
+                dataCollection[formData[index][0]] = imageSource;
+            }
+            else{
+                dataCollection[formData[index][0]] = val;
+            }
+        }
+        dataCollection[createdTime] = new Date();
+        dataStorage.push(dataCollection);
+        localStorage.setItem('userData', JSON.stringify(dataStorage));
+        userPermAddress.disabled = (addressCheckBox.checked) ? true : false;
+        location.reload();
+    }
+    else{
+        action.preventDefault()
+    }
+}
+
+const isFormValid = () => {
+    const errorCollection = document.querySelectorAll('form small');
+    let validStatus = true;
+    errorCollection.forEach(errorContainer => {
+        if(errorContainer.innerHTML != ""){
+            validStatus = false;
+            return validStatus;
+        }
+    })
+    return validStatus;
+}
+
+const noValueCheck = (val, errorMessage) => {
     let inputValue = (val.value).replace(/\s/g, ' ').trim();
     let helperText = val.parentElement.nextElementSibling;
 
-    if (inputValue == '') helperText.innerHTML = NO_VALUE_ERR;
-    else if (errorMessage != '' && checkPattern != ''){
-        if(!(checkPattern.test(inputValue))) helperText.innerHTML = errorMessage;
+    if (inputValue == '') {
+        helperText.innerHTML = NO_VALUE_ERR;
+    }
+    else if (errorMessage != '') {
+        if (val.id == 'firstName' || val.id == 'lastName' || val.id == 'userCity') {
+            helperText.innerHTML = (namePattern.test(inputValue)) ? "" : errorMessage;
+        }
+        if (val.id == 'mobileNumber') {
+            helperText.innerHTML = (mobileNumberPattern.test(inputValue)) ? "" : errorMessage;
+        }
+        if (val.id == 'userEmail') {
+            helperText.innerHTML = (emailPattern.test(inputValue)) ? "" : errorMessage;
+        }
+        if (val.id == 'pin') {
+            helperText.innerHTML = (pinCodePattern.test(inputValue)) ? "" : errorMessage;
+        }
     }
     else {
         helperText.innerHTML = "";
@@ -89,13 +166,17 @@ const showOption = async () => {
             stateContainer.classList.remove('visibleNone');
         }
         else {
+            statusAvailbleStatus = false;
             cityContainer.classList.remove('visibleNone');
             stateContainer.classList.add('visibleNone');
         }
     });
 }
 
-const sameAddress = () => userPermAddress.value = userComAddress.value;
+const sameAddress = () => {
+    userPermAddress.value = userComAddress.value;
+    permanentAddressHelper.innerHTML = "";
+};
 
 imageUploadBtn.addEventListener('change', () => {
     const fileFormatCheck = (imageUploadBtn.value).split('.');
@@ -105,6 +186,7 @@ imageUploadBtn.addEventListener('change', () => {
         readImage.readAsDataURL(uploadBtn.files[0]);
         readImage.addEventListener('load', () => {
             imageContainer.src = readImage.result;
+            imageSource = readImage.result;
             imageContainer.classList.remove('visibleNone');
         });
         uploadBtn.parentElement.nextElementSibling.innerHTML = "";
@@ -139,23 +221,17 @@ const preventKey = (key, keyType) => {
 }
 
 const resetForm = () => {
-    inputCollection.forEach(inputField => inputField.value = "");
+    inputCollection.forEach(inputField => {
+        if (!(inputField.type == "radio" || inputField.type == 'checkbox')) {
+            inputField.parentElement.nextElementSibling.innerHTML = "";
+        }
+    });
     stateContainer.classList.add('visibleNone');
     cityContainer.classList.add('visibleNone');
     imageContainer.classList.add('visibleNone');
+    userPermAddress.disabled = false;
+    imageContainer.src = "";
+    userFormData.reset();
 }
 showOption();
-
-imageUploadBtn.addEventListener('change', () => noValueCheck(imageUploadBtn, '', ''));
-selectOrganization.addEventListener('change', () => noValueCheck(selectOrganization, '', ''));
-userFirstName.addEventListener('keyup', () => noValueCheck(userFirstName, namePattern, 'Value is invalid'));
-userLastName.addEventListener('keyup', () => noValueCheck(userLastName, namePattern, 'Value is invalid'));
-userDOB.addEventListener('change', () => noValueCheck(userDOB, '', ''));
-userMobileNumber.addEventListener('keyup', () => noValueCheck(userMobileNumber, mobileNumberPattern, 'Mobile Number is Invalid'));
-userEmail.addEventListener('keyup', () => noValueCheck(userEmail, emailPattern, 'Email is Invalid'));
-countryOption.addEventListener('change', () => noValueCheck(countryOption, '', ''));
-stateOption.addEventListener('change', () => noValueCheck(stateOption, '', ''));
-userCity.addEventListener('keyup', () => noValueCheck(userCity, namePattern, 'Invalid City Name'));
-userComAddress.addEventListener('keyup', () => noValueCheck(userComAddress, '', ''));
-userPermAddress.addEventListener('keyup', () => noValueCheck(userPermAddress, '', ''));
-userPINCode.addEventListener('keyup', () => noValueCheck(userPINCode, pinCodePattern, 'Invalid PIN code'));
+userDOB.setAttribute('max', todayDate[0]);
