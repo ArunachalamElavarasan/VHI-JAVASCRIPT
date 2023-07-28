@@ -168,6 +168,13 @@ table td{
 tr{
     border-bottom: 1px solid #ddd;
 }
+#tableContainer{
+    width: 90%;
+    margin: auto;
+}
+.tableScroll{
+    overflow-x: scroll;
+}
 table{
     margin: 30px auto;
     margin-bottom: 50px;
@@ -186,6 +193,22 @@ thead tr{
     background-color: black;
     color: white;
 }
-thead th{
-    padding: 5px;
+td{
+    width: 350px;
+}
+.displayNone{
+    display: none;
+}
+.user{
+    text-decoration: underline;
+}
+input#dob::-webkit-calendar-picker-indicator, select, input[type = "radio"] {
+    cursor: pointer;
+}
+th{
+    padding: 0px 20px;
+    margin: 20px;
+}
+table button {
+    margin:  0px 5px;
 }

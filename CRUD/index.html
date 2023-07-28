@@ -50,14 +50,14 @@
                 <img src="" alt="" class="imgFluid visibleNone" id="imgContainer">
               </section>
               <section class="flexDisplay flexItemCenter">
-                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/png, image/jpeg, image/gif" onchange="noValueCheck(this, '')">
                 <label class="btn textLight btnGreen" for="uploadBtn" style="text-align: center;">
                   Upload
                 </label>
                 &nbsp;
                 <span class="textDanger">*</span>
+                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/*" onchange="noValueCheck(this, '')" onfocus="removeError(this)">
+                <small style="position: absolute; bottom: 10px; left: 0px;" class="textDanger"></small>
               </section>
-              <small style="position: absolute; bottom: 10px; left: 0px;" class="textDanger"></small>
             </div>
             <div class="flexDisplay flexBetween flexDirCol inputCollectionContainer">
               <main class="flexDisplay flexBetween">
@@ -72,17 +72,17 @@
                       <option value="EFG institute of technology">EFG institute of technology</option>
                       <option value="COV institute of technology">COV institute of technology</option>
                     </select>
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
                 <div>
                   <label for="firstName ">First Name</label>  
                   &nbsp;
                 <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')" onkeyup="noValueCheck(this, 'Value is invalid')">
+                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')" onblur="noValueCheck(this, 'Value is invalid')" onfocus="removeError(this)">
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
               </main>
               <main class="flexDisplay flexBetween">
@@ -91,9 +91,9 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')" onkeyup="noValueCheck(this, 'Value is invalid')">
+                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')" onblur="noValueCheck(this, 'Value is invalid')" onfocus="removeError(this)">
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
                 <div class="inputField">
                   <label>Gender</label>
@@ -113,9 +113,9 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900" onchange="noValueCheck(this, '')">
+                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900" onchange="noValueCheck(this, 'Date of Birth must before today date')">
+                  <small class="textDanger"></small>
                 </section>
-                <small class="textDanger"></small>
               </div>
               <section class="inputCollectionContainer flexDisplay flexBetween">
                 <div>
@@ -123,18 +123,18 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')" onkeyup="noValueCheck(this, 'Mobile Number is Invalid')">
+                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')" onblur="noValueCheck(this, 'Mobile Number is Invalid')" onfocus="removeError(this)">
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
                 <div>
                   <label for="userEmail">Email ID</label>
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section class="flexDisplay flexDirCol" style="justify-content: flex-start;">
-                    <input type="email" name="EmailID" id="userEmail" class="inputField" onkeyup="noValueCheck(this, 'Email is Invalid')">
+                    <input type="email" name="EmailID" id="userEmail" class="inputField" onblur="noValueCheck(this, 'Email is Invalid')" onfocus="removeError(this)">
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
               </section>
             </section>
@@ -145,8 +145,8 @@
                 <span class="textDanger">*</span>
                 <section>
                   <select name="userCountry" id="userCountry" class="inputField" onchange="noValueCheck(this, '')"></select>
+                  <small class="textDanger"></small>
                 </section>
-                <small class="textDanger"></small>
               </div>
               <section class="inputCollectionContainer flexDisplay flexBetween">
                 <div class="visibleNone" id="stateContainer">
@@ -154,18 +154,19 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
+                    <input type="hidden" name="userState" value="None">
                     <select name="userState" id="userState" class="inputField" onchange="noValueCheck(this, '')"></select>
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
                 <div class="visibleNone" id="cityContainer">
                   <label for="userCity">City</label>
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')" onkeyup="noValueCheck(this, 'Invalid City Name')">
+                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')" onblur="noValueCheck(this, 'Invalid City Name')" onfocus="removeError(this)">
+                    <small class="textDanger"></small>
                   </section>
-                  <small class="textDanger"></small>
                 </div>
               </section>
             </section>
@@ -177,8 +178,8 @@
               <span class="textDanger">*</span>
               <section>
                 <textarea name="communicationAddress" id="communicationAddress" cols="80" rows="5" onkeyup="noValueCheck(this, '')"></textarea>
+                <small class="textDanger"></small>
               </section>
-              <small class="textDanger"></small>
             </div>
             <div class="textAreaContainer">
               <label for="permanentAddress">Permanent Address</label>
@@ -186,8 +187,8 @@
               <span class="textDanger">*</span>
               <section>
                 <textarea name="permanentAddress" id="permanentAddress" cols="80" rows="5" onkeyup="noValueCheck(this, '')"></textarea>
+                <small class="textDanger" id="permanentHelper"></small>
               </section>
-              <small class="textDanger" id="permanentHelper"></small>
             </div>
           </main>
           <div style="height: 30px;">
@@ -201,40 +202,42 @@
             &nbsp;
             <span class="textDanger">*</span>
             <section>
-              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')" onkeyup="noValueCheck(this, 'Invalid PIN code')">
+              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')" onblur="noValueCheck(this, 'Invalid PIN code')" onfocus="removeError(this)">
+              <small class="textDanger"></small>
             </section>
-            <small class="textDanger"></small>
           </div>
           <section class="widthBlock flexDisplay flexEnd">
             <section class="flexDisplay flexBetween btnContainer">
-              <button class="btn textLight btnGreen" id="actionBtn" type="submit" onclick="performAction(event)">Register</button>
+              <button class="btn textLight btnGreen" id="actionBtn" type="button" onclick="createUserDetail(event)">Register</button>
               <button class="btn textLight btnGreen" id="resetBtn" type="reset" onclick="resetForm()">Reset</button>
             </section>
           </section>
           <br>
         </main>
       </form>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Date of Birth</th>
-              <th>Mobile Number</th>
-              <th>Email ID</th>
-              <th>Country</th>
-              <th>State</th>
-              <th>City</th>
-              <th>PIN Code</th>
-              <th>Update</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-
-          </tbody>
-        </table>
+      <div id="tableContainer" class="displayNone">
+        <h3 class="user">User Data</h3>
+        <section class="tableScroll">
+          <table>
+            <thead id="table">
+              <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Date of Birth</th>
+                <th>Mobile Number</th>
+                <th>Email ID</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>City</th>
+                <th>PIN Code</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+  
+            </tbody>
+          </table>
+        </section>
       </div>
     </main>
     <script src="Script files/crud.js"></script>
