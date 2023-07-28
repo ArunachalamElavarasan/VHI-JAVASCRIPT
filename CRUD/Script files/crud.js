@@ -38,6 +38,8 @@ const errorCollection = document.querySelectorAll('form small');
 const tableBox = document.getElementById('tableContainer');
 const genderCollection = document.querySelectorAll('input[type="radio"');
 const inputCollection = [...document.querySelectorAll('form input'), ...document.querySelectorAll('form select'), ...document.querySelectorAll('form textArea')];
+const actionBtn = document.getElementById('actionBtn');
+const resetBtn = document.getElementById('resetBtn');
 
 //alert and error message
 const DELETE_CONFIRM = 'User details will be deleted permanently. Do you like to continue?';
@@ -71,8 +73,8 @@ const createUserDetail = (event) => {
         dataStorage.push(dataCollection);
         localStorage.setItem('userData', JSON.stringify(dataStorage));
         userPermAddress.disabled = (addressCheckBox.checked) ? true : false;
-        let detailsRow = createTable(dataCollection);
-        tableContainer.appendChild(detailsRow);
+        tableContainer.appendChild(createTable(dataCollection));
+        tableBox.classList.remove('displayNone');
         resetForm();
     }
 }
@@ -85,6 +87,8 @@ const readUserDetail = (dataIndex) => {
     countryOption.value = updateDataItem.userCountry;
     actionBtn.innerHTML = 'Update';
     actionBtn.onclick = () => updateUserDetail(dataIndex);
+    resetBtn.setAttribute('click', () => readUserDetail(dataIndex));
+
     for (const key in updateDataItem) {
         for (let index = 0; index < inputCollection.length; index++) {
             if (key == inputCollection[index].name && key != 'uploadBtn' && key != 'gender') {
@@ -93,11 +97,7 @@ const readUserDetail = (dataIndex) => {
             }
         }
     }
-    genderCollection.forEach(inputField => {
-        if (inputField.value == updateDataItem.gender) {
-            inputField.checked = true;
-        }
-    })
+    genderCollection.forEach(inputField => inputField.checked = (inputField.value == updateDataItem.gender) ? true : false)
     if (updateDataItem.addressCheck == 'yes') {
         addressCheckBox.checked = true;
         sameAddressOperation();
@@ -118,8 +118,8 @@ const updateUserDetail = (dataIndex) => {
         let dataCollection = dataStorage[dataIndex];
         let formLen = formData.length;
         imageSource = imageContainer.src;
+        
         userPermAddress.disabled = (addressCheckBox.checked) ? false : false;
-
         for (let index = 0; index < formLen; index++) {
             let val = formData[index][1];
             dataCollection[formData[index][0]] = (formData[index][0] == 'uploadBtn') ? imageSource : val;
@@ -129,19 +129,17 @@ const updateUserDetail = (dataIndex) => {
         while (tableContainer.hasChildNodes()) {
             tableContainer.removeChild(tableContainer.lastChild);
         }
-        dataStorage.forEach(dataItem => {
-            let detailsRow = createTable(dataItem);
-            tableContainer.appendChild(detailsRow);
-        });
+        dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
         actionBtn.innerHTML = 'Register';
         actionBtn.onclick = createUserDetail;
+        resetBtn.onclick = resetForm;
         resetForm();
     }
 }
 
 const deleteUserDetail = (dataIndex) => {
     if (confirm(DELETE_CONFIRM)) {
-        dataStorage.splice((dataIndex), 1);
+        dataStorage.splice(dataIndex, 1);
         localStorage.setItem('userData', JSON.stringify(dataStorage));
         while (tableContainer.hasChildNodes()) {
             tableContainer.removeChild(tableContainer.lastChild);
@@ -151,12 +149,14 @@ const deleteUserDetail = (dataIndex) => {
             tableContainer.appendChild(detailsRow);
         });
     }
+    if (dataStorage.length == 0) tableBox.classList.add('displayNone');
 }
 
 //input validation
 const noValueCheck = (val, errorMessage) => {
     let inputValue = (val.value).replace(/\s/g, ' ').trim();
     let helperText = val.nextElementSibling;
+
     if (inputValue == '' && val.id != 'uploadBtn') helperText.innerHTML = NO_VALUE_ERR;
     else if (val.id == 'uploadBtn' && imageContainer.src == '') helperText.innerHTML = NO_VALUE_ERR;
     else if (errorMessage != '') {
@@ -209,10 +209,9 @@ const createOptionElement = (countryObj, appendSelect, optionCategory) => {
 const generateCountry = async () => {
     let country = fetch(countryCollection);
     country = (await country).json();
-    country = await country;
-    countryDetails = country;
+    countryDetails = await country;
 
-    createOptionElement(country, countryOption, 'Country');
+    createOptionElement(countryDetails, countryOption, 'Country');
     countryOption.addEventListener('change',
         () => generateState(((countryOption.selectedIndex) - 1), createOptionElement));
 }
@@ -282,10 +281,6 @@ const createTable = (dataItem) => {
         createTableRow.innerHTML = tableData;
         return createTableRow;
     }
-    else {
-        tableBox.classList.add('visibleNone');
-        return '';
-    }
 }
 
 //prevent key board keys
@@ -321,10 +316,7 @@ window.onload = () => {
     dataStorage = JSON.parse(localStorage.getItem('userData')) || [];
 
     if (dataStorage.length > 0) {
-        dataStorage.forEach(dataItem => {
-            let detailsRow = createTable(dataItem);
-            tableContainer.appendChild(detailsRow);
-        });
+        dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
         tableBox.classList.remove('displayNone');
     }
     userDOB.setAttribute('max', todayDate[0]);
