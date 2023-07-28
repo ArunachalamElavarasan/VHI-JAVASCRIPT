@@ -64,7 +64,7 @@ window.onload = () => {
             let createTableRow = document.createElement('tr');
             let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.dateOfBirth}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
             <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight" onclick = "updateData(this)"><i class="fa-solid fa-pen"></i></button></td>
-            <td><button class = "bgRed textLight" onclick = "deleteData(this)"><i class="fa-solid fa-trash"></i></button></td>`;
+            <td><button class = "bgRed textLight delete" onclick = "deleteData(this)"><i class="fa-solid fa-trash"></i></button></td>`;
 
             createTableRow.innerHTML = tableData;
             tableContainer.appendChild(createTableRow);

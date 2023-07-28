@@ -157,9 +157,6 @@ form main div{
 #addressCheckBox{
     cursor: pointer;
 }
-table button {
-    cursor: pointer;
-}
 table td{
     text-align: center;
     min-width: 50px;
@@ -211,4 +208,10 @@ th{
 }
 table button {
     margin:  0px 5px;
+}
+.pointer{
+    cursor: pointer;
+}
+.addOpacity{
+    opacity: 0.8;
 }

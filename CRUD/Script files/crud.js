@@ -34,8 +34,9 @@ const userComAddress = document.getElementById('communicationAddress');
 const userPermAddress = document.getElementById('permanentAddress');
 const addressCheckBox = document.getElementById('addressCheckBox');
 const tableContainer = document.getElementById('tableBody');
+const errorCollection = document.querySelectorAll('form small');
 const tableBox = document.getElementById('tableContainer');
-const errorCollection = document.getElementById('form small');
+const genderCollection = document.querySelectorAll('input[type="radio"');
 const inputCollection = [...document.querySelectorAll('form input'), ...document.querySelectorAll('form select'), ...document.querySelectorAll('form textArea')];
 
 //alert and error message
@@ -70,29 +71,33 @@ const createUserDetail = (event) => {
         dataStorage.push(dataCollection);
         localStorage.setItem('userData', JSON.stringify(dataStorage));
         userPermAddress.disabled = (addressCheckBox.checked) ? true : false;
+        let detailsRow = createTable(dataCollection);
+        tableContainer.appendChild(detailsRow);
         resetForm();
-        createTable(dataCollection);
     }
 }
 
-const readUserDetail = (dataItem) => {
-    let pos = dataItem.parentNode.parentNode.rowIndex - 1;
-    let updateDataItem = dataStorage[pos];
-
+const readUserDetail = (dataIndex) => {
+    let updateDataItem = dataStorage[dataIndex];
+    resetForm();
     imageContainer.src = updateDataItem.uploadBtn;
     imageContainer.classList.remove('visibleNone');
     countryOption.value = updateDataItem.userCountry;
     actionBtn.innerHTML = 'Update';
-    actionBtn.onclick =  () => updateUserDetail(pos);
+    actionBtn.onclick = () => updateUserDetail(dataIndex);
     for (const key in updateDataItem) {
         for (let index = 0; index < inputCollection.length; index++) {
-            if (key == inputCollection[index].name && key != 'uploadBtn') {
+            if (key == inputCollection[index].name && key != 'uploadBtn' && key != 'gender') {
                 inputCollection[index].value = updateDataItem[key];
                 break;
             }
         }
     }
-
+    genderCollection.forEach(inputField => {
+        if (inputField.value == updateDataItem.gender) {
+            inputField.checked = true;
+        }
+    })
     if (updateDataItem.addressCheck == 'yes') {
         addressCheckBox.checked = true;
         sameAddressOperation();
@@ -101,38 +106,50 @@ const readUserDetail = (dataItem) => {
     generateState(userCountry, createOptionElement);
     stateOption.value = updateDataItem.userState;
     cityContainer.classList.remove('visibleNone');
+    disableBtn();
 }
 
-const updateUserDetail = (dataPos) => {
+const updateUserDetail = (dataIndex) => {
     inputCollection.map(inputField => {
         if (inputField.type != 'radio' && inputField.type != 'checkbox') noValueCheck(inputField);
     });
     if (isFormValid()) {
         let formData = [...new FormData(userFormData)];
-        let dataCollection = dataStorage[dataPos];
-        imageSource = imageContainer.src;
+        let dataCollection = dataStorage[dataIndex];
         let formLen = formData.length;
+        imageSource = imageContainer.src;
         userPermAddress.disabled = (addressCheckBox.checked) ? false : false;
 
         for (let index = 0; index < formLen; index++) {
             let val = formData[index][1];
             dataCollection[formData[index][0]] = (formData[index][0] == 'uploadBtn') ? imageSource : val;
         }
-        dataStorage.splice(dataPos, 1, dataCollection);
         localStorage.setItem('userData', JSON.stringify(dataStorage));
         userPermAddress.disabled = (addressCheckBox.checked) ? true : false;
-        let detailsRow = createTable(dataCollection);
-        tableContainer.remove(dataPos);
+        while (tableContainer.hasChildNodes()) {
+            tableContainer.removeChild(tableContainer.lastChild);
+        }
+        dataStorage.forEach(dataItem => {
+            let detailsRow = createTable(dataItem);
+            tableContainer.appendChild(detailsRow);
+        });
+        actionBtn.innerHTML = 'Register';
+        actionBtn.onclick = createUserDetail;
+        resetForm();
     }
 }
 
-const deleteUserDetail = (dataItem) => {
-    let pos = dataItem.parentNode.parentNode;
-
+const deleteUserDetail = (dataIndex) => {
     if (confirm(DELETE_CONFIRM)) {
-        dataStorage.splice((pos.rowIndex - 1), 1);
+        dataStorage.splice((dataIndex), 1);
         localStorage.setItem('userData', JSON.stringify(dataStorage));
-        pos.remove();
+        while (tableContainer.hasChildNodes()) {
+            tableContainer.removeChild(tableContainer.lastChild);
+        }
+        dataStorage.forEach(dataItem => {
+            let detailsRow = createTable(dataItem);
+            tableContainer.appendChild(detailsRow);
+        });
     }
 }
 
@@ -141,7 +158,7 @@ const noValueCheck = (val, errorMessage) => {
     let inputValue = (val.value).replace(/\s/g, ' ').trim();
     let helperText = val.nextElementSibling;
     if (inputValue == '' && val.id != 'uploadBtn') helperText.innerHTML = NO_VALUE_ERR;
-    else if(val.id == 'uploadBtn' && imageContainer.src == '') helperText.innerHTML = NO_VALUE_ERR; 
+    else if (val.id == 'uploadBtn' && imageContainer.src == '') helperText.innerHTML = NO_VALUE_ERR;
     else if (errorMessage != '') {
         if (val.id == 'firstName' || val.id == 'lastName' || val.id == 'userCity') {
             helperText.innerHTML = (namePattern.test(inputValue)) ? "" : errorMessage;
@@ -173,6 +190,14 @@ const isFormValid = () => {
     return validStatus;
 }
 
+//make disable button
+const disableBtn = () => {
+    const tableBtn = document.querySelectorAll('table button');
+    tableBtn.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.remove('pointer');
+    });
+}
 //Select option generate functions
 const createOptionElement = (countryObj, appendSelect, optionCategory) => {
     let option = `<option selected disabled hidden value = "">Select ${optionCategory}</option>`;
@@ -246,13 +271,21 @@ const convertImage = () => {
     alert(IMG_TYPE_ERR);
 }
 
-const createTable = dataItem => {
-    let createTableRow = document.createElement('tr');
-    let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.dateOfBirth}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
-    <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight" onclick = "readUserDetail(this)"><i class="fa-solid fa-pen"></i></button><button class = "bgRed textLight" onclick = "deleteUserDetail(this)"><i class="fa-solid fa-trash"></i></button></td>`;
+const createTable = (dataItem) => {
+    if (dataStorage.length > 0) {
+        let detailIndex = null;
+        detailIndex = dataStorage.indexOf(dataItem);
+        let createTableRow = document.createElement('tr');
+        let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.dateOfBirth}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
+        <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight pointer" onclick = "readUserDetail(${detailIndex})"><i class="fa-solid fa-pen"></i></button><button class = "bgRed textLight pointer" onclick = "deleteUserDetail(${detailIndex})"><i class="fa-solid fa-trash"></i></button></td>`;
 
-    createTableRow.innerHTML = tableData;
-    return createTableRow;
+        createTableRow.innerHTML = tableData;
+        return createTableRow;
+    }
+    else {
+        tableBox.classList.add('visibleNone');
+        return '';
+    }
 }
 
 //prevent key board keys
@@ -288,7 +321,7 @@ window.onload = () => {
     dataStorage = JSON.parse(localStorage.getItem('userData')) || [];
 
     if (dataStorage.length > 0) {
-        dataStorage.forEach(dataItem =>{
+        dataStorage.forEach(dataItem => {
             let detailsRow = createTable(dataItem);
             tableContainer.appendChild(detailsRow);
         });
