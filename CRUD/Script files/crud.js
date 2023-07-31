@@ -47,14 +47,13 @@ const NO_VALUE_ERR = "This field is required";
 const IMG_TYPE_ERR = "Please upload image file with .jpeg, .png, .jpeg or .gif";
 
 //pattern
-const namePattern = /^([A-Za-z]+)$/
+const namePattern = /^([A-Za-z\s]+)$/
 const emailPattern = /^([A-Za-z0-9\.-]+)@([A-Za-z0-9\.-]+).([a-z]{2,15}).([a-z]{2,10}?)$/
 const mobileNumberPattern = /^([9 | 8 | 7| 6])([0-9]{9})$/
 const pinCodePattern = /^[0-9]{6}$/
 
 //CRUD functions
 const createUserDetail = (event) => {
-
     event.preventDefault();
     inputCollection.map(inputField => {
         if (inputField.type != 'radio' && inputField.type != 'checkbox') noValueCheck(inputField);
@@ -80,31 +79,30 @@ const createUserDetail = (event) => {
 }
 
 const readUserDetail = (dataIndex) => {
-    let updateDataItem = dataStorage[dataIndex];
     resetForm();
-    imageContainer.src = updateDataItem.uploadBtn;
+    let updateDateItem = dataStorage[dataIndex];
+    imageContainer.src = updateDateItem.uploadBtn;
     imageContainer.classList.remove('visibleNone');
-    countryOption.value = updateDataItem.userCountry;
+    countryOption.value = updateDateItem.userCountry;
     actionBtn.innerHTML = 'Update';
+    resetBtn.onclick = () => readUserDetail(dataIndex);
     actionBtn.onclick = () => updateUserDetail(dataIndex);
-    resetBtn.setAttribute('click', () => readUserDetail(dataIndex));
-
-    for (const key in updateDataItem) {
+    for (const key in updateDateItem) {
         for (let index = 0; index < inputCollection.length; index++) {
             if (key == inputCollection[index].name && key != 'uploadBtn' && key != 'gender') {
-                inputCollection[index].value = updateDataItem[key];
+                inputCollection[index].value = updateDateItem[key];
                 break;
             }
         }
     }
-    genderCollection.forEach(inputField => inputField.checked = (inputField.value == updateDataItem.gender) ? true : false)
-    if (updateDataItem.addressCheck == 'yes') {
+    genderCollection.forEach(inputField => inputField.checked = (inputField.value == updateDateItem.gender) ? true : false)
+    if (updateDateItem.addressCheck == 'yes') {
         addressCheckBox.checked = true;
         sameAddressOperation();
     }
     const userCountry = (countryOption.selectedIndex) - 1;
     generateState(userCountry, createOptionElement);
-    stateOption.value = updateDataItem.userState;
+    stateOption.value = updateDateItem.userState;
     cityContainer.classList.remove('visibleNone');
     disableBtn();
 }
@@ -131,9 +129,9 @@ const updateUserDetail = (dataIndex) => {
         }
         dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
         actionBtn.innerHTML = 'Register';
-        actionBtn.onclick = createUserDetail;
-        resetBtn.onclick = resetForm;
         resetForm();
+        resetBtn.onclick = resetForm;
+        actionBtn.onclick = createUserDetail;
     }
 }
 
@@ -144,10 +142,7 @@ const deleteUserDetail = (dataIndex) => {
         while (tableContainer.hasChildNodes()) {
             tableContainer.removeChild(tableContainer.lastChild);
         }
-        dataStorage.forEach(dataItem => {
-            let detailsRow = createTable(dataItem);
-            tableContainer.appendChild(detailsRow);
-        });
+        dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
     }
     if (dataStorage.length == 0) tableBox.classList.add('displayNone');
 }
@@ -157,6 +152,7 @@ const noValueCheck = (val, errorMessage) => {
     let inputValue = (val.value).replace(/\s/g, ' ').trim();
     let helperText = val.nextElementSibling;
 
+    if(inputValue)
     if (inputValue == '' && val.id != 'uploadBtn') helperText.innerHTML = NO_VALUE_ERR;
     else if (val.id == 'uploadBtn' && imageContainer.src == '') helperText.innerHTML = NO_VALUE_ERR;
     else if (errorMessage != '') {
@@ -213,7 +209,7 @@ const generateCountry = async () => {
 
     createOptionElement(countryDetails, countryOption, 'Country');
     countryOption.addEventListener('change',
-        () => generateState(((countryOption.selectedIndex) - 1), createOptionElement));
+        () => generateState(((countryOption.selectedIndex) - 1), createOptionElement));   
 }
 
 const generateState = (countryStates, optionCreation) => {
@@ -275,7 +271,7 @@ const createTable = (dataItem) => {
         let detailIndex = null;
         detailIndex = dataStorage.indexOf(dataItem);
         let createTableRow = document.createElement('tr');
-        let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.dateOfBirth}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
+        let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
         <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight pointer" onclick = "readUserDetail(${detailIndex})"><i class="fa-solid fa-pen"></i></button><button class = "bgRed textLight pointer" onclick = "deleteUserDetail(${detailIndex})"><i class="fa-solid fa-trash"></i></button></td>`;
 
         createTableRow.innerHTML = tableData;
@@ -309,7 +305,10 @@ const resetForm = () => {
     userFormData.reset();
 }
 
-const removeError = currentInput => currentInput.nextElementSibling.innerHTML = "";
+const removeError = currentInput => {
+    currentInput.nextElementSibling.innerHTML = "";
+    console.log('Hello Peter I am happend');
+}
 
 //event listeners
 window.onload = () => {
@@ -321,6 +320,8 @@ window.onload = () => {
     }
     userDOB.setAttribute('max', todayDate[0]);
     generateCountry();
+    resetBtn.onclick = resetForm;
+    actionBtn.onclick = createUserDetail;
 }
 
 imageUploadBtn.addEventListener('change', convertImage);

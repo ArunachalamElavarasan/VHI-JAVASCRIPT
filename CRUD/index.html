@@ -55,7 +55,7 @@
                 </label>
                 &nbsp;
                 <span class="textDanger">*</span>
-                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/*" onchange="noValueCheck(this, '')" onfocus="removeError(this)">
+                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/*" onfocus="removeError(this)">
                 <small style="position: absolute; bottom: 10px; left: 0px;" class="textDanger"></small>
               </section>
             </div>
@@ -66,7 +66,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <select name="userOrganization" id="organization" class="inputField" onchange="noValueCheck(this, '')">
+                    <select name="userOrganization" id="organization" class="inputField">
                       <option selected hidden disabled value="">Select Organization</option>
                       <option value="ABC institute of technology">ABC institute of technology</option>
                       <option value="EFG institute of technology">EFG institute of technology</option>
@@ -80,7 +80,7 @@
                   &nbsp;
                 <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')" onblur="noValueCheck(this, 'Value is invalid')" onfocus="removeError(this)">
+                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')" onfocus="removeError(this)">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -91,7 +91,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')" onblur="noValueCheck(this, 'Value is invalid')" onfocus="removeError(this)">
+                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')" onfocus="removeError(this)">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -113,7 +113,7 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900" onchange="noValueCheck(this, 'Date of Birth must before today date')">
+                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900" onfocus="removeError(this)">
                   <small class="textDanger"></small>
                 </section>
               </div>
@@ -123,7 +123,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')" onblur="noValueCheck(this, 'Mobile Number is Invalid')" onfocus="removeError(this)">
+                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')" onfocus="removeError(this)">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -132,7 +132,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section class="flexDisplay flexDirCol" style="justify-content: flex-start;">
-                    <input type="email" name="EmailID" id="userEmail" class="inputField" onblur="noValueCheck(this, 'Email is Invalid')" onfocus="removeError(this)">
+                    <input type="email" name="EmailID" id="userEmail" class="inputField" onfocus="removeError(this)">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -144,7 +144,7 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <select name="userCountry" id="userCountry" class="inputField" onchange="noValueCheck(this, '')"></select>
+                  <select name="userCountry" id="userCountry" class="inputField" onfocus="removeError(this)"></select>
                   <small class="textDanger"></small>
                 </section>
               </div>
@@ -155,7 +155,7 @@
                   <span class="textDanger">*</span>
                   <section>
                     <input type="hidden" name="userState" value="None">
-                    <select name="userState" id="userState" class="inputField" onchange="noValueCheck(this, '')"></select>
+                    <select name="userState" id="userState" class="inputField" onfocus="removeError(this)"></select>
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -164,7 +164,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')" onblur="noValueCheck(this, 'Invalid City Name')" onfocus="removeError(this)">
+                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')" oninput="removeError(this)">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -177,7 +177,7 @@
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <textarea name="communicationAddress" id="communicationAddress" cols="80" rows="5" onkeyup="noValueCheck(this, '')"></textarea>
+                <textarea name="communicationAddress" id="communicationAddress" cols="80" rows="5"></textarea>
                 <small class="textDanger"></small>
               </section>
             </div>
@@ -186,7 +186,7 @@
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <textarea name="permanentAddress" id="permanentAddress" cols="80" rows="5" onkeyup="noValueCheck(this, '')"></textarea>
+                <textarea name="permanentAddress" id="permanentAddress" cols="80" rows="5" onfocusin="() => removeError(this)"></textarea>
                 <small class="textDanger" id="permanentHelper"></small>
               </section>
             </div>
@@ -202,14 +202,14 @@
             &nbsp;
             <span class="textDanger">*</span>
             <section>
-              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')" onblur="noValueCheck(this, 'Invalid PIN code')" onfocus="removeError(this)">
+              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')" onfocus="removeError(this)">
               <small class="textDanger"></small>
             </section>
           </div>
           <section class="widthBlock flexDisplay flexEnd">
             <section class="flexDisplay flexBetween btnContainer">
-              <button class="btn textLight btnGreen" id="actionBtn" type="button" onclick="createUserDetail(event)">Register</button>
-              <button class="btn textLight btnGreen" id="resetBtn" type="reset" onclick="resetForm()">Reset</button>
+              <button class="btn textLight btnGreen" id="actionBtn" type="button">Register</button>
+              <button class="btn textLight btnGreen" id="resetBtn" type="button">Reset</button>
             </section>
           </section>
           <br>
@@ -223,7 +223,6 @@
               <tr>
                 <th>Name</th>
                 <th>Gender</th>
-                <th>Date of Birth</th>
                 <th>Mobile Number</th>
                 <th>Email ID</th>
                 <th>Country</th>
