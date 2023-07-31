@@ -55,7 +55,7 @@
                 </label>
                 &nbsp;
                 <span class="textDanger">*</span>
-                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/*" onfocus="removeError(this)">
+                <input type="file" name="uploadBtn" id="uploadBtn" accept="image/*">
                 <small style="position: absolute; bottom: 10px; left: 0px;" class="textDanger"></small>
               </section>
             </div>
@@ -80,7 +80,7 @@
                   &nbsp;
                 <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')" onfocus="removeError(this)">
+                    <input type="text" name="FirstName" id="firstName" class="inputField" onkeydown="preventKey(event, 'number')">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -91,7 +91,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')" onfocus="removeError(this)">
+                    <input type="text" name="LastName" id="lastName" class="inputField" onkeydown="preventKey(event, 'number')">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -113,7 +113,7 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900" onfocus="removeError(this)">
+                  <input type="date" name="dateOfBirth" id="dob" class="inputField" min="01-01-1900">
                   <small class="textDanger"></small>
                 </section>
               </div>
@@ -123,7 +123,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')" onfocus="removeError(this)">
+                    <input type="text" name="MobileNumber" id="mobileNumber" class="inputField" onkeydown="preventKey(event, 'text')">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -132,7 +132,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section class="flexDisplay flexDirCol" style="justify-content: flex-start;">
-                    <input type="email" name="EmailID" id="userEmail" class="inputField" onfocus="removeError(this)">
+                    <input type="email" name="EmailID" id="userEmail" class="inputField">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -144,7 +144,7 @@
                 &nbsp;
                 <span class="textDanger">*</span>
                 <section>
-                  <select name="userCountry" id="userCountry" class="inputField" onfocus="removeError(this)"></select>
+                  <select name="userCountry" id="userCountry" class="inputField"></select>
                   <small class="textDanger"></small>
                 </section>
               </div>
@@ -154,8 +154,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="hidden" name="userState" value="None">
-                    <select name="userState" id="userState" class="inputField" onfocus="removeError(this)"></select>
+                    <select name="userState" id="userState" class="inputField"></select>
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -164,7 +163,7 @@
                   &nbsp;
                   <span class="textDanger">*</span>
                   <section>
-                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')" oninput="removeError(this)">
+                    <input type="text" name="UserCity" id="userCity" class="inputField" onkeydown="preventKey(event, 'number')">
                     <small class="textDanger"></small>
                   </section>
                 </div>
@@ -186,13 +185,12 @@
               &nbsp;
               <span class="textDanger">*</span>
               <section>
-                <textarea name="permanentAddress" id="permanentAddress" cols="80" rows="5" onfocusin="() => removeError(this)"></textarea>
+                <textarea name="permanentAddress" id="permanentAddress" cols="80" rows="5"></textarea>
                 <small class="textDanger" id="permanentHelper"></small>
               </section>
             </div>
           </main>
           <div style="height: 30px;">
-            <input type="hidden" name="addressCheck" value="no">
             <input type="checkbox" name="addressCheck" id="addressCheckBox" value="yes">
             <label for="addressCheckBox">Communication Address same as Permanent Address</label>
           </div>
@@ -202,7 +200,7 @@
             &nbsp;
             <span class="textDanger">*</span>
             <section>
-              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')" onfocus="removeError(this)">
+              <input type="text" name="PinCode" id="pin" class="inputField" onkeydown="preventKey(event, 'text')">
               <small class="textDanger"></small>
             </section>
           </div>
