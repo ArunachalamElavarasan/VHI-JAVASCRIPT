@@ -215,3 +215,6 @@ table button {
 .addOpacity{
     opacity: 0.8;
 }
+label{
+    cursor: pointer;
+}

@@ -16,7 +16,7 @@ document.getElementById('dob').setAttribute('max', todayDate[0]);
 
 //variable declaration
 const countryCollection = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json';
-const errorMessage = ['Please enter valid mobile number', 'Please enter valid email id', 'Please enter valid PIN code'];
+const errorMessages = ['Please enter valid mobile number', 'Please enter valid email id', 'Please enter valid PIN code'];
 const beginValue = 0;
 let countryDetails = null;
 let detailsStorage = [];
@@ -52,9 +52,41 @@ const emailPattern = /^([A-Za-z0-9\.-]+)@([A-Za-z0-9\.-]+).([a-z]{2,15}).([a-z]{
 const mobileNumberPattern = /^([9 | 8 | 7| 6])([0-9]{9})$/
 const pinCodePattern = /^[0-9]{6}$/
 
+//input validation
+const validateForm = inserType => {
+    let imageSourceValue = (inserType == 'create') ? imageUploadBtn.value : imageContainer.src;
+    inputCollection.forEach(inputField => {
+        if (inputField.type != 'radio' && inputField.type != 'checkbox') {
+            let inputValue = (inputField.value).replace(/\s/g, ' ').trim();
+            let helperText = inputField.nextElementSibling;
+            if (inputValue == '' && inputField.id != 'uploadBtn') {
+                helperText.innerHTML = NO_VALUE_ERR;
+                return '';
+            }
+            if (inputField.id == 'uploadBtn' && !imageSourceValue) helperText.innerHTML = NO_VALUE_ERR;
+            if (inputField.id == 'mobileNumber' || inputField.id == 'userEmail' || inputField.id == 'pin') {
+                let errorMessage = (inputField.id == 'mobileNumber') ? errorMessages[beginValue] : (inputField.id == 'userEmail') ? errorMessages[1] : errorMessages[2];
+                let pattern = (inputField.id == 'mobileNumber') ? mobileNumberPattern : (inputField.id == 'userEmail') ? emailPattern : pinCodePattern;
+                helperText.innerHTML = pattern.test(inputValue) ? '' : errorMessage;
+            }
+        }
+    })
+}
+
+const isFormValid = () => {
+    let validStatus = true;
+    errorCollection.forEach(errorContainer => {
+        if (errorContainer.innerHTML != "" && stateAvailbleStatus) {
+            validStatus = false;
+            return validStatus;
+        }
+    })
+    return validStatus;
+}
+
 //CRUD functions
 const insertUserDetail = (inserType, detailIndex) => {
-    noValueCheck(inserType);
+    validateForm(inserType);
     if (isFormValid()) {
         let formValue = [...new FormData(userForm)];
         let dataCollection = (inserType == 'create') ? {} : detailsStorage[detailIndex];
@@ -77,48 +109,6 @@ const insertUserDetail = (inserType, detailIndex) => {
     }
 }
 
-const readUserDetail = detailIndex => {
-    resetForm();
-    let updateDateItem = detailsStorage[detailIndex];
-    imageContainer.src = updateDateItem.uploadBtn;
-    countryOption.value = updateDateItem.userCountry;
-    actionBtn.innerHTML = 'Update';
-    resetBtn.onclick = () => readUserDetail(detailIndex);
-    actionBtn.onclick = () => insertUserDetail('update', detailIndex);
-    for (const key in updateDateItem) {
-        for (let index = beginValue; index < inputCollection.length; index++) {
-            if (key == inputCollection[index].name && key != 'uploadBtn' && key != 'gender') {
-                inputCollection[index].value = updateDateItem[key];
-                break;
-            }
-        }
-    }
-    document.querySelector(`input[value="${updateDateItem.gender}"]`).checked = true;
-    
-    if (updateDateItem.addressCheck == 'yes') {
-        addressCheckBox.checked = true;
-        sameAddressOperation();
-    }
-
-    const userCountry = (countryOption.selectedIndex) - 1;
-    generateState(userCountry, createOptionElement);
-    stateOption.value = updateDateItem.userState;
-    cityContainer.classList.remove('visibleNone');
-    disableBtn();
-}
-
-const deleteUserDetail = detailIndex => {
-    if (confirm(DELETE_CONFIRM)) {
-        detailsStorage.splice(detailIndex, 1);
-        localStorage.setItem('userData', JSON.stringify(detailsStorage));
-        while (tableContainer.hasChildNodes()) {
-            tableContainer.removeChild(tableContainer.lastChild);
-        }
-        detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
-    }
-    if (detailsStorage.length == beginValue) tableBox.classList.add('displayNone');
-}
-
 const createUserDetail = userDataCollection => {
     tableContainer.appendChild(createTable(userDataCollection));
     tableBox.classList.remove('displayNone');
@@ -134,46 +124,19 @@ const updateTable = () => {
     actionBtn.onclick = () => insertUserDetail('create', '');
 }
 
-//input validation
-const noValueCheck = inserType => {
-    let imageSourceValue = (inserType == 'create') ? imageUploadBtn.value : imageContainer.src;
+//Reset form
+const resetForm = () => {
     inputCollection.forEach(inputField => {
-        if (inputField.type != 'radio' && inputField.type != 'checkbox') {
-            let inputValue = (inputField.value).replace(/\s/g, ' ').trim();
-            let helperText = inputField.nextElementSibling;
-            if (inputValue == '' && inputField.id != 'uploadBtn') {
-                helperText.innerHTML = NO_VALUE_ERR;
-                return '';
-            }
-            if (inputField.id == 'uploadBtn' && !imageSourceValue) helperText.innerHTML = NO_VALUE_ERR;
-            if (inputField.id == 'mobileNumber' || inputField.id == 'userEmail' || inputField.id == 'pin') {
-                let errorMessage = (inputField.id == 'mobileNumber') ? errorMessage[beginValue] : (inputField.id == 'userEmail') ? errorMessage[1] : errorMessage[2];
-                let pattern = (inputField.id == 'mobileNumber') ? mobileNumberPattern : (inputField.id == 'userEmail') ? emailPattern : pinCodePattern;
-                helperText.innerHTML = pattern.test(inputValue) ? '' : errorMessage;
-            }
-        }
-    })
-}
-
-const isFormValid = () => {
-    let validStatus = true;
-    errorCollection.forEach(errorContainer => {
-        if (errorContainer.innerHTML != "" && stateAvailbleStatus) {
-            validStatus = false;
-            return validStatus;
-        }
-    })
-    return validStatus;
-}
-
-//make button disable
-const disableBtn = () => {
-    const tableBtn = document.querySelectorAll('table button');
-    tableBtn.forEach(btn => {
-        btn.disabled = true;
-        btn.classList.remove('pointer');
+        if (!(inputField.type == "radio" || inputField.type == 'checkbox')) removeError(inputField);
     });
+    stateContainer.classList.add('visibleNone');
+    cityContainer.classList.add('visibleNone');
+    imageContainer.src = 'Images/userProfile.png';
+    userPermAddress.disabled = false;
+    userComAddress.removeEventListener('keyup', sameAddress)
+    userForm.reset();
 }
+
 //Select option generate functions
 const createOptionElement = (countryObj, appendSelect, optionCategory) => {
     const createOption = (optionValue) => {
@@ -208,6 +171,88 @@ const generateState = (countryStates, optionCreation) => {
     }
 }
 
+const readUserDetail = detailIndex => {
+    resetForm();
+    let updateDetail = detailsStorage[detailIndex];
+    let inputLength = inputCollection.length;
+    imageContainer.src = updateDetail.uploadBtn;
+    countryOption.value = updateDetail.userCountry;
+    actionBtn.innerHTML = 'Update';
+    resetBtn.onclick = () => readUserDetail(detailIndex);
+    actionBtn.onclick = () => insertUserDetail('update', detailIndex);
+    for (const key in updateDetail) {
+        for (let index = beginValue; index < inputLength; index++) {
+            if (key == inputCollection[index].name && key != 'uploadBtn' && key != 'gender') {
+                inputCollection[index].value = updateDetail[key];
+                break;
+            }
+        }
+    }
+    document.querySelector(`input[value="${updateDetail.gender}"]`).checked = true;
+    
+    if (updateDetail.addressCheck == 'yes') {
+        addressCheckBox.checked = true;
+        sameAddressOperation();
+    }
+    const userCountry = (countryOption.selectedIndex) - 1;
+    generateState(userCountry, createOptionElement);
+    stateOption.value = updateDetail.userState;
+    cityContainer.classList.remove('visibleNone');
+    disableBtn();
+}
+
+const deleteUserDetail = detailIndex => {
+    if (confirm(DELETE_CONFIRM)) {
+        detailsStorage.splice(detailIndex, 1);
+        localStorage.setItem('userData', JSON.stringify(detailsStorage));
+        while (tableContainer.hasChildNodes()) {
+            tableContainer.removeChild(tableContainer.lastChild);
+        }
+        detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+    }
+    if (detailsStorage.length == beginValue) tableBox.classList.add('displayNone');
+}
+
+const preventKey = (key, keyType) => {
+    const keyValue = key.which;
+
+    if (keyType == 'number' && ((keyValue > 47 && keyValue < 58) || (keyValue > 95 && keyValue < 112) || (keyValue > 180 && keyValue < 223))) {
+        key.preventDefault();
+    }
+    if (keyType == 'text' && ((keyValue > 64 && keyValue < 91) || (keyValue > 105 && keyValue < 222))) {
+        key.preventDefault();
+    }
+}
+
+const createTable = (dataItem) => {
+    if (detailsStorage.length > beginValue) {
+        let detailIndex = detailsStorage.indexOf(dataItem);
+        let createTableRow = document.createElement('tr');
+        let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
+        <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight pointer" onclick = "readUserDetail(${detailIndex})"><i class="fa-solid fa-pen"></i></button><button class = "bgRed textLight pointer" onclick = "deleteUserDetail(${detailIndex})"><i class="fa-solid fa-trash"></i></button></td>`;
+        createTableRow.innerHTML = tableData;
+        return createTableRow;
+    }
+}
+
+//image conversion
+const convertImage = () => {
+    const fileFormatCheck = (imageUploadBtn.value).split('.');
+
+    if (fileFormatCheck[1] == 'jpeg' || fileFormatCheck[1] == 'png' || fileFormatCheck[1] == 'gif' || fileFormatCheck[1] == 'jpg') {
+        const readImage = new FileReader();
+        readImage.readAsDataURL(uploadBtn.files[beginValue]);
+        readImage.addEventListener('load', () => {
+            imageContainer.src = readImage.result;
+            imageSource = readImage.result;
+        });
+        uploadBtn.nextElementSibling.innerHTML = "";
+        return '';
+    }
+    uploadBtn.value = "";
+    alert(IMG_TYPE_ERR);
+}
+
 //same address function
 const sameAddress = () => {
     userPermAddress.value = userComAddress.value;
@@ -227,64 +272,20 @@ const sameAddressOperation = () => {
     }
 }
 
-//image conversion
-const convertImage = () => {
-    const fileFormatCheck = (imageUploadBtn.value).split('.');
-
-    if (fileFormatCheck[1] == 'jpeg' || fileFormatCheck[1] == 'png' || fileFormatCheck[1] == 'gif' || fileFormatCheck[1] == 'jpg') {
-        const readImage = new FileReader();
-
-        readImage.readAsDataURL(uploadBtn.files[beginValue]);
-        readImage.addEventListener('load', () => {
-            imageContainer.src = readImage.result;
-            imageSource = readImage.result;
-        });
-        uploadBtn.nextElementSibling.innerHTML = "";
-        return '';
-    }
-    uploadBtn.value = "";
-    alert(IMG_TYPE_ERR);
-}
-
-const createTable = (dataItem) => {
-    if (detailsStorage.length > beginValue) {
-        let detailIndex = detailsStorage.indexOf(dataItem);
-        let createTableRow = document.createElement('tr');
-        let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
-        <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight pointer" onclick = "readUserDetail(${detailIndex})"><i class="fa-solid fa-pen"></i></button><button class = "bgRed textLight pointer" onclick = "deleteUserDetail(${detailIndex})"><i class="fa-solid fa-trash"></i></button></td>`;
-        createTableRow.innerHTML = tableData;
-        return createTableRow;
-    }
-}
-
-//prevent key board keys
-const preventKey = (key, keyType) => {
-    const keyValue = key.which;
-
-    if (keyType == 'number' && ((keyValue > 47 && keyValue < 58) || (keyValue > 95 && keyValue < 112) || (keyValue > 180 && keyValue < 223))) {
-        key.preventDefault();
-    }
-    if (keyType == 'text' && ((keyValue > 64 && keyValue < 91) || (keyValue > 105 && keyValue < 222))) {
-        key.preventDefault();
-    }
-}
-
-//Reset form
-const resetForm = () => {
-    inputCollection.forEach(inputField => {
-        if (!(inputField.type == "radio" || inputField.type == 'checkbox')) removeError(inputField);
-    });
-    stateContainer.classList.add('visibleNone');
-    cityContainer.classList.add('visibleNone');
-    imageContainer.src = 'Images/userProfile.png';
-    userPermAddress.disabled = false;
-    userComAddress.removeEventListener('keyup', sameAddress)
-    userForm.reset();
-}
-
 const removeError = currentInput => currentInput.nextElementSibling.innerHTML = "";
 
-//event listeners
+//make button disable
+const disableBtn = () => {
+    const tableBtn = document.querySelectorAll('table button');
+    tableBtn.forEach(btn => {
+        btn.disabled = true;
+        btn.classList.remove('pointer');
+    });
+}
+
+imageUploadBtn.addEventListener('change', convertImage);
+addressCheckBox.addEventListener('change', sameAddressOperation);
+
 window.onload = () => {
     detailsStorage = JSON.parse(localStorage.getItem('userData')) || [];
 
@@ -301,6 +302,3 @@ window.onload = () => {
         }
     });
 }
-
-imageUploadBtn.addEventListener('change', convertImage);
-addressCheckBox.addEventListener('change', sameAddressOperation);
