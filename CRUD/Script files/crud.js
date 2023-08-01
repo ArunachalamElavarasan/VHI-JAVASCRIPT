@@ -9,24 +9,24 @@
 
 //Date and Time
 const dateAndTime = new Date();
+const todayDate = dateAndTime.toISOString().split('T');
 document.getElementById('date').innerHTML = dateAndTime.toLocaleDateString();
 document.getElementById('time').innerHTML = dateAndTime.toLocaleTimeString();
+document.getElementById('dob').setAttribute('max', todayDate[0]);
 
-//constant declaration
-const todayDate = dateAndTime.toISOString().split('T');
+//variable declaration
 const countryCollection = 'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries%2Bstates%2Bcities.json';
 const errorMessage = ['Please enter valid mobile number', 'Please enter valid email id', 'Please enter valid PIN code'];
 const beginValue = 0;
 let countryDetails = null;
-let dataStorage = [];
+let detailsStorage = [];
 let imageSource = null;
 let stateAvailbleStatus = true;
 
 //DOM declaration
-const userFormData = document.getElementById('userDataForm');
+const userForm = document.getElementById('userDataForm');
 const imageContainer = document.getElementById('imgContainer');
 const imageUploadBtn = document.getElementById('uploadBtn');
-const userDOB = document.getElementById('dob');
 const stateContainer = document.getElementById('stateContainer');
 const cityContainer = document.getElementById('cityContainer');
 const countryOption = document.getElementById('userCountry');
@@ -53,22 +53,22 @@ const mobileNumberPattern = /^([9 | 8 | 7| 6])([0-9]{9})$/
 const pinCodePattern = /^[0-9]{6}$/
 
 //CRUD functions
-const insertUserDetail = (inserType, dataIndex) => {
+const insertUserDetail = (inserType, detailIndex) => {
     noValueCheck(inserType);
     if (isFormValid()) {
-        let formData = [...new FormData(userFormData)];
-        let dataCollection = (inserType == 'create') ? {} : dataStorage[dataIndex];
-        let formLen = formData.length;
+        let formValue = [...new FormData(userForm)];
+        let dataCollection = (inserType == 'create') ? {} : detailsStorage[detailIndex];
+        let formLen = formValue.length;
         userPermAddress.disabled = (addressCheckBox.checked) ? false : false;
 
         for (let index = beginValue; index < formLen; index++) {
-            let val = formData[index][1];
-            dataCollection[formData[index][beginValue]] = (formData[index][beginValue] == 'uploadBtn') ? imageSource : val;
+            let val = formValue[index][1];
+            dataCollection[formValue[index][beginValue]] = (formValue[index][beginValue] == 'uploadBtn') ? imageSource : val;
         }
         dataCollection.addressCheck = dataCollection.hasOwnProperty('addressCheck') ? 'yes' : 'no';
         dataCollection.userState = (dataCollection.hasOwnProperty('userState')) ? stateOption.value : 'None';
-        if (inserType == 'create') dataStorage.push(dataCollection);
-        localStorage.setItem('userData', JSON.stringify(dataStorage));
+        if (inserType == 'create') detailsStorage.push(dataCollection);
+        localStorage.setItem('userData', JSON.stringify(detailsStorage));
         userPermAddress.disabled = (addressCheckBox.checked) ? true : false;
 
         if (inserType == 'create') createUserDetail(dataCollection);
@@ -77,15 +77,14 @@ const insertUserDetail = (inserType, dataIndex) => {
     }
 }
 
-const readUserDetail = (dataIndex) => {
+const readUserDetail = detailIndex => {
     resetForm();
-    let updateDateItem = dataStorage[dataIndex];
+    let updateDateItem = detailsStorage[detailIndex];
     imageContainer.src = updateDateItem.uploadBtn;
-    imageContainer.classList.remove('visibleNone');
     countryOption.value = updateDateItem.userCountry;
     actionBtn.innerHTML = 'Update';
-    resetBtn.onclick = () => readUserDetail(dataIndex);
-    actionBtn.onclick = () => insertUserDetail('update', dataIndex);
+    resetBtn.onclick = () => readUserDetail(detailIndex);
+    actionBtn.onclick = () => insertUserDetail('update', detailIndex);
     for (const key in updateDateItem) {
         for (let index = beginValue; index < inputCollection.length; index++) {
             if (key == inputCollection[index].name && key != 'uploadBtn' && key != 'gender') {
@@ -108,16 +107,16 @@ const readUserDetail = (dataIndex) => {
     disableBtn();
 }
 
-const deleteUserDetail = (dataIndex) => {
+const deleteUserDetail = detailIndex => {
     if (confirm(DELETE_CONFIRM)) {
-        dataStorage.splice(dataIndex, 1);
-        localStorage.setItem('userData', JSON.stringify(dataStorage));
+        detailsStorage.splice(detailIndex, 1);
+        localStorage.setItem('userData', JSON.stringify(detailsStorage));
         while (tableContainer.hasChildNodes()) {
             tableContainer.removeChild(tableContainer.lastChild);
         }
-        dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+        detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
     }
-    if (dataStorage.length == beginValue) tableBox.classList.add('displayNone');
+    if (detailsStorage.length == beginValue) tableBox.classList.add('displayNone');
 }
 
 const createUserDetail = userDataCollection => {
@@ -129,7 +128,7 @@ const updateTable = () => {
     while (tableContainer.hasChildNodes()) {
         tableContainer.removeChild(tableContainer.lastChild);
     }
-    dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+    detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
     actionBtn.innerHTML = 'Register';
     resetBtn.onclick = resetForm;
     actionBtn.onclick = () => insertUserDetail('create', '');
@@ -148,9 +147,9 @@ const noValueCheck = inserType => {
             }
             if (inputField.id == 'uploadBtn' && !imageSourceValue) helperText.innerHTML = NO_VALUE_ERR;
             if (inputField.id == 'mobileNumber' || inputField.id == 'userEmail' || inputField.id == 'pin') {
-                let errorInfo = (inputField.id == 'mobileNumber') ? errorMessage[beginValue] : (inputField.id == 'userEmail') ? errorMessage[1] : errorMessage[2];
+                let errorMessage = (inputField.id == 'mobileNumber') ? errorMessage[beginValue] : (inputField.id == 'userEmail') ? errorMessage[1] : errorMessage[2];
                 let pattern = (inputField.id == 'mobileNumber') ? mobileNumberPattern : (inputField.id == 'userEmail') ? emailPattern : pinCodePattern;
-                helperText.innerHTML = pattern.test(inputValue) ? '' : errorInfo;
+                helperText.innerHTML = pattern.test(inputValue) ? '' : errorMessage;
             }
         }
     })
@@ -177,9 +176,13 @@ const disableBtn = () => {
 }
 //Select option generate functions
 const createOptionElement = (countryObj, appendSelect, optionCategory) => {
-    let option = `<option selected disabled hidden value = "">Select ${optionCategory}</option>`;
-    for (const key of countryObj) option += `<option value = "${key.name}">${key.name}</option>`;
-    appendSelect.innerHTML = option;
+    const createOption = (optionValue) => {
+        let option = document.createElement('option');
+        option.innerHTML = option.value = optionValue;
+        return option;
+    }
+    appendSelect.innerHTML = `<option selected disabled hidden value = "">Select ${optionCategory}</option>`;
+    for (const key of countryObj) appendSelect.appendChild(createOption(key.name));
 }
 
 const generateCountry = async () => {
@@ -235,7 +238,6 @@ const convertImage = () => {
         readImage.addEventListener('load', () => {
             imageContainer.src = readImage.result;
             imageSource = readImage.result;
-            imageContainer.classList.remove('visibleNone');
         });
         uploadBtn.nextElementSibling.innerHTML = "";
         return '';
@@ -245,12 +247,11 @@ const convertImage = () => {
 }
 
 const createTable = (dataItem) => {
-    if (dataStorage.length > beginValue) {
-        let detailIndex = dataStorage.indexOf(dataItem);
+    if (detailsStorage.length > beginValue) {
+        let detailIndex = detailsStorage.indexOf(dataItem);
         let createTableRow = document.createElement('tr');
         let tableData = `<td>${dataItem.FirstName} ${dataItem.LastName}</td><td>${dataItem.gender}</td><td>${dataItem.MobileNumber}</td><td>${dataItem.EmailID}</td>
         <td>${dataItem.userCountry}</td><td>${dataItem.userState}</td><td>${dataItem.UserCity}</td><td>${dataItem.PinCode}</td><td><button class = "bgBlue textLight pointer" onclick = "readUserDetail(${detailIndex})"><i class="fa-solid fa-pen"></i></button><button class = "bgRed textLight pointer" onclick = "deleteUserDetail(${detailIndex})"><i class="fa-solid fa-trash"></i></button></td>`;
-
         createTableRow.innerHTML = tableData;
         return createTableRow;
     }
@@ -275,24 +276,22 @@ const resetForm = () => {
     });
     stateContainer.classList.add('visibleNone');
     cityContainer.classList.add('visibleNone');
-    imageContainer.classList.add('visibleNone');
+    imageContainer.src = 'Images/userProfile.png';
     userPermAddress.disabled = false;
     userComAddress.removeEventListener('keyup', sameAddress)
-    imageContainer.src = "";
-    userFormData.reset();
+    userForm.reset();
 }
 
 const removeError = currentInput => currentInput.nextElementSibling.innerHTML = "";
 
 //event listeners
 window.onload = () => {
-    dataStorage = JSON.parse(localStorage.getItem('userData')) || [];
+    detailsStorage = JSON.parse(localStorage.getItem('userData')) || [];
 
-    if (dataStorage.length > beginValue) {
-        dataStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+    if (detailsStorage.length > beginValue) {
+        detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
         tableBox.classList.remove('displayNone');
     }
-    userDOB.setAttribute('max', todayDate[beginValue]);
     generateCountry();
     resetBtn.onclick = resetForm;
     actionBtn.onclick = () => insertUserDetail('create', '');
