@@ -4,7 +4,7 @@
 *       Developed for          : VHITECH Training Program            *
 *       Maintenance History                                          *
 *       Developer              : Arunachalam                         *
-*       Creation date          : 22/07/2023      Ticket No:          *
+*       Creation date          : 24/07/2023      Ticket No:          *
 *                                                                   **/
 
 //Date and Time
@@ -73,6 +73,7 @@ const validateForm = inserType => {
     })
 }
 
+//returns true if all input has correct value else false
 const isFormValid = () => {
     let validStatus = true;
     errorCollection.forEach(errorContainer => {
@@ -84,7 +85,7 @@ const isFormValid = () => {
     return validStatus;
 }
 
-//CRUD functions
+//Create and Update user details
 const insertUserDetail = (inserType, detailIndex) => {
     validateForm(inserType);
     if (isFormValid()) {
@@ -92,6 +93,7 @@ const insertUserDetail = (inserType, detailIndex) => {
         let dataCollection = (inserType == 'create') ? {} : detailsStorage[detailIndex];
         let formLen = formValue.length;
         userPermAddress.disabled = (addressCheckBox.checked) ? false : false;
+        imageSource = imageContainer.src;
 
         for (let index = beginValue; index < formLen; index++) {
             let val = formValue[index][1];
@@ -108,23 +110,23 @@ const insertUserDetail = (inserType, detailIndex) => {
         resetForm();
     }
 }
-
+//insert new row in table when user create new user
 const createUserDetail = userDataCollection => {
-    tableContainer.appendChild(createTable(userDataCollection));
+    tableContainer.appendChild(createRow(userDataCollection));
     tableBox.classList.remove('displayNone');
 }
-
+//update table when user update details
 const updateTable = () => {
     while (tableContainer.hasChildNodes()) {
         tableContainer.removeChild(tableContainer.lastChild);
     }
-    detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+    detailsStorage.forEach(dataItem => tableContainer.appendChild(createRow(dataItem)));
     actionBtn.innerHTML = 'Register';
     resetBtn.onclick = resetForm;
     actionBtn.onclick = () => insertUserDetail('create', '');
 }
 
-//Reset form
+//Reset form values
 const resetForm = () => {
     inputCollection.forEach(inputField => {
         if (!(inputField.type == "radio" || inputField.type == 'checkbox')) removeError(inputField);
@@ -137,7 +139,7 @@ const resetForm = () => {
     userForm.reset();
 }
 
-//Select option generate functions
+//option element generate functions
 const createOptionElement = (countryObj, appendSelect, optionCategory) => {
     const createOption = (optionValue) => {
         let option = document.createElement('option');
@@ -147,7 +149,7 @@ const createOptionElement = (countryObj, appendSelect, optionCategory) => {
     appendSelect.innerHTML = `<option selected disabled hidden value = "">Select ${optionCategory}</option>`;
     for (const key of countryObj) appendSelect.appendChild(createOption(key.name));
 }
-
+//
 const generateCountry = async () => {
     let country = fetch(countryCollection);
     country = (await country).json();
@@ -156,7 +158,7 @@ const generateCountry = async () => {
     countryOption.addEventListener('change',
         () => generateState(((countryOption.selectedIndex) - 1), createOptionElement));
 }
-
+//create a state option in select input
 const generateState = (countryStates, optionCreation) => {
     if (countryDetails[countryStates].states.length > beginValue) {
         optionCreation(countryDetails[countryStates].states, stateOption, 'State');
@@ -170,7 +172,7 @@ const generateState = (countryStates, optionCreation) => {
         stateContainer.classList.add('visibleNone');
     }
 }
-
+//that show user details in form inputs
 const readUserDetail = detailIndex => {
     resetForm();
     let updateDetail = detailsStorage[detailIndex];
@@ -200,7 +202,7 @@ const readUserDetail = detailIndex => {
     cityContainer.classList.remove('visibleNone');
     disableBtn();
 }
-
+//Delete user details from local storage
 const deleteUserDetail = detailIndex => {
     if (confirm(DELETE_CONFIRM)) {
         detailsStorage.splice(detailIndex, 1);
@@ -208,11 +210,11 @@ const deleteUserDetail = detailIndex => {
         while (tableContainer.hasChildNodes()) {
             tableContainer.removeChild(tableContainer.lastChild);
         }
-        detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+        detailsStorage.forEach(dataItem => tableContainer.appendChild(createRow(dataItem)));
     }
     if (detailsStorage.length == beginValue) tableBox.classList.add('displayNone');
 }
-
+//prevent unwanted key
 const preventKey = (key, keyType) => {
     const keyValue = key.which;
 
@@ -223,8 +225,8 @@ const preventKey = (key, keyType) => {
         key.preventDefault();
     }
 }
-
-const createTable = (dataItem) => {
+//Create a table row with user details
+const createRow = dataItem => {
     if (detailsStorage.length > beginValue) {
         let detailIndex = detailsStorage.indexOf(dataItem);
         let createTableRow = document.createElement('tr');
@@ -235,7 +237,7 @@ const createTable = (dataItem) => {
     }
 }
 
-//image conversion
+//it convert image to data url
 const convertImage = () => {
     const fileFormatCheck = (imageUploadBtn.value).split('.');
 
@@ -253,12 +255,12 @@ const convertImage = () => {
     alert(IMG_TYPE_ERR);
 }
 
-//same address function
+//that maintain both addresses were same
 const sameAddress = () => {
     userPermAddress.value = userComAddress.value;
     userPermAddress.nextElementSibling.innerHTML = "";
 };
-
+//that make addresses same based on checkbox checked status
 const sameAddressOperation = () => {
     const checkStatus = (addressCheckBox.checked) ? true : false;
     userPermAddress.disabled = checkStatus;
@@ -274,7 +276,7 @@ const sameAddressOperation = () => {
 
 const removeError = currentInput => currentInput.nextElementSibling.innerHTML = "";
 
-//make button disable
+//make buttons disabled into table 
 const disableBtn = () => {
     const tableBtn = document.querySelectorAll('table button');
     tableBtn.forEach(btn => {
@@ -290,7 +292,7 @@ window.onload = () => {
     detailsStorage = JSON.parse(localStorage.getItem('userData')) || [];
 
     if (detailsStorage.length > beginValue) {
-        detailsStorage.forEach(dataItem => tableContainer.appendChild(createTable(dataItem)));
+        detailsStorage.forEach(dataItem => tableContainer.appendChild(createRow(dataItem)));
         tableBox.classList.remove('displayNone');
     }
     generateCountry();
