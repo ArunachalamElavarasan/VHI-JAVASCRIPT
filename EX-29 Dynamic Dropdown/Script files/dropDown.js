@@ -226,7 +226,7 @@ const generateMenu = () =>{
 
     createSelect.addEventListener('change', () => {
       const dataCollection = document.getElementById('firstMenu').selectedIndex;
-      createNextMenu(dataCollection, dropDown, "firstMenu")
+      createNextMenu(dataCollection, dropDown, "firstMenu", "states")
     });
 
     dropDown.forEach(item => {
